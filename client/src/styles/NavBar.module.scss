@@ -1,0 +1,64 @@
+.nav {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: right;
+  padding: 0 20px;
+  background-color: grey;
+}
+
+.link {
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+
+  &:hover {
+    color: black;
+    background-color: rgb(219, 206, 174);
+  }
+}
+
+.navHome {
+  margin-right: auto;
+}
+
+
+.dropdownMenuContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 15px;
+  align-items: flex-end;
+}
+
+.dropdownToggle {
+  border-style: none;
+  cursor: pointer;
+}
+
+.dropdownContent {
+  width: 100px;
+  background-color: purple;
+
+  &.inactive {
+    display: none;
+  }
+}
+
+.dropdownLink {
+  text-decoration: none;
+  color: rgb(228, 230, 230);
+  display: block;
+  padding: 5px;
+
+  &:hover {
+    color: rgb(255,255,255);
+  }
+}
+
+
+
+
+
+
