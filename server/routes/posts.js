@@ -5,7 +5,12 @@ const pool = require('../db');
 // Get all posts
 router.get('/', async (req, res) => {
   try {
-    const allPosts = await pool.query('SELECT * FROM post');
+    const allPosts = await pool.query(
+      `SELECT post.id, post.title, post.body, post.created_on, blog_user.username
+      FROM post
+      INNER JOIN blog_user
+      ON post.author_id = blog_user.id ORDER BY created_on DESC`
+    );
     res.status(200).json(allPosts.rows);
   } catch (error) {
     console.error(error);
