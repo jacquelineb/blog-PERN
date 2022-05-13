@@ -4,7 +4,7 @@ import Signup from './components/Signup';
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
 import style from './styles/App.module.scss';
-import LandingPage from './components/LandingPage';
+import Blog from './components/Blog';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -14,7 +14,6 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState(() => {
     const currentUser = localStorage.getItem('currentUser');
-    console.log(currentUser);
     return currentUser ? currentUser : null;
   });
 
@@ -51,6 +50,7 @@ function App() {
 
     if (response.status === 200) {
       setIsAuthenticated(false);
+      setCurrentUser(null);
     }
     console.log(await response.json());
   }
@@ -59,10 +59,9 @@ function App() {
     <>
       <Router>
         <NavBar isAuth={isAuthenticated} currUser={currentUser} logOut={handleLogOut} />
-
         <div className={style.mainContent}>
           <Switch>
-            <Route exact path='/' component={LandingPage} />
+            <Route exact path='/' component={Blog} />
             <Route
               path='/login'
               render={(props) =>
@@ -81,6 +80,7 @@ function App() {
               path='/signup'
               render={() => (isAuthenticated ? <Redirect to='/dashboard' /> : <Signup />)}
             />
+            <Redirect to='/' />
           </Switch>
         </div>
       </Router>
