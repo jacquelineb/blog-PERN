@@ -2,16 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-
 const pool = require('../db');
 const initializePassport = require('../passport-config');
 
 initializePassport(passport);
-
-// Middleware
-router.use(express.json());
-router.use(passport.initialize());
-router.use(passport.session());
 
 // Middleware-like functions
 function checkNotAuthenticated(req, res, next) {
@@ -35,7 +29,7 @@ function checkAuthenticated(req, res, next) {
   }
 }
 
-// ===== Register a user ====== //
+// Register a user
 router.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -83,12 +77,12 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
   }
 });
 
-// ===== Log a user in ===== //
+// Log a user in
 router.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
   res.status(200).json({ user: req.user.username });
 });
 
-// ===== Log a user out ===== //
+// Log a user out
 router.delete('/logout', checkAuthenticated, (req, res) => {
   req.logOut();
   res.status(200).json('Logout successful.');
