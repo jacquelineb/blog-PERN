@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Login from './components/Login';
-import Signup from './components/Signup';
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
-import style from './styles/App.module.scss';
 import Blog from './components/Blog';
-import { useState, useEffect } from 'react';
+import style from './styles/App.module.scss';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() =>
@@ -76,10 +75,6 @@ function App() {
             <Route
               path='/dashboard'
               render={() => (isAuthenticated ? <Dashboard /> : <Redirect to='/login' />)}
-            />
-            <Route
-              path='/signup'
-              render={() => (isAuthenticated ? <Redirect to='/dashboard' /> : <Signup />)}
             />
             <Redirect to='/' />
           </Switch>

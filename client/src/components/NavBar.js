@@ -15,9 +15,6 @@ function NavBar({ isAuth, currUser, logOut }) {
           <Link className={style.link} to='/login'>
             LOG IN
           </Link>
-          <Link className={style.link} to='/signup'>
-            SIGN UP
-          </Link>
         </>
       )}
     </nav>
