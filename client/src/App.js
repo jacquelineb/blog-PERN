@@ -60,22 +60,15 @@ function App() {
         <NavBar isAuth={isAuthenticated} currUser={currentUser} logOut={handleLogOut} />
         <div className={style.mainContent}>
           <Switch>
-            <Route exact path='/' component={Blog} />
-            <Route exact path='/page/:pageNum([1-9][0-9]*)' component={Blog} />
-            <Route
-              path='/login'
-              render={(props) =>
-                isAuthenticated ? (
-                  <Redirect to='/dashboard' />
-                ) : (
-                  <Login {...props} logIn={handleLogIn} />
-                )
-              }
-            />
-            <Route
-              path='/dashboard'
-              render={() => (isAuthenticated ? <Dashboard /> : <Redirect to='/login' />)}
-            />
+            <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
+              <Blog />
+            </Route>
+            <Route exact path='/login'>
+              {isAuthenticated ? <Redirect to='/dashboard' /> : <Login logIn={handleLogIn} />}
+            </Route>
+            <Route exact path='/dashboard'>
+              {isAuthenticated ? <Dashboard /> : <Redirect to='/login' />}
+            </Route>
             <Redirect to='/' />
           </Switch>
         </div>
