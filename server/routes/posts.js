@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get a set of 10 posts
 router.get('/page/:page_num', async (req, res) => {
   try {
     const { page_num } = req.params;
@@ -34,6 +35,16 @@ router.get('/page/:page_num', async (req, res) => {
     );
 
     res.status(200).json(posts.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json('Server Error');
+  }
+});
+
+router.get('/count', async (req, res) => {
+  try {
+    const num_posts = await pool.query('SELECT count(*) FROM post');
+    res.status(200).json(num_posts.rows[0].count);
   } catch (error) {
     console.error(error);
     res.status(500).json('Server Error');

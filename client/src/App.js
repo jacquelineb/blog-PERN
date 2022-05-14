@@ -62,6 +62,7 @@ function App() {
         <div className={style.mainContent}>
           <Switch>
             <Route exact path='/' component={Blog} />
+            <Route exact path='/page/:pageNum([1-9][0-9]*)' component={Blog} />
             <Route
               path='/login'
               render={(props) =>
