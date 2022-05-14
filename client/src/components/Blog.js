@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import styles from '../styles/Blog.module.scss';
 
 function Blog() {
   let { pageNum } = useParams();
@@ -80,13 +81,14 @@ function Blog() {
 
 function Post({ data }) {
   return (
-    <>
-      <h1>{data.title}</h1>
+    <div className={styles.post}>
+      <h2 className={styles.title}>{data.title}</h2>
       <p>
-        Posted by <span>{data.username}</span> on <span>{data.created_on}</span>
+        Posted by <span className={styles.author}>{data.username}</span> on{' '}
+        <span className={styles.date}>{data.created_on}</span>
       </p>
       <p>{data.body}</p>
-    </>
+    </div>
   );
 }
 

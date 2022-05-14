@@ -1,0 +1,14 @@
+.post {
+  border: 4px solid black;
+  margin: 20px 0;
+
+  .title {
+    color: #A10702;
+    font-size: 32px;
+  }
+
+  .author, .date {
+    font-weight: bold;
+    color: #86BA90
+  }
+}
