@@ -85,14 +85,17 @@ function Blog({ isAuth }) {
 }
 
 function Post({ data }) {
+  const { title, body, username, created_on } = data;
   return (
     <div className={styles.post}>
-      <h2 className={styles.title}>{data.title}</h2>
+      <h2 className={styles.title}>{title}</h2>
       <p>
-        Posted by <span className={styles.author}>{data.username}</span> on{' '}
-        <span className={styles.date}>{data.created_on}</span>
+        Posted by <span className={styles.author}>{username}</span> on{' '}
+        <span className={styles.date}>{created_on}</span>
       </p>
-      <p>{data.body}</p>
+      {body.split('\n').map((paragraph) => {
+        return paragraph ? <p>{paragraph}</p> : null;
+      })}
     </div>
   );
 }
