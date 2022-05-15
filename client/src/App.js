@@ -61,7 +61,7 @@ function App() {
         <div className={style.mainContent}>
           <Switch>
             <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
-              <Blog />
+              <Blog isAuth={isAuthenticated} />
             </Route>
             <Route exact path='/login'>
               {isAuthenticated ? <Redirect to='/dashboard' /> : <Login logIn={handleLogIn} />}

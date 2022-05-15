@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from '../styles/Blog.module.scss';
 
-function Blog() {
+import { CreateBlogPost, EditBlogPost } from './BlogPostForm';
+
+function Blog({ isAuth }) {
   let { pageNum } = useParams();
   pageNum = pageNum ? +pageNum : 1;
 
-  const [page, setPage] = useState(pageNum); // YOU NEED TO INIALIZE THIS TO WHATEVER IS IN URL
+  const [page, setPage] = useState(pageNum);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
 
@@ -51,15 +53,18 @@ function Blog() {
   return (
     <>
       <h1>cool blog</h1>
-      <div>
+      {isAuth ? <CreateBlogPost /> : null}
+      <div className={styles.postsContainer}>
         {posts.map((post) => {
           return (
-            <div key={post.id}>
+            <div className={styles.postContainer} key={post.id} data-post-id={post.id}>
               <Post data={post} />
+              {isAuth ? <EditBlogPost post={post} /> : null}
             </div>
           );
         })}
       </div>
+
       <div>
         {page > 1 ? (
           <div>

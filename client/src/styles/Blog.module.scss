@@ -1,7 +1,10 @@
-.post {
+.postContainer {
   border: 4px solid black;
   margin: 20px 0;
+  white-space: pre;
+}
 
+.post {
   .title {
     color: #A10702;
     font-size: 32px;
