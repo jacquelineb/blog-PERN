@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreateBlogPost } from './BlogPostForm';
+import { CreateBlogPost } from './BlogPostTransactions';
 
 function Dashboard() {
   return (

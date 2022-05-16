@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from '../styles/Blog.module.scss';
 
-import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from './BlogPostForm';
+import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from './BlogPostTransactions';
 
 function Blog({ isAuth }) {
   let { pageNum } = useParams();
