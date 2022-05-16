@@ -24,7 +24,6 @@ function Blog({ isAuth }) {
   useEffect(() => {
     async function fetchTotalNumPosts() {
       try {
-        console.log('fetching num posts');
         const response = await fetch('http://localhost:5000/posts/count');
         const numPosts = await response.json();
         setTotalPosts(numPosts);
@@ -67,22 +66,20 @@ function Blog({ isAuth }) {
         })}
       </div>
 
-      <div>
-        {page > 1 ? (
-          <div>
-            <Link to={`/page/${page - 1}`}>newer posts</Link>
-          </div>
-        ) : null}
-        {page < Math.ceil(totalPosts / POSTS_PER_PAGE) ? (
-          <div>
-            <Link to={`/page/${page + 1}`}>older posts</Link>
-          </div>
-        ) : null}
-        <p>
-          Page {page} of {Math.ceil(totalPosts / POSTS_PER_PAGE)}
-        </p>
-      </div>
+      <BlogPagination currPage={page} totalNumPages={Math.ceil(totalPosts / POSTS_PER_PAGE)} />
     </>
+  );
+}
+
+function BlogPagination({ currPage, totalNumPages }) {
+  return (
+    <div>
+      {currPage > 1 ? <Link to={`/page/${currPage - 1}`}>newer posts</Link> : null}
+      {currPage < totalNumPages ? <Link to={`/page/${currPage + 1}`}>older posts</Link> : null}
+      <p>
+        Page {currPage} of {totalNumPages}
+      </p>
+    </div>
   );
 }
 
