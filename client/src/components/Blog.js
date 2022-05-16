@@ -8,11 +8,10 @@ function Blog({ isAuth }) {
   let { pageNum } = useParams();
   pageNum = pageNum ? +pageNum : 1;
 
+  const POSTS_PER_PAGE = 10;
   const [page, setPage] = useState(pageNum);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
-
-  const POSTS_PER_PAGE = 10;
 
   useEffect(() => {
     if (pageNum) {
@@ -23,32 +22,35 @@ function Blog({ isAuth }) {
   }, [pageNum]);
 
   useEffect(() => {
+    async function fetchTotalNumPosts() {
+      try {
+        console.log('fetching num posts');
+        const response = await fetch('http://localhost:5000/posts/count');
+        const numPosts = await response.json();
+        setTotalPosts(numPosts);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
     fetchTotalNumPosts();
-  });
+  }, []);
 
   useEffect(() => {
+    async function fetchPostsForPage(page) {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/posts?limit=${POSTS_PER_PAGE}&offset=${
+            POSTS_PER_PAGE * (page - 1)
+          }`
+        );
+        const posts = await response.json();
+        setPosts(posts);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
     fetchPostsForPage(page);
   }, [page]);
-
-  async function fetchPostsForPage(page) {
-    try {
-      const response = await fetch(`http://localhost:5000/posts/page/${page}`);
-      const posts = await response.json();
-      setPosts(posts);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
-  async function fetchTotalNumPosts() {
-    try {
-      const response = await fetch('http://localhost:5000/posts/count');
-      const numPosts = await response.json();
-      setTotalPosts(numPosts);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
 
   return (
     <>
@@ -85,7 +87,8 @@ function Blog({ isAuth }) {
 }
 
 function Post({ data }) {
-  const { title, body, username, created_on } = data;
+  const { id, title, body, username, created_on } = data;
+
   return (
     <div className={styles.post}>
       <h2 className={styles.title}>{title}</h2>
@@ -93,8 +96,8 @@ function Post({ data }) {
         Posted by <span className={styles.author}>{username}</span> on{' '}
         <span className={styles.date}>{created_on}</span>
       </p>
-      {body.split('\n').map((paragraph) => {
-        return paragraph ? <p>{paragraph}</p> : null;
+      {body.split('\n').map((paragraph, i) => {
+        return paragraph ? <p key={`${id}-${i}`}>{paragraph}</p> : null;
       })}
     </div>
   );
