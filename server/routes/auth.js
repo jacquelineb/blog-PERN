@@ -91,7 +91,6 @@ router.delete('/logout', checkAuthenticated, (req, res) => {
 router.get('/verify', (req, res) => {
   try {
     if (req.isAuthenticated()) {
-      console.log(req.user.username);
       res.json({ isAuthenticated: true, user: req.user.username });
     } else {
       res.json({ isAuthenticated: false, user: null });

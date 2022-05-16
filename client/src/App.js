@@ -7,54 +7,69 @@ import Blog from './components/Blog';
 import style from './styles/App.module.scss';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() =>
-    JSON.parse(localStorage.getItem('isAuthenticated')) ? true : false
-  );
-
-  const [currentUser, setCurrentUser] = useState(() => {
-    const currentUser = localStorage.getItem('currentUser');
-    return currentUser ? currentUser : null;
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    localStorage.setItem('isAuthenticated', isAuthenticated);
-    localStorage.setItem('currentUser', currentUser);
-  }, [isAuthenticated, currentUser]);
+    async function getCurrentUser() {
+      try {
+        const response = await fetch('http://localhost:5000/auth/verify', {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        const userData = await response.json();
+        setCurrentUser(userData.user);
+        setIsAuthenticated(userData.isAuthenticated);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+    getCurrentUser();
+  }, []);
 
   async function handleLogIn(credentials) {
-    const response = await fetch('http://localhost:5000/auth/login', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify(credentials),
-    });
+    try {
+      const response = await fetch('http://localhost:5000/auth/login', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(credentials),
+      });
 
-    if (response.status === 200) {
-      setIsAuthenticated(true);
-      const { user } = await response.json();
-      setCurrentUser(user);
+      if (response.status === 200) {
+        const { user } = await response.json();
+        setCurrentUser(user);
+        setIsAuthenticated(true);
+      }
+      return response.status;
+    } catch (error) {
+      console.error(error.message);
     }
-
-    return response.status;
   }
 
   async function handleLogOut() {
-    const response = await fetch('http://localhost:5000/auth/logout', {
-      method: 'DELETE',
-      credentials: 'include',
-    });
+    try {
+      const response = await fetch('http://localhost:5000/auth/logout', {
+        method: 'DELETE',
+        credentials: 'include',
+      });
 
-    if (response.status === 200) {
-      setIsAuthenticated(false);
-      setCurrentUser(null);
+      if (response.status !== 500) {
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+      }
+    } catch (error) {
+      console.error(error.message);
     }
-    console.log(await response.json());
   }
 
-  return (
+  return !isLoading ? (
     <>
       <Router>
         <NavBar isAuth={isAuthenticated} currUser={currentUser} logOut={handleLogOut} />
@@ -74,7 +89,7 @@ function App() {
         </div>
       </Router>
     </>
-  );
+  ) : null;
 }
 
 export default App;
