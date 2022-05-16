@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from '../styles/Blog.module.scss';
 
-import { CreateBlogPost, EditBlogPost } from './BlogPostForm';
+import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from './BlogPostForm';
 
 function Blog({ isAuth }) {
   let { pageNum } = useParams();
@@ -28,7 +28,7 @@ function Blog({ isAuth }) {
         const numPosts = await response.json();
         setTotalPosts(numPosts);
       } catch (error) {
-        console.error(error.message);
+        console.error(error);
       }
     }
     fetchTotalNumPosts();
@@ -45,7 +45,7 @@ function Blog({ isAuth }) {
         const posts = await response.json();
         setPosts(posts);
       } catch (error) {
-        console.error(error.message);
+        console.error(error);
       }
     }
     fetchPostsForPage(page);
@@ -60,7 +60,12 @@ function Blog({ isAuth }) {
           return (
             <div className={styles.postContainer} key={post.id} data-post-id={post.id}>
               <Post data={post} />
-              {isAuth ? <EditBlogPost post={post} /> : null}
+              {isAuth ? (
+                <>
+                  <EditBlogPost post={post} />
+                  <DeleteBlogPost postId={post.id} />
+                </>
+              ) : null}
             </div>
           );
         })}

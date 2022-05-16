@@ -39,7 +39,6 @@ function BlogPostForm({ onSubmit, currPost = { title: '', body: '' } }) {
           <label htmlFor='body'>Body</label>
           <textarea id='body' name='body' value={post.body} onChange={handleChange} required />
         </div>
-
         <button type='submit'>Submit</button>
       </form>
     </>
@@ -50,19 +49,21 @@ function CreateBlogPost() {
   const [showModalForm, setShowModalForm] = useState(false);
 
   async function handleCreate(post) {
-    const response = await fetch('http://localhost:5000/posts/create', {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ ...post }),
-    });
+    try {
+      const response = await fetch('http://localhost:5000/posts/create', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ ...post }),
+      });
 
-    console.log(response);
-    // if success, refresh page
-    // else show error
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -90,20 +91,22 @@ function CreateBlogPost() {
 function EditBlogPost({ post }) {
   const [showModalForm, setShowModalForm] = useState(false);
 
-  async function handleEdit(post) {
-    const response = await fetch(`http://localhost:5000/posts/edit/${post.id}`, {
-      method: 'PUT',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ ...post }),
-    });
+  async function handleEdit(editedPost) {
+    try {
+      const response = await fetch(`http://localhost:5000/posts/edit/${post.id}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ ...editedPost }),
+      });
 
-    console.log(response.status);
-    // if success, refresh page
-    // else show error
+      console.log(response.status);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -129,4 +132,27 @@ function EditBlogPost({ post }) {
   );
 }
 
-export { CreateBlogPost, EditBlogPost };
+function DeleteBlogPost({ postId }) {
+  async function handleDelete() {
+    try {
+      if (window.confirm('Are you sure you want to delete this post?')) {
+        console.log('delete');
+        console.log(postId);
+        const response = await fetch(`http://localhost:5000/posts/delete/${postId}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+
+        if (response.status === 200) {
+          // update posts array
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return <button onClick={handleDelete}>Delete</button>;
+}
+
+export { CreateBlogPost, EditBlogPost, DeleteBlogPost };
