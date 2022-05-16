@@ -12,6 +12,7 @@ function Blog({ isAuth }) {
   const [page, setPage] = useState(pageNum);
   const [posts, setPosts] = useState([]);
   const [totalPosts, setTotalPosts] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (pageNum) {
@@ -44,6 +45,7 @@ function Blog({ isAuth }) {
         );
         const posts = await response.json();
         setPosts(posts);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -54,24 +56,30 @@ function Blog({ isAuth }) {
   return (
     <>
       <h1>cool blog</h1>
-      {isAuth ? <CreateBlogPost /> : null}
-      <div className={styles.postsContainer}>
-        {posts.map((post) => {
-          return (
-            <div className={styles.postContainer} key={post.id} data-post-id={post.id}>
-              <Post data={post} />
-              {isAuth ? (
-                <>
-                  <EditBlogPost post={post} />
-                  <DeleteBlogPost postId={post.id} />
-                </>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
-
-      <BlogPagination currPage={page} totalNumPages={Math.ceil(totalPosts / POSTS_PER_PAGE)} />
+      {isLoading ? null : (
+        <>
+          {isAuth ? <CreateBlogPost /> : null}
+          <div className={styles.postsContainer}>
+            {posts.map((post) => {
+              return (
+                <div className={styles.postContainer} key={post.id} data-post-id={post.id}>
+                  <Post data={post} />
+                  {isAuth ? (
+                    <>
+                      <EditBlogPost post={post} />
+                      <DeleteBlogPost postId={post.id} />
+                    </>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
+          <BlogPagination
+            currPage={page}
+            totalNumPages={Math.ceil(totalPosts / POSTS_PER_PAGE)}
+          />
+        </>
+      )}
     </>
   );
 }

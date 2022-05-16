@@ -69,7 +69,7 @@ function App() {
     }
   }
 
-  return !isLoading ? (
+  return isLoading ? null : (
     <>
       <Router>
         <NavBar isAuth={isAuthenticated} currUser={currentUser} logOut={handleLogOut} />
@@ -89,7 +89,7 @@ function App() {
         </div>
       </Router>
     </>
-  ) : null;
+  );
 }
 
 export default App;
