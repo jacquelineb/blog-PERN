@@ -4,7 +4,7 @@ import styles from '../styles/Blog.module.scss';
 
 import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from './BlogPostTransactions';
 
-function Blog({ isAuth }) {
+function Blog({ user }) {
   let { pageNum } = useParams();
   pageNum = pageNum ? +pageNum : 1;
 
@@ -58,13 +58,13 @@ function Blog({ isAuth }) {
       <h1>cool blog</h1>
       {isLoading ? null : (
         <>
-          {isAuth ? <CreateBlogPost /> : null}
+          {user ? <CreateBlogPost /> : null}
           <div className={styles.postsContainer}>
             {posts.map((post) => {
               return (
                 <div className={styles.postContainer} key={post.id} data-post-id={post.id}>
                   <Post data={post} />
-                  {isAuth ? (
+                  {user ? (
                     <>
                       <EditBlogPost post={post} />
                       <DeleteBlogPost postId={post.id} />
