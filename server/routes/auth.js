@@ -30,6 +30,7 @@ function checkAuthenticated(req, res, next) {
 }
 
 // Register a user
+/*
 router.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -76,6 +77,7 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
     res.status(500).json('Server error');
   }
 });
+*/
 
 // Log a user in
 router.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
@@ -88,6 +90,7 @@ router.delete('/logout', checkAuthenticated, (req, res) => {
   res.status(200).json('Logout successful.');
 });
 
+// Verify user
 router.get('/verify', (req, res) => {
   try {
     if (req.isAuthenticated()) {
