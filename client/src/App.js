@@ -7,8 +7,7 @@ import Blog from './components/Blog';
 import style from './styles/App.module.scss';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currUser, setCurrUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,11 +19,10 @@ function App() {
         });
 
         const userData = await response.json();
-        setCurrentUser(userData.user);
-        setIsAuthenticated(userData.isAuthenticated);
+        setCurrUser(userData.user);
         setIsLoading(false);
       } catch (error) {
-        console.error(error.message);
+        console.error(error);
       }
     }
     getCurrentUser();
@@ -44,12 +42,14 @@ function App() {
 
       if (response.status === 200) {
         const { user } = await response.json();
-        setCurrentUser(user);
-        setIsAuthenticated(true);
+        setCurrUser(user);
+        return true;
       }
-      return response.status;
+
+      setCurrUser(null);
+      return false;
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
   }
 
@@ -61,33 +61,34 @@ function App() {
       });
 
       if (response.status !== 500) {
-        setIsAuthenticated(false);
-        setCurrentUser(null);
+        setCurrUser(null);
       }
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
   }
 
-  return isLoading ? null : (
+  return (
     <>
-      <Router>
-        <NavBar isAuth={isAuthenticated} currUser={currentUser} logOut={handleLogOut} />
-        <div className={style.mainContent}>
-          <Switch>
-            <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
-              <Blog isAuth={isAuthenticated} />
-            </Route>
-            <Route exact path='/login'>
-              {isAuthenticated ? <Redirect to='/dashboard' /> : <Login logIn={handleLogIn} />}
-            </Route>
-            <Route exact path='/dashboard'>
-              {isAuthenticated ? <Dashboard /> : <Redirect to='/login' />}
-            </Route>
-            <Redirect to='/' />
-          </Switch>
-        </div>
-      </Router>
+      {isLoading ? null : (
+        <Router>
+          <NavBar user={currUser} handleLogOut={handleLogOut} />
+          <div className={style.mainContent}>
+            <Switch>
+              <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
+                <Blog user={currUser} />
+              </Route>
+              <Route exact path='/login'>
+                {currUser ? <Redirect to='/dashboard' /> : <Login handleLogIn={handleLogIn} />}
+              </Route>
+              <Route exact path='/dashboard'>
+                {currUser ? <Dashboard user={currUser} /> : <Redirect to='/login' />}
+              </Route>
+              <Redirect to='/' />
+            </Switch>
+          </div>
+        </Router>
+      )}
     </>
   );
 }

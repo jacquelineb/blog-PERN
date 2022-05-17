@@ -2,26 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import style from '../styles/NavBar.module.scss';
 
-function NavBar({ isAuth, currUser, logOut }) {
+function NavBar({ user, handleLogOut }) {
   return (
     <nav className={style.nav}>
       <Link className={`${style.link} ${style.navHome}`} to='/'>
         HOME
       </Link>
-      {isAuth ? (
-        <DropdownMenu currUser={currUser} logOut={logOut} />
+      {!user ? (
+        <Link className={style.link} to='/login'>
+          LOG IN
+        </Link>
       ) : (
-        <>
-          <Link className={style.link} to='/login'>
-            LOG IN
-          </Link>
-        </>
+        <DropdownMenu user={user} logout={handleLogOut} />
       )}
     </nav>
   );
 }
 
-function DropdownMenu({ currUser, logOut }) {
+function DropdownMenu({ user, logout }) {
   const dropdownItemsRef = useRef(null);
   const [dropdownIsActive, setDropdownIsActive] = useState(false);
 
@@ -51,7 +49,7 @@ function DropdownMenu({ currUser, logOut }) {
           setDropdownIsActive(!dropdownIsActive);
         }}
       >
-        {currUser} ▼
+        {user} ▼
       </button>
 
       <div
@@ -61,7 +59,7 @@ function DropdownMenu({ currUser, logOut }) {
         <Link className={style.dropdownLink} to='/dashboard'>
           Dashboard
         </Link>
-        <Link className={style.dropdownLink} to='#' onClick={logOut}>
+        <Link className={style.dropdownLink} to='#' onClick={logout}>
           Log out
         </Link>
       </div>
