@@ -36,6 +36,9 @@ app.use('/auth', authRouter);
 const postsRouter = require('./routes/posts');
 app.use('/posts', postsRouter);
 
+const usersRouter = require('./routes/users');
+app.use('/users', usersRouter);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);

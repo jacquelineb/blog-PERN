@@ -41,16 +41,18 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
       errorMessages.missingFields = 'Please enter all fields.';
     }
 
-    const existingEmail = await pool.query('SELECT id FROM blog_user WHERE email = $1', [
-      email,
-    ]);
+    const existingEmail = await pool.query(
+      'SELECT id FROM blog_user WHERE LOWER(email) = LOWER($1)',
+      [email]
+    );
     if (existingEmail.rows.length > 0) {
       errorMessages.emailTaken = 'This email is already in use.';
     }
 
-    const existingUsername = await pool.query('SELECT id FROM blog_user WHERE username = $1', [
-      username,
-    ]);
+    const existingUsername = await pool.query(
+      'SELECT id FROM blog_user WHERE LOWER(username) = LOWER($1)',
+      [username]
+    );
     if (existingUsername.rows.length > 0) {
       errorMessages.usernameTaken = 'This username is taken.';
     }

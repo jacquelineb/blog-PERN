@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import styles from '../styles/Blog.module.scss';
 
 import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from './BlogPostTransactions';
+import BlogAdminInfo from './BlogAdminInfo';
 
 function Blog({ user }) {
   let { pageNum } = useParams();
@@ -55,6 +56,7 @@ function Blog({ user }) {
 
   return (
     <>
+      <BlogAdminInfo />
       <h1>cool blog</h1>
       {isLoading ? null : (
         <>
