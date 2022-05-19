@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styles from '../styles/Blog.module.scss';
-
 import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from './BlogPostTransactions';
 import BlogAdminInfo from './BlogAdminInfo';
+import { formatDate } from '../utils/index';
 
 function Blog({ user }) {
   let { pageNum } = useParams();
@@ -100,13 +100,12 @@ function BlogPagination({ currPage, totalNumPages }) {
 
 function Post({ data }) {
   const { id, title, body, username, created_on } = data;
-
   return (
     <div className={styles.post}>
       <h2 className={styles.title}>{title}</h2>
       <p>
         Posted by <span className={styles.author}>{username}</span> on{' '}
-        <span className={styles.date}>{created_on}</span>
+        <span className={styles.date}>{formatDate(created_on)}</span>
       </p>
       {body.split('\n').map((paragraph, i) => {
         return paragraph ? <p key={`${id}-${i}`}>{paragraph}</p> : null;
