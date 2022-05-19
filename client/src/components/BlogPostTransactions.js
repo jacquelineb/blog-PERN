@@ -7,7 +7,7 @@ function CreateBlogPost() {
 
   async function handleCreate(post) {
     try {
-      const response = await fetch('http://localhost:5000/posts/create', {
+      const response = await fetch('http://localhost:5000/posts/', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -50,7 +50,7 @@ function EditBlogPost({ post }) {
 
   async function handleEdit(editedPost) {
     try {
-      const response = await fetch(`http://localhost:5000/posts/edit/${post.id}`, {
+      const response = await fetch(`http://localhost:5000/posts/${post.id}`, {
         method: 'PUT',
         mode: 'cors',
         headers: {
@@ -93,7 +93,7 @@ function DeleteBlogPost({ postId }) {
   async function handleDelete() {
     try {
       if (window.confirm('Are you sure you want to delete this post?')) {
-        const response = await fetch(`http://localhost:5000/posts/delete/${postId}`, {
+        const response = await fetch(`http://localhost:5000/posts/${postId}`, {
           method: 'DELETE',
           credentials: 'include',
         });

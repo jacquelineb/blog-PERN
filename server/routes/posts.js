@@ -35,7 +35,7 @@ router.get('/count', async (req, res) => {
 });
 
 // Create a post
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     if (req.user) {
       const user_id = req.user.id;
@@ -57,7 +57,7 @@ router.post('/create', async (req, res) => {
 });
 
 // Edit a post
-router.put('/edit/:post_id', async (req, res) => {
+router.put('/:post_id', async (req, res) => {
   try {
     if (req.user) {
       const user_id = req.user.id;
@@ -83,7 +83,7 @@ router.put('/edit/:post_id', async (req, res) => {
 });
 
 // Delete a post
-router.delete('/delete/:post_id', async (req, res) => {
+router.delete('/:post_id', async (req, res) => {
   try {
     if (req.user) {
       const user_id = req.user.id;
