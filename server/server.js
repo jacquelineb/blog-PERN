@@ -39,6 +39,9 @@ app.use('/posts', postsRouter);
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
+const storageRouter = require('./routes/storage');
+app.use('/storage', storageRouter);
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
