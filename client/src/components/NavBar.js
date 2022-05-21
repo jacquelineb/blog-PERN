@@ -5,12 +5,12 @@ import style from '../styles/NavBar.module.scss';
 function NavBar({ user, handleLogOut }) {
   return (
     <nav className={style.nav}>
-      <Link className={`${style.link} ${style.navHome}`} to='/'>
-        HOME
+      <Link className={style.link} to='/'>
+        Home
       </Link>
       {!user ? (
         <Link className={style.link} to='/login'>
-          LOG IN
+          Log in
         </Link>
       ) : (
         <DropdownMenu user={user} logout={handleLogOut} />
@@ -43,13 +43,13 @@ function DropdownMenu({ user, logout }) {
   return (
     <div className={style.dropdownMenuContainer}>
       <button
-        className={style.dropdownToggle}
         type='button'
+        className={style.dropdownToggle}
         onClick={() => {
           setDropdownIsActive(!dropdownIsActive);
         }}
       >
-        {user} ▼
+        {user} ⮟
       </button>
 
       <div

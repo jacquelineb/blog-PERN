@@ -119,7 +119,11 @@ function EditUserDetails({ user }) {
                   name='upload'
                   accept='image/jpeg, image/jpg, image/png, image/webp'
                   onChange={(e) => {
-                    setSelectedImageFile(e.target.files[0]);
+                    if (e.target.files[0].size <= 300000) {
+                      setSelectedImageFile(e.target.files[0]);
+                    } else {
+                      alert('File size is too big! (Limit 300kb)');
+                    }
                   }}
                   hidden
                 />
@@ -142,6 +146,7 @@ function EditUserDetails({ user }) {
                 >
                   Reset
                 </button>
+                <p>Image dimensions of 184px by 184px is recommended.</p>
               </div>
 
               <div>

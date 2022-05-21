@@ -10,9 +10,8 @@ body {
   padding: 0;
 }
 
-.mainContent {
+.AppContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  background-color: aquamarine;
 }

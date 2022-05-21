@@ -71,9 +71,9 @@ function App() {
   return (
     <>
       {isLoading ? null : (
-        <Router>
-          <NavBar user={currUser} handleLogOut={handleLogOut} />
-          <div className={style.mainContent}>
+        <div className={style.AppContainer}>
+          <Router>
+            <NavBar user={currUser} handleLogOut={handleLogOut} />
             <Switch>
               <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
                 <Blog user={currUser} />
@@ -86,8 +86,8 @@ function App() {
               </Route>
               <Redirect to='/' />
             </Switch>
-          </div>
-        </Router>
+          </Router>
+        </div>
       )}
     </>
   );

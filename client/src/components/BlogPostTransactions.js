@@ -67,7 +67,7 @@ function EditBlogPost({ post }) {
   }
 
   return (
-    <div>
+    <>
       <button
         onClick={() => {
           setShowModalForm(true);
@@ -85,7 +85,7 @@ function EditBlogPost({ post }) {
         <p>Editing post</p>
         <BlogPostForm onSubmit={handleEdit} currPost={post} />
       </Modal>
-    </div>
+    </>
   );
 }
 

@@ -1,45 +1,50 @@
 .nav {
   display: flex;
-  height: 50px;
   align-items: center;
-  justify-content: right;
-  padding: 0 20px;
-  background-color: grey;
+  justify-content: space-between;
+  padding: 0 30px;
+  height: 30px;
+  background-color: rgba(0,0,0,0.2);
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 }
 
 .link {
-  font-size: 20px;
+  font-size: 14px;
   text-decoration: none;
   color: white;
-  padding: 10px 20px;
 
   &:hover {
     color: black;
-    background-color: rgb(219, 206, 174);
   }
 }
-
-.navHome {
-  margin-right: auto;
-}
-
 
 .dropdownMenuContainer {
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 15px;
   align-items: flex-end;
+  margin-right: 20px;
+  position: relative;
 }
 
 .dropdownToggle {
-  border-style: none;
+  background: none;
+  border: none;
+  color: white;
   cursor: pointer;
+
+  &:hover {
+    color: black;
+  }
 }
 
 .dropdownContent {
   width: 100px;
   background-color: purple;
+  z-index: 2;
+  position: absolute;
+  top: 24px;
 
   &.inactive {
     display: none;
@@ -48,7 +53,7 @@
 
 .dropdownLink {
   text-decoration: none;
-  color: rgb(228, 230, 230);
+  color: rgb(230, 230, 230);
   display: block;
   padding: 5px;
 
@@ -56,6 +61,7 @@
     color: rgb(255,255,255);
   }
 }
+
 
 
 
