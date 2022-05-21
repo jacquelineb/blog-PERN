@@ -34,7 +34,7 @@ function BlogPost({ post }) {
       </p>
       <div className={style.body}>
         {body.split('\n').map((paragraph, i) => {
-          return paragraph ? <p key={`${id}-${i}`}>{paragraph}</p> : null;
+          return paragraph ? <p key={`${id}-${i}`}>{paragraph}</p> : <br />;
         })}
       </div>
     </div>
