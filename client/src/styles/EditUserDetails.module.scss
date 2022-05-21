@@ -1,0 +1,36 @@
+.EditUserDetailsContainer {
+  padding: 0 100px;
+  width: 700px
+}
+
+.avatarChange {
+  text-align: center;
+
+  p {
+    font-size: 12px;
+    width: 30%;
+    margin: auto;
+    padding-top: 5px;
+  }
+}
+
+.avatar {
+  height: 184px;
+  width: 184px;
+}
+
+.biographyInput {
+  width: 100%;
+  height: 70px;
+  resize: none;
+}
+
+.characterLimit {
+  font-size: 12px;
+  padding-bottom: 10px;
+}
+
+.submitButton {
+  margin-left: auto;
+  display: block;
+}

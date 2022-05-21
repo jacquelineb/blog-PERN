@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/form.module.scss';
+import style from '../styles/Login.module.scss';
 
 function Login({ handleLogIn }) {
   const [loginError, setLoginError] = useState(false);
@@ -31,12 +31,12 @@ function Login({ handleLogIn }) {
   }
 
   return (
-    <div className={styles.formContainer}>
+    <div className={style.formContainer}>
       <h1>Log in</h1>
       {loginError ? (
-        <p className={styles.errorMsg}>The email or password you entered is incorrect.</p>
+        <p className={style.errorMsg}>The email or password you entered is incorrect.</p>
       ) : null}
-      <form className={styles.form} onSubmit={onSubmit}>
+      <form className={style.form} onSubmit={onSubmit}>
         <div>
           <label htmlFor='email'>Email:</label>
           <input type='email' name='email' required />

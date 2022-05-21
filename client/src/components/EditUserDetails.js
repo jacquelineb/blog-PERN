@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../utils/index';
 import defaultAvatar from '../assets/avatar.png';
+import style from '../styles/EditUserDetails.module.scss';
 
 function EditUserDetails({ user }) {
   const BIOGRAPHY_CHAR_LIMIT = 160;
@@ -94,12 +95,13 @@ function EditUserDetails({ user }) {
     }
   }
   return (
-    <>
+    <div className={style.EditUserDetailsContainer}>
       {isLoading ? null : (
-        <div>
-          <div>
+        <form onSubmit={handleSave}>
+          <div className={style.avatarChange}>
             <div>
               <img
+                className={style.avatar}
                 src={avatar}
                 alt={`${user}'s avatar`}
                 onError={(e) => {
@@ -108,72 +110,66 @@ function EditUserDetails({ user }) {
                 }}
               />
             </div>
+            <input
+              type='file'
+              id='upload'
+              name='upload'
+              accept='image/jpeg, image/jpg, image/png, image/webp'
+              onChange={(e) => {
+                if (e.target.files[0].size <= 300000) {
+                  setSelectedImageFile(e.target.files[0]);
+                } else {
+                  alert('File size is too big! (Limit 300kb)');
+                }
+              }}
+              hidden
+            />
+
+            <button
+              type='button'
+              onClick={() => {
+                document.getElementById('upload').click();
+              }}
+            >
+              Change avatar
+            </button>
+
+            <button
+              type='button'
+              disabled={avatar === originalUserData.current.avatar}
+              onClick={() => {
+                setSelectedImageFile(null);
+              }}
+            >
+              Reset
+            </button>
+            <p>Image dimensions of 184px by 184px is recommended.</p>
           </div>
 
           <div>
-            <form onSubmit={handleSave}>
-              <div>
-                <input
-                  type='file'
-                  id='upload'
-                  name='upload'
-                  accept='image/jpeg, image/jpg, image/png, image/webp'
-                  onChange={(e) => {
-                    if (e.target.files[0].size <= 300000) {
-                      setSelectedImageFile(e.target.files[0]);
-                    } else {
-                      alert('File size is too big! (Limit 300kb)');
-                    }
-                  }}
-                  hidden
-                />
-
-                <button
-                  type='button'
-                  onClick={() => {
-                    document.getElementById('upload').click();
-                  }}
-                >
-                  Change avatar
-                </button>
-
-                <button
-                  type='button'
-                  disabled={avatar === originalUserData.current.avatar}
-                  onClick={() => {
-                    setSelectedImageFile(null);
-                  }}
-                >
-                  Reset
-                </button>
-                <p>Image dimensions of 184px by 184px is recommended.</p>
-              </div>
-
-              <div>
-                <div>Biography</div>
-                <textarea
-                  id='biography'
-                  name='biography'
-                  type='text'
-                  maxLength={BIOGRAPHY_CHAR_LIMIT}
-                  value={biography}
-                  onChange={(e) => {
-                    setBiography(e.target.value);
-                  }}
-                />
-                <p>{`Characters: ${biography.length} / ${BIOGRAPHY_CHAR_LIMIT}`}</p>
-              </div>
-
-              <div>
-                <button type='submit' id='save'>
-                  Save
-                </button>
-              </div>
-            </form>
+            <label htmlFor='biography'>Biography</label>
+            <textarea
+              className={style.biographyInput}
+              id='biography'
+              name='biography'
+              type='text'
+              maxLength={BIOGRAPHY_CHAR_LIMIT}
+              value={biography}
+              onChange={(e) => {
+                setBiography(e.target.value);
+              }}
+            />
+            <p
+              className={style.characterLimit}
+            >{`Characters: ${biography.length} / ${BIOGRAPHY_CHAR_LIMIT}`}</p>
           </div>
-        </div>
+
+          <button className={style.submitButton} type='submit' id='save'>
+            Save
+          </button>
+        </form>
       )}
-    </>
+    </div>
   );
 }
 

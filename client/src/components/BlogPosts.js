@@ -5,7 +5,6 @@ import { formatDate } from '../utils/index';
 import style from '../styles/BlogPosts.module.scss';
 
 function BlogPosts({ posts, authUser }) {
-  console.log(authUser);
   return (
     <div className={style.BlogPostsContainer}>
       {posts.map((post) => {

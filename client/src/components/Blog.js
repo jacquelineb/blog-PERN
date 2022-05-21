@@ -60,7 +60,7 @@ function Blog({ user }) {
       <Header />
       {isLoading ? null : (
         <div className={style.mainContent}>
-          <h1>cool blog</h1>
+          <h1 className={style.blogTitle}>cool blog</h1>
           {user ? <CreateBlogPost /> : null}
           <BlogPosts posts={posts} authUser={user} />
           <BlogPagination
