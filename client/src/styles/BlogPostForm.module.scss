@@ -1,0 +1,12 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 500px;
+  margin: 20px;
+}
+
+.bodyInput {
+  height: 90%;
+  resize: none;
+}

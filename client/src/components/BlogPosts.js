@@ -25,13 +25,12 @@ function BlogPosts({ posts, authUser }) {
 }
 
 function BlogPost({ post }) {
-  const { id, title, body, username, created_on } = post;
+  const { id, title, body, created_on } = post;
   return (
     <div className={style.post}>
       <h2 className={style.title}>{title}</h2>
       <p className={style.postMetaData}>
-        Posted by <span className={style.author}>{username}</span> on{' '}
-        <span className={styles.date}>{formatDate(created_on)}</span>
+        Posted on <span className={style.date}>{formatDate(created_on)}</span>
       </p>
       <div className={style.body}>
         {body.split('\n').map((paragraph, i) => {
