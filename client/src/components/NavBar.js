@@ -59,9 +59,9 @@ function DropdownMenu({ user, logout }) {
         <Link className={style.dropdownLink} to='/dashboard'>
           Dashboard
         </Link>
-        <Link className={style.dropdownLink} to='#' onClick={logout}>
+        <button className={`${style.logoutBtn} ${style.dropdownLink}`} onClick={logout}>
           Log out
-        </Link>
+        </button>
       </div>
     </div>
   );

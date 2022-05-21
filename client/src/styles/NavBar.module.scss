@@ -8,10 +8,10 @@
   position: absolute;
   width: 100%;
   z-index: 1;
+  font-size: 14px;
 }
 
 .link {
-  font-size: 14px;
   text-decoration: none;
   color: white;
 
@@ -55,8 +55,16 @@
   color: rgb(230, 230, 230);
   display: block;
   padding: 5px;
+  font-size: 14px;
 
   &:hover {
     color: rgb(255,255,255);
   }
+}
+
+.logoutBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
 }
