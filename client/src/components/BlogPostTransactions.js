@@ -5,7 +5,7 @@ import Modal from './Modal';
 function CreateBlogPost() {
   const [showModalForm, setShowModalForm] = useState(false);
 
-  async function handleCreate(post) {
+  async function handleSubmit(post) {
     try {
       const response = await fetch('http://localhost:5000/posts/', {
         method: 'POST',
@@ -17,7 +17,7 @@ function CreateBlogPost() {
         body: JSON.stringify({ ...post }),
       });
 
-      console.log(response);
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -26,8 +26,8 @@ function CreateBlogPost() {
   return (
     <div>
       <button
-        onClick={() => {
-          setShowModalForm(true);
+        onClick={async () => {
+          (await isAuthenticated()) ? setShowModalForm(true) : window.location.reload();
         }}
       >
         Create new post
@@ -39,7 +39,7 @@ function CreateBlogPost() {
         }}
       >
         <p>Create a new post</p>
-        <BlogPostForm onSubmit={handleCreate} />
+        <BlogPostForm onSubmit={handleSubmit} />
       </Modal>
     </div>
   );
@@ -48,7 +48,7 @@ function CreateBlogPost() {
 function EditBlogPost({ post }) {
   const [showModalForm, setShowModalForm] = useState(false);
 
-  async function handleEdit(editedPost) {
+  async function handleSubmit(editedPost) {
     try {
       const response = await fetch(`http://localhost:5000/posts/${post.id}`, {
         method: 'PUT',
@@ -60,22 +60,21 @@ function EditBlogPost({ post }) {
         body: JSON.stringify({ ...editedPost }),
       });
 
-      console.log(response.status);
+      return response;
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <>
+    <div>
       <button
-        onClick={() => {
-          setShowModalForm(true);
+        onClick={async () => {
+          (await isAuthenticated()) ? setShowModalForm(true) : window.location.reload();
         }}
       >
         Edit
       </button>
-
       <Modal
         display={showModalForm}
         handleClose={() => {
@@ -83,9 +82,9 @@ function EditBlogPost({ post }) {
         }}
       >
         <p>Editing post</p>
-        <BlogPostForm onSubmit={handleEdit} currPost={post} />
+        <BlogPostForm onSubmit={handleSubmit} currPost={post} />
       </Modal>
-    </>
+    </div>
   );
 }
 
@@ -99,6 +98,10 @@ function DeleteBlogPost({ postId }) {
         });
 
         if (response.status === 200) {
+          window.location.reload();
+        } else {
+          alert('An error occurred');
+          console.log(response);
         }
       }
     } catch (error) {
@@ -107,6 +110,20 @@ function DeleteBlogPost({ postId }) {
   }
 
   return <button onClick={handleDelete}>Delete</button>;
+}
+
+async function isAuthenticated() {
+  try {
+    const response = await fetch('http://localhost:5000/auth/verify', {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    const { isAuthenticated } = await response.json();
+    return isAuthenticated;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export { CreateBlogPost, EditBlogPost, DeleteBlogPost };
