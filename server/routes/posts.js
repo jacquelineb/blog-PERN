@@ -39,7 +39,9 @@ router.post('/', async (req, res) => {
   try {
     if (req.user) {
       const user_id = req.user.id;
-      const { title, body } = req.body;
+      let { title, body } = req.body;
+      body = body.replace(/[\r\n]{2,}/g, '\n');
+
       await pool.query('INSERT INTO post (author_id, title, body) VALUES ($1, $2, $3)', [
         user_id,
         title,
@@ -62,7 +64,9 @@ router.put('/:post_id', async (req, res) => {
     if (req.user) {
       const user_id = req.user.id;
       const { post_id } = req.params;
-      const { title, body } = req.body;
+      let { title, body } = req.body;
+      body = body.replace(/[\r\n]{2,}/g, '\n');
+
       const post = await pool.query(
         'UPDATE post SET (title, body) = ($1, $2) WHERE id = $3 AND author_id = $4 RETURNING *',
         [title, body, post_id, user_id]
