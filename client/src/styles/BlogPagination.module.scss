@@ -1,0 +1,19 @@
+.BlogPaginationContainer {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.pageLinksContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageLink {
+  display: block;
+  text-decoration: none;
+  margin: 2px 0;
+}
+
+.pageNumber {
+text-align: right;
+}

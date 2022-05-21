@@ -1,14 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import style from '../styles/BlogPagination.module.scss';
 
 function BlogPagination({ currPage, totalNumPages }) {
   return (
-    <div>
-      {currPage > 1 ? <Link to={`/page/${currPage - 1}`}>Newer posts</Link> : null}
-      {currPage < totalNumPages ? <Link to={`/page/${currPage + 1}`}>Older posts</Link> : null}
-      <p>
+    <div className={style.BlogPaginationContainer}>
+      <div className={style.pageLinksContainer}>
+        <div>
+          {currPage > 1 ? (
+            <Link className={style.pageLink} to={`/page/${currPage - 1}`}>
+              Newer posts
+            </Link>
+          ) : null}
+        </div>
+        <div>
+          {currPage < totalNumPages ? (
+            <Link className={style.pageLink} to={`/page/${currPage + 1}`}>
+              Older posts
+            </Link>
+          ) : null}
+        </div>
+      </div>
+      <div className={style.pageNumber}>
         Page {currPage} of {totalNumPages}
-      </p>
+      </div>
     </div>
   );
 }
