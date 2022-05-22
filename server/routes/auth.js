@@ -4,30 +4,9 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const pool = require('../db');
 const initializePassport = require('../passport-config');
+const authMiddleware = require('../utils/authMiddleware');
 
 initializePassport(passport);
-
-// Middleware-like functions
-function checkNotAuthenticated(req, res, next) {
-  // This function is for allowing the request to go through only if the user is NOT authenticated.
-  // I.e., A user should only be able to do things like post to register and login if they are not already logged in / authenticated.
-  if (!req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).json('Unauthorized');
-  }
-}
-
-function checkAuthenticated(req, res, next) {
-  // This function basically let's the request go through only if the user is authenticated
-  // E.g. See the request for logging a user out. I only want this route to be accessible if the
-  // user is logged in, i.e., a user should not be able to logout if they are not already logged in.
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(401).json('Unauthenticated.');
-  }
-}
 
 // Register a user
 /*
@@ -82,12 +61,17 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
 */
 
 // Log a user in
-router.post('/login', checkNotAuthenticated, passport.authenticate('local'), (req, res) => {
-  res.status(200).json({ user: req.user.username });
-});
+router.post(
+  '/login',
+  authMiddleware.checkNotAuthenticated,
+  passport.authenticate('local'),
+  (req, res) => {
+    res.status(200).json({ user: req.user.username });
+  }
+);
 
 // Log a user out
-router.delete('/logout', checkAuthenticated, (req, res) => {
+router.delete('/logout', authMiddleware.checkAuthenticated, (req, res) => {
   req.logOut();
   res.status(200).json('Logout successful.');
 });

@@ -1,14 +1,7 @@
 const pool = require('../db');
 const express = require('express');
 const router = express.Router();
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(401).json('Unauthenticated.');
-  }
-}
+const authMiddleware = require('../utils/authMiddleware');
 
 // Get user's public info
 router.get('/:username', async (req, res) => {
@@ -26,7 +19,7 @@ router.get('/:username', async (req, res) => {
 });
 
 // Edit current user's bio
-router.put('/bio', checkAuthenticated, async (req, res) => {
+router.put('/bio', authMiddleware.checkAuthenticated, async (req, res) => {
   try {
     const currUser = req.user.id;
     const { bio } = req.body;
@@ -47,7 +40,7 @@ router.put('/bio', checkAuthenticated, async (req, res) => {
 });
 
 // Edit current user's avatar
-router.put('/avatar', checkAuthenticated, async (req, res) => {
+router.put('/avatar', authMiddleware.checkAuthenticated, async (req, res) => {
   try {
     const currUser = req.user.id;
     const { avatar } = req.body;

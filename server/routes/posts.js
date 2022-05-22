@@ -1,14 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const pool = require('../db');
-
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(401).json('Unauthenticated.');
-  }
-}
+const authMiddleware = require('../utils/authMiddleware');
 
 // Get posts
 router.get('/', async (req, res) => {
@@ -43,7 +36,7 @@ router.get('/count', async (req, res) => {
 });
 
 // Create a post
-router.post('/', checkAuthenticated, async (req, res) => {
+router.post('/', authMiddleware.checkAuthenticated, async (req, res) => {
   try {
     const user_id = req.user.id;
     const { title, body } = req.body;
@@ -62,7 +55,7 @@ router.post('/', checkAuthenticated, async (req, res) => {
 });
 
 // Edit a post
-router.put('/:post_id', checkAuthenticated, async (req, res) => {
+router.put('/:post_id', authMiddleware.checkAuthenticated, async (req, res) => {
   try {
     const user_id = req.user.id;
     const { post_id } = req.params;
@@ -85,7 +78,7 @@ router.put('/:post_id', checkAuthenticated, async (req, res) => {
 });
 
 // Delete a post
-router.delete('/:post_id', checkAuthenticated, async (req, res) => {
+router.delete('/:post_id', authMiddleware.checkAuthenticated, async (req, res) => {
   try {
     const user_id = req.user.id;
     const { post_id } = req.params;
