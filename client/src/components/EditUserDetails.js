@@ -73,27 +73,30 @@ function EditUserDetails({ user }) {
   async function handleSave(e) {
     try {
       e.preventDefault();
-      let changesMade = false;
+      const promises = [];
       if (avatar !== originalUserData.current.avatar) {
         const urlToUploadedImage = await uploadFileToS3Bucket(selectedImageFile);
         if (urlToUploadedImage) {
-          await updateAvatarUrl(urlToUploadedImage);
-          await deleteFileFromS3Bucket(originalUserData.current.avatar.split('/').pop()); // Delete the old avatar from storage
+          promises.push(updateAvatarUrl(urlToUploadedImage));
+          promises.push(
+            // Delete the old avatar from storage
+            deleteFileFromS3Bucket(originalUserData.current.avatar.split('/').pop())
+          );
         }
-        changesMade = true;
-      }
-      if (biography !== originalUserData.current.bio) {
-        await updateBiography();
-        changesMade = true;
       }
 
-      if (changesMade) {
-        window.location.reload();
+      if (biography !== originalUserData.current.bio) {
+        promises.push(updateBiography());
+      }
+
+      if (promises.length) {
+        Promise.all(promises).then(() => window.location.reload());
       }
     } catch (error) {
       console.error(error);
     }
   }
+
   return (
     <div className={style.EditUserDetailsContainer}>
       {isLoading ? null : (
