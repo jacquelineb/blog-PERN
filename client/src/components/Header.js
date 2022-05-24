@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import style from '../styles/Header.module.scss';
 import defaultAvatar from '../assets/avatar.png';
-import header from '../assets/header.jpg';
 
 function Header() {
   const [biography, setBiography] = useState('');

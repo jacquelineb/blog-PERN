@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from '../styles/Blog.module.scss';
 import { EditBlogPost, DeleteBlogPost } from './BlogPostTransactions';
 import { formatDate } from '../utils/index';
 import style from '../styles/BlogPosts.module.scss';

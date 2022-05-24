@@ -101,7 +101,6 @@ function DeleteBlogPost({ postId }) {
           window.location.reload();
         } else {
           alert('An error occurred');
-          console.log(response);
         }
       }
     } catch (error) {
