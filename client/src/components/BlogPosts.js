@@ -33,7 +33,7 @@ function BlogPost({ post }) {
       </p>
       <div className={style.body}>
         {body.split('\n').map((paragraph, i) => {
-          return paragraph ? <p key={`${id}-${i}`}>{paragraph}</p> : <br />;
+          return <p key={`${id}-${i}`}>{paragraph ? paragraph : '\u00A0'}</p>;
         })}
       </div>
     </div>
