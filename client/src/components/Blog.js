@@ -27,7 +27,7 @@ function Blog({ user }) {
   useEffect(() => {
     async function fetchTotalNumPosts() {
       try {
-        const response = await fetch('http://localhost:5000/posts/count');
+        const response = await fetch('/posts/count');
         const numPosts = await response.json();
         setTotalNumPosts(numPosts);
       } catch (error) {
@@ -41,9 +41,7 @@ function Blog({ user }) {
     async function fetchPostsForPage(page) {
       try {
         const response = await fetch(
-          `http://localhost:5000/posts?limit=${POSTS_PER_PAGE}&offset=${
-            POSTS_PER_PAGE * (page - 1)
-          }`
+          `/posts?limit=${POSTS_PER_PAGE}&offset=${POSTS_PER_PAGE * (page - 1)}`
         );
         const posts = await response.json();
         setPosts(posts);

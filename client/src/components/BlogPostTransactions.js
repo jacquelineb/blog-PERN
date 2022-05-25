@@ -7,7 +7,7 @@ function CreateBlogPost() {
 
   async function handleSubmit(post) {
     try {
-      const response = await fetch('http://localhost:5000/posts/', {
+      const response = await fetch('/posts/', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -50,7 +50,7 @@ function EditBlogPost({ post }) {
 
   async function handleSubmit(editedPost) {
     try {
-      const response = await fetch(`http://localhost:5000/posts/${post.id}`, {
+      const response = await fetch(`/posts/${post.id}`, {
         method: 'PUT',
         mode: 'cors',
         headers: {
@@ -92,7 +92,7 @@ function DeleteBlogPost({ postId }) {
   async function handleDelete() {
     try {
       if (window.confirm('Are you sure you want to delete this post?')) {
-        const response = await fetch(`http://localhost:5000/posts/${postId}`, {
+        const response = await fetch(`/posts/${postId}`, {
           method: 'DELETE',
           credentials: 'include',
         });
@@ -113,7 +113,7 @@ function DeleteBlogPost({ postId }) {
 
 async function isAuthenticated() {
   try {
-    const response = await fetch('http://localhost:5000/auth/verify', {
+    const response = await fetch('/auth/verify', {
       method: 'GET',
       credentials: 'include',
     });
