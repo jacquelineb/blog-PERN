@@ -1,28 +1,24 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
 const express = require('express');
 const app = express();
 const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
+const path = require('path');
 
 // MIDDLEWARE
-app.use(express.json());
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+} else {
+  require('dotenv').config();
+}
 
+app.use(cors());
+app.use(express.json());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-  })
-);
-
-app.use(
-  cors({
-    origin: 'http://localhost:3000', // <-- location of local react app we're connecting with
-    credentials: true,
   })
 );
 
