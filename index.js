@@ -3,15 +3,15 @@ const app = express();
 const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
-const path = require('path');
 
-// MIDDLEWARE
 if (process.env.NODE_ENV === 'production') {
+  const path = require('path');
   app.use(express.static(path.join(__dirname, 'client/build')));
 } else {
   require('dotenv').config();
 }
 
+// MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 app.use(
