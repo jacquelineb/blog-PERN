@@ -14,9 +14,10 @@ function BlogPostForm({ onSubmit, currPost = { title: '', body: '' } }) {
     });
   }
 
-  function onSubmitWrapper(e) {
+  async function onSubmitWrapper(e) {
     e.preventDefault();
-    onSubmit(post);
+    await onSubmit(post);
+    window.location.reload();
   }
 
   return (
