@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     async function getCurrentUser() {
       try {
-        const response = await fetch('/auth/verify', {
+        const response = await fetch('/api/auth/verify', {
           method: 'GET',
           credentials: 'include',
         });
@@ -30,7 +30,7 @@ function App() {
 
   async function handleLogIn(credentials) {
     try {
-      const response = await fetch('/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -55,7 +55,7 @@ function App() {
 
   async function handleLogOut() {
     try {
-      const response = await fetch('/auth/logout', {
+      const response = await fetch('/api/auth/logout', {
         method: 'DELETE',
         credentials: 'include',
       });

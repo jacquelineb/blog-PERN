@@ -11,7 +11,7 @@ function Header() {
   useEffect(() => {
     async function getAdminInfo() {
       try {
-        const response = await fetch(`/users/${ADMIN}`);
+        const response = await fetch(`/api/users/${ADMIN}`);
         const { bio, avatar } = await response.json();
         setBiography(bio);
         setAvatar(avatar);

@@ -20,7 +20,7 @@ async function uploadFileToS3Bucket(file) {
 
 async function deleteFileFromS3Bucket(key) {
   try {
-    const response = await fetch(`/storage/${key}`, {
+    const response = await fetch(`/api/storage/${key}`, {
       method: 'DELETE',
       credentials: 'include',
     });
@@ -31,7 +31,7 @@ async function deleteFileFromS3Bucket(key) {
 }
 
 async function generateUploadUrl() {
-  const response = await fetch('/storage/uploadUrl', {
+  const response = await fetch('/api/storage/uploadUrl', {
     method: 'GET',
     credentials: 'include',
   });

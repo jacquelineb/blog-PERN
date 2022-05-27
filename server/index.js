@@ -22,18 +22,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ROUTES
-const authRouter = require('./routes/auth');
-app.use('/auth', authRouter);
-
-const postsRouter = require('./routes/posts');
-app.use('/posts', postsRouter);
-
-const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
-
-const storageRouter = require('./routes/storage');
-app.use('/storage', storageRouter);
+// API
+app.use('/api', require('./api'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

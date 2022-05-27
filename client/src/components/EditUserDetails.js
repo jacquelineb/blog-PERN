@@ -14,7 +14,7 @@ function EditUserDetails({ user }) {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await fetch(`/users/${user}`);
+        const response = await fetch(`/api/users/${user}`);
         const data = await response.json();
         if (data) {
           const { bio, avatar } = data;
@@ -40,7 +40,7 @@ function EditUserDetails({ user }) {
 
   async function updateBiography() {
     try {
-      await fetch(`/users/bio`, {
+      await fetch(`/api/users/bio`, {
         method: 'PUT',
         mode: 'cors',
         headers: {
@@ -56,7 +56,7 @@ function EditUserDetails({ user }) {
 
   async function updateAvatarUrl(url) {
     try {
-      await fetch('/users/avatar', {
+      await fetch('/api/users/avatar', {
         method: 'PUT',
         mode: 'cors',
         headers: {
