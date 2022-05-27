@@ -3,11 +3,8 @@ const app = express();
 const session = require('express-session');
 const cors = require('cors');
 const passport = require('passport');
-const path = require('path');
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-} else {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
@@ -37,10 +34,6 @@ app.use('/users', usersRouter);
 
 const storageRouter = require('./routes/storage');
 app.use('/storage', storageRouter);
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'));
-});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
