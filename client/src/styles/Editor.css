@@ -1,0 +1,14 @@
+
+.cdx-search-field,
+.image-tool__caption {
+  display: none;
+}
+
+.ce-block:hover{
+  background-color:lightgray;
+}
+
+.codex-editor__redactor {
+  border: 1px solid red;
+  padding-bottom: 100px !important;
+}

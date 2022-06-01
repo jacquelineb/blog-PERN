@@ -40,13 +40,11 @@ router.post('/', authMiddleware.checkAuthenticated, async (req, res) => {
   try {
     const user_id = req.user.id;
     const { title, body } = req.body;
-
     await pool.query('INSERT INTO post (author_id, title, body) VALUES ($1, $2, $3)', [
       user_id,
       title,
       body,
     ]);
-
     res.status(200).json('Successfully created post');
   } catch (error) {
     console.error(error);

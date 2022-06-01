@@ -1,5 +1,6 @@
 import React from 'react';
-import { EditBlogPost, DeleteBlogPost } from './BlogPostTransactions';
+import EditBlogPostButton from './EditBlogPostButton';
+import DeleteBlogPostButton from './DeleteBlogPostButton';
 import { formatDate } from '../utils/index';
 import style from '../styles/BlogPosts.module.scss';
 
@@ -12,8 +13,8 @@ function BlogPosts({ posts, authUser }) {
             <BlogPost post={post} />
             {authUser ? (
               <div className={style.btnsContainer}>
-                <EditBlogPost post={post} />
-                <DeleteBlogPost postId={post.id} />
+                <EditBlogPostButton originalPost={post} />
+                <DeleteBlogPostButton post={post} />
               </div>
             ) : null}
           </div>
@@ -31,9 +32,18 @@ function BlogPost({ post }) {
       <p className={style.postMetaData}>
         Posted on <span className={style.date}>{formatDate(created_on)}</span>
       </p>
+
       <div className={style.body}>
-        {body.split('\n').map((paragraph, i) => {
-          return <p key={`${id}-${i}`}>{paragraph ? paragraph : '\u00A0'}</p>;
+        {body.map((block) => {
+          const html =
+            block.type === 'paragraph'
+              ? `<p>${block.data.text}</p>`
+              : block.type === 'image'
+              ? `<img src='${block.data.file.url}' />`
+              : null;
+          return (
+            <div key={`${id}-${block.id}`} dangerouslySetInnerHTML={{ __html: html }}></div>
+          );
         })}
       </div>
     </div>

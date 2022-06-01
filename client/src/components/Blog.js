@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { CreateBlogPost } from './BlogPostTransactions';
+import CreateBlogPostButton from './CreateBlogPostButton';
 import Header from './Header';
 import BlogPosts from './BlogPosts';
 import BlogPagination from './BlogPagination';
@@ -59,7 +59,7 @@ function Blog({ user }) {
       {isLoading ? null : (
         <div className={style.mainContent}>
           <h1 className={style.blogTitle}>blog</h1>
-          {user ? <CreateBlogPost /> : null}
+          {user ? <CreateBlogPostButton /> : null}
           <BlogPosts posts={posts} authUser={user} />
           <BlogPagination
             currPage={page}

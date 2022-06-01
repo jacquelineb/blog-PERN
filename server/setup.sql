@@ -15,6 +15,6 @@ CREATE TABLE IF NOT EXISTS post (
   id SERIAL PRIMARY KEY,
   author_id INTEGER NOT NULL REFERENCES blog_user(id),
   title VARCHAR(255) NOT NULL CHECK(title <> ''),
-  body TEXT NOT NULL CHECK(body <> ''),
+  body JSONB[] NOT NULL CHECK(body <> '{}'),
   created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
