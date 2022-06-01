@@ -4,6 +4,7 @@ import Login from './components/Login';
 import NavBar from './components/NavBar';
 import Dashboard from './components/Dashboard';
 import Blog from './components/Blog';
+import { authVerify, authLogin, authLogout } from './api/auth';
 import style from './styles/App.module.scss';
 
 function App() {
@@ -11,13 +12,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log(currUser);
+  }, [currUser]);
+  useEffect(() => {
     async function getCurrentUser() {
       try {
-        const response = await fetch('/api/auth/verify', {
-          method: 'GET',
-          credentials: 'include',
-        });
-
+        const response = await authVerify();
         const userData = await response.json();
         setCurrUser(userData.user);
         setIsLoading(false);
@@ -30,16 +30,7 @@ function App() {
 
   async function handleLogIn(credentials) {
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(credentials),
-      });
-
+      const response = await authLogin(credentials);
       if (response.status === 200) {
         const { user } = await response.json();
         setCurrUser(user);
@@ -55,11 +46,7 @@ function App() {
 
   async function handleLogOut() {
     try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'DELETE',
-        credentials: 'include',
-      });
-
+      const response = await authLogout();
       if (response.status !== 500) {
         setCurrUser(null);
       }
