@@ -43,4 +43,22 @@ async function deletePost(postId) {
   }
 }
 
-export { createPost, editPost, deletePost };
+async function getPostCount() {
+  try {
+    const response = await fetch('/api/posts/count');
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function getPosts(limit, offset) {
+  try {
+    const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { createPost, editPost, deletePost, getPostCount, getPosts };

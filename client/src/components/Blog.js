@@ -4,13 +4,15 @@ import CreateBlogPostButton from './CreateBlogPostButton';
 import Header from './Header';
 import BlogPosts from './BlogPosts';
 import BlogPagination from './BlogPagination';
+import { getPostCount, getPosts } from '../api/post';
 import style from '../styles/Blog.module.scss';
+
+const POSTS_PER_PAGE = 10;
 
 function Blog({ user }) {
   let { pageNum } = useParams();
   pageNum = pageNum ? +pageNum : 1;
 
-  const POSTS_PER_PAGE = 10;
   const [page, setPage] = useState(pageNum);
   const [posts, setPosts] = useState([]);
   const [totalNumPosts, setTotalNumPosts] = useState(0);
@@ -27,7 +29,7 @@ function Blog({ user }) {
   useEffect(() => {
     async function fetchTotalNumPosts() {
       try {
-        const response = await fetch('/api/posts/count');
+        const response = await getPostCount();
         const numPosts = await response.json();
         setTotalNumPosts(numPosts);
       } catch (error) {
@@ -38,11 +40,11 @@ function Blog({ user }) {
   }, []);
 
   useEffect(() => {
-    async function fetchPostsForPage(page) {
+    async function fetchPostsForPage() {
       try {
-        const response = await fetch(
-          `/api/posts?limit=${POSTS_PER_PAGE}&offset=${POSTS_PER_PAGE * (page - 1)}`
-        );
+        const limit = POSTS_PER_PAGE;
+        const offset = POSTS_PER_PAGE * (page - 1);
+        const response = await getPosts(limit, offset);
         const posts = await response.json();
         setPosts(posts);
         setIsLoading(false);
@@ -50,7 +52,7 @@ function Blog({ user }) {
         console.error(error);
       }
     }
-    fetchPostsForPage(page);
+    fetchPostsForPage();
   }, [page]);
 
   return (
@@ -58,7 +60,7 @@ function Blog({ user }) {
       <Header />
       {isLoading ? null : (
         <div className={style.mainContent}>
-          <h1 className={style.blogTitle}>blog</h1>
+          <h1 className={style.blogTitle}>Untitled Blog</h1>
           {user ? <CreateBlogPostButton /> : null}
           <BlogPosts posts={posts} authUser={user} />
           <BlogPagination

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import style from '../styles/Header.module.scss';
+import { getUserDetails } from '../api/user';
 import defaultAvatar from '../assets/avatar.png';
+import style from '../styles/Header.module.scss';
 
 function Header() {
   const [biography, setBiography] = useState('');
@@ -11,7 +12,7 @@ function Header() {
   useEffect(() => {
     async function getAdminInfo() {
       try {
-        const response = await fetch(`/api/users/${ADMIN}`);
+        const response = await getUserDetails(ADMIN);
         const { bio, avatar } = await response.json();
         setBiography(bio);
         setAvatar(avatar);
