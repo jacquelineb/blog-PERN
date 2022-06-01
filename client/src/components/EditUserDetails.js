@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../utils/index';
+import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/user';
 import defaultAvatar from '../assets/avatar.png';
 import style from '../styles/EditUserDetails.module.scss';
 
@@ -14,10 +15,10 @@ function EditUserDetails({ user }) {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await fetch(`/api/users/${user}`);
-        const data = await response.json();
-        if (data) {
-          const { bio, avatar } = data;
+        const response = await getUserDetails(user);
+        const userData = await response.json();
+        if (userData) {
+          const { bio, avatar } = userData;
           setBiography(bio);
           setAvatar(avatar);
           originalUserData.current = { bio, avatar };
@@ -38,38 +39,6 @@ function EditUserDetails({ user }) {
     );
   }, [selectedImageFile]);
 
-  async function updateBiography() {
-    try {
-      await fetch(`/api/users/bio`, {
-        method: 'PUT',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ bio: biography }),
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function updateAvatarUrl(url) {
-    try {
-      await fetch('/api/users/avatar', {
-        method: 'PUT',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ avatar: url }),
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   async function handleSave(e) {
     try {
       e.preventDefault();
@@ -77,7 +46,7 @@ function EditUserDetails({ user }) {
       if (avatar !== originalUserData.current.avatar) {
         const urlToUploadedImage = await uploadFileToS3Bucket(selectedImageFile);
         if (urlToUploadedImage) {
-          promises.push(updateAvatarUrl(urlToUploadedImage));
+          promises.push(updateUserAvatar(urlToUploadedImage));
           promises.push(
             // Delete the old avatar from storage
             deleteFileFromS3Bucket(originalUserData.current.avatar.split('/').pop())
@@ -86,7 +55,7 @@ function EditUserDetails({ user }) {
       }
 
       if (biography !== originalUserData.current.bio) {
-        promises.push(updateBiography());
+        promises.push(updateUserBiography(biography));
       }
 
       if (promises.length) {
