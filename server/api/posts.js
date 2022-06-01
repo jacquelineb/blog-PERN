@@ -6,6 +6,7 @@ const authMiddleware = require('../utils/authMiddleware');
 // Get posts
 router.get('/', async (req, res) => {
   const { limit, offset } = req.query;
+
   try {
     const posts = await pool.query(
       `SELECT post.id, post.title, post.body, post.created_on, blog_user.username
@@ -15,7 +16,7 @@ router.get('/', async (req, res) => {
       OFFSET $1 ROWS
       FETCH FIRST $2 ROW ONLY
       `,
-      [offset, limit]
+      [offset, limit ? limit : 10]
     );
     res.status(200).json(posts.rows);
   } catch (error) {
