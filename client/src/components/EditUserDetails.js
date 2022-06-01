@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../utils/index';
-import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/user';
+import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../api/storage.js';
+import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/user.js';
 import defaultAvatar from '../assets/avatar.png';
 import style from '../styles/EditUserDetails.module.scss';
 

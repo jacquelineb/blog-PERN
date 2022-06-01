@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import EditorJS from '@editorjs/editorjs';
 import Image from '@editorjs/image';
+import { uploadFileToS3Bucket } from '../api/storage.js';
+import { createPost, editPost } from '../api/post.js';
 import style from '../styles/BlogPostEditorJs.module.scss';
 import '../styles/Editor.css';
-import { uploadFileToS3Bucket } from '../utils';
-import { createPost, editPost } from '../api/post.js';
 
 function BlogPostEditor({ originalPost = null }) {
   const titleRef = useRef(originalPost ? originalPost.title : '');
