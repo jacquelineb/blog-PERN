@@ -1,7 +1,7 @@
 import React from 'react';
 import EditBlogPostButton from './EditBlogPostButton';
 import DeleteBlogPostButton from './DeleteBlogPostButton';
-import { formatDate } from '../utils/index';
+import formatDate from '../utils/formatDate.js';
 import style from '../styles/BlogPosts.module.scss';
 
 function BlogPosts({ posts, authUser }) {
