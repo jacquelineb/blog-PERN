@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import EditorJS from '@editorjs/editorjs';
-import Image from '@editorjs/image';
 import { uploadFileToS3Bucket } from '../api/storage.js';
 import { createPost, editPost } from '../api/post.js';
+import createEditor from '../utils/createEditor.js';
 import style from '../styles/BlogPostEditorJs.module.scss';
 import '../styles/Editor.css';
 
@@ -17,33 +16,7 @@ function BlogPostEditor({ originalPost = null }) {
 
   useEffect(() => {
     if (!bodyEditor.current) {
-      bodyEditor.current = new EditorJS({
-        holder: 'bodyEditor',
-        readOnly: false,
-        tools: {
-          image: {
-            class: Image,
-            config: {
-              uploader: {
-                uploadByFile(file) {
-                  return Promise.resolve({
-                    success: 1,
-                    file: {
-                      url: URL.createObjectURL(file),
-                      tempFileData: file, // Temporarily save file in case I need to upload to cloud
-                    },
-                  });
-                },
-              },
-            },
-          },
-        },
-        data: {
-          blocks: originalPost ? originalPost.body : [],
-          time: '',
-          version: '',
-        },
-      });
+      bodyEditor.current = createEditor(originalPost ? originalPost.body : []);
     }
   }, [originalPost]);
 
