@@ -12,9 +12,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log(currUser);
-  }, [currUser]);
-  useEffect(() => {
     async function getCurrentUser() {
       try {
         const response = await authVerify();
