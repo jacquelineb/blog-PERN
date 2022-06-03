@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import CreateBlogPostButton from './CreateBlogPostButton';
+import { getPostCount, getPosts } from '../api/post';
 import Header from './Header';
 import BlogPosts from './BlogPosts';
 import BlogPagination from './BlogPagination';
-import { getPostCount, getPosts } from '../api/post';
 import style from '../styles/Blog.module.scss';
 
 const POSTS_PER_PAGE = 10;
@@ -61,7 +60,6 @@ function Blog({ user }) {
       {isLoading ? null : (
         <div className={style.mainContent}>
           <h1 className={style.blogTitle}>Untitled Blog</h1>
-          {user ? <CreateBlogPostButton /> : null}
           <BlogPosts posts={posts} authUser={user} />
           <BlogPagination
             currPage={page}
