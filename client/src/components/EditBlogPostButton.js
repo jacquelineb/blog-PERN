@@ -21,7 +21,7 @@ function EditBlogPostButton({ originalPost }) {
         }}
       >
         <p>Editing post</p>
-        <BlogPostEditor originalPost={originalPost} />
+        <BlogPostEditor editingPost={originalPost} />
       </Modal>
     </div>
   );

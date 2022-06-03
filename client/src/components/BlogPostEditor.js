@@ -5,8 +5,10 @@ import createEditor from '../utils/createEditor.js';
 import style from '../styles/BlogPostEditorJs.module.scss';
 import '../styles/Editor.css';
 
-function BlogPostEditor({ originalPost = null }) {
-  const titleRef = useRef(originalPost ? originalPost.title : '');
+import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
+
+function BlogPostEditor({ editingPost = null }) {
+  const titleRef = useRef(editingPost ? editingPost.title : '');
   const bodyEditor = useRef();
   useEffect(() => {
     if (titleRef.current) {
@@ -16,64 +18,38 @@ function BlogPostEditor({ originalPost = null }) {
 
   useEffect(() => {
     if (!bodyEditor.current) {
-      bodyEditor.current = createEditor(originalPost ? originalPost.body : []);
+      bodyEditor.current = createEditor(editingPost ? editingPost.body : []);
     }
-  }, [originalPost]);
+  }, [editingPost]);
 
-  async function handleCreate() {
-    console.log('in here');
+  async function handleSubmit(e) {
+    e.preventDefault();
     try {
       const title = titleRef.current.value;
       const body = (await bodyEditor.current.save()).blocks;
 
-      // Get each paragraph containing an image and upload those images to S3
-      const imageParagraphs = body.filter((paragraph) => paragraph.type === 'image');
-      const promises = imageParagraphs.map(async (imageParagraph) => {
-        const imageFile = imageParagraph.data.file.tempFileData;
-        delete imageParagraph.data.file.tempFileData;
-        return uploadFileToS3Bucket(imageFile);
-      });
+      // Promises to upload any locally uploaded images to cloud
+      // and update the url to point to location on cloud
+      const promises = [];
+      for (const block of body) {
+        // Locally uploaded images have a url created via URL.createObjectURL()
+        if (block.type === 'image' && block.data.file.url.startsWith('blob:')) {
+          const promise = (async () => {
+            const imageFile = await convertObjectUrlToFile(block.data.file.url);
+            const urlToUploadedFile = await uploadFileToS3Bucket(imageFile);
+            block.data.file.url = urlToUploadedFile;
+          })();
+          promises.push(promise);
+        }
+      }
 
-      // Update the urls to point to their corresponding uploaded file
-      const imageUrls = await Promise.all(promises);
-      imageParagraphs.forEach((imageParagraph, i) => {
-        imageParagraph.data.file.url = imageUrls[i]; // will modify urls in body too
-      });
+      await Promise.all(promises);
+      if (!editingPost) {
+        await createPost(title, body);
+      } else {
+        await editPost(editingPost.id, title, body);
+      }
 
-      // Save to db
-      await createPost(title, body);
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleEdit() {
-    try {
-      const title = titleRef.current.value;
-      const body = (await bodyEditor.current.save()).blocks;
-
-      // New image blocks are blocks that have an image that hasn't been uploaded to the cloud yet
-      // They have a data.file.tempFileData field which contains the file needed to be uploaded.
-      const newImageBlocks = body.filter(
-        (block) => block.type === 'image' && block.data.file.tempFileData
-      );
-
-      // Upload the new images to the cloud
-      const imageUploadPromises = newImageBlocks.map(async (imageBlock) => {
-        const imageFile = imageBlock.data.file.tempFileData;
-        delete imageBlock.data.file.tempFileData;
-        return uploadFileToS3Bucket(imageFile);
-      });
-
-      // Update the urls to point to their corresponding uploaded file
-      const imageUrls = await Promise.all(imageUploadPromises);
-      newImageBlocks.forEach((imageBlock, i) => {
-        imageBlock.data.file.url = imageUrls[i]; // will modify urls in body too
-      });
-
-      // Save to db
-      await editPost(originalPost.id, title, body);
       window.location.reload();
     } catch (error) {
       console.error(error);
@@ -82,12 +58,7 @@ function BlogPostEditor({ originalPost = null }) {
 
   return (
     <div className={style.BlogPostEditorContainer}>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          !originalPost ? handleCreate() : handleEdit();
-        }}
-      >
+      <form onSubmit={handleSubmit}>
         <input
           className={style.title}
           defaultValue={titleRef.current}

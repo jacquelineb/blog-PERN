@@ -9,13 +9,13 @@ function createEditor(data) {
       image: {
         class: Image,
         config: {
+          types: 'image/png, image/gif, image/jpeg',
           uploader: {
             uploadByFile(file) {
               return Promise.resolve({
                 success: 1,
                 file: {
                   url: URL.createObjectURL(file),
-                  tempFileData: file, // Temporarily save file in case I need to upload to cloud
                 },
               });
             },
