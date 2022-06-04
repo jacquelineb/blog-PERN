@@ -1,11 +1,10 @@
 import React, { useRef, useEffect } from 'react';
-import { uploadFileToS3Bucket } from '../api/storage.js';
 import { createPost, editPost } from '../api/post.js';
+import { uploadFileToS3Bucket } from '../api/storage.js';
+import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
 import createEditor from '../utils/createEditor.js';
 import style from '../styles/BlogPostEditorJs.module.scss';
 import '../styles/Editor.css';
-
-import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
 
 function BlogPostEditor({ editingPost = null }) {
   const titleRef = useRef(editingPost ? editingPost.title : '');
@@ -70,7 +69,7 @@ function BlogPostEditor({ editingPost = null }) {
           required
         />
         <div id='bodyEditor'></div> {/* Editor.js */}
-        <button type='submit'>Save</button>
+        <button type='submit'>{!editingPost ? 'Post' : 'Update'}</button>
       </form>
     </div>
   );
