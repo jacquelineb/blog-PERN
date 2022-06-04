@@ -24,7 +24,7 @@ async function deleteFileFromS3Bucket(key) {
       method: 'DELETE',
       credentials: 'include',
     });
-    console.log(response);
+    return response;
   } catch (error) {
     console.error(error);
   }
