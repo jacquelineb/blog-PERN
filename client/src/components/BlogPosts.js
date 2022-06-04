@@ -1,22 +1,22 @@
 import React from 'react';
 import formatDate from '../utils/formatDate.js';
-import CreateBlogPostButton from './CreateBlogPostButton';
-import EditBlogPostButton from './EditBlogPostButton';
-import DeleteBlogPostButton from './DeleteBlogPostButton';
+import CreateBlogPost from './CreateBlogPost';
+import EditBlogPost from './EditBlogPost';
+import DeleteBlogPost from './DeleteBlogPost';
 import style from '../styles/BlogPosts.module.scss';
 
 function BlogPosts({ posts, authUser }) {
   return (
     <div className={style.BlogPostsContainer}>
-      {authUser ? <CreateBlogPostButton /> : null}
+      {authUser ? <CreateBlogPost /> : null}
       {posts.map((post) => {
         return (
           <div className={style.postContainer} key={post.id} data-post-id={post.id}>
             <BlogPost post={post} />
             {authUser ? (
               <div className={style.btnsContainer}>
-                <EditBlogPostButton originalPost={post} />
-                <DeleteBlogPostButton post={post} />
+                <EditBlogPost originalPost={post} />
+                <DeleteBlogPost post={post} />
               </div>
             ) : null}
           </div>

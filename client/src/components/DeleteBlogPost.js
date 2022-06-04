@@ -1,7 +1,7 @@
 import React from 'react';
 import { deletePost } from '../api/post';
 
-function DeleteBlogPostButton({ post }) {
+function DeleteBlogPost({ post }) {
   async function handleDelete() {
     try {
       if (window.confirm('Are you sure you want to delete this post?')) {
@@ -24,4 +24,4 @@ function DeleteBlogPostButton({ post }) {
   return <button onClick={handleDelete}>Delete</button>;
 }
 
-export default DeleteBlogPostButton;
+export default DeleteBlogPost;

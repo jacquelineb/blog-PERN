@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateBlogPostButton from './CreateBlogPostButton';
+import CreateBlogPost from './CreateBlogPost';
 import EditUserDetails from './EditUserDetails';
 import style from '../styles/Dashboard.module.scss';
 
@@ -7,7 +7,7 @@ function Dashboard({ user }) {
   return (
     <div className={style.DashboardContainer}>
       <h1>Dashboard</h1>
-      <CreateBlogPostButton />
+      <CreateBlogPost />
       <EditUserDetails user={user} />
     </div>
   );
