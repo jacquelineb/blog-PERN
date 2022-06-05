@@ -7,8 +7,12 @@ function Dashboard({ user }) {
   return (
     <div className={style.DashboardContainer}>
       <h1>Dashboard</h1>
-      <CreateBlogPost />
-      <EditUserDetails user={user} />
+      <div className={style.dashboardSection}>
+        <EditUserDetails user={user} />
+      </div>
+      <div className={style.dashboardSection}>
+        <CreateBlogPost />
+      </div>
     </div>
   );
 }

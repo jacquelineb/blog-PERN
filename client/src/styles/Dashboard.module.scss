@@ -4,8 +4,12 @@
   align-items: center;
   padding-top: 100px;
   gap: 10px;
+
+  h1 {
+    margin: 0;
+  }
 }
 
-h1 {
-  margin: 0;
+.dashboardSection {
+  margin-bottom: 50px;
 }
