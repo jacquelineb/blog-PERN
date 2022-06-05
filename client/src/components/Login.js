@@ -16,8 +16,8 @@ function Login({ handleLogIn }) {
   }, []);
 
   async function onSubmit(e) {
+    e.preventDefault();
     try {
-      e.preventDefault();
       const credentials = {
         email: e.target.email.value,
         password: e.target.password.value,
@@ -33,22 +33,22 @@ function Login({ handleLogIn }) {
   return (
     <div className={style.formContainer}>
       <h1>Log in</h1>
-      {loginError ? (
-        <p className={style.errorMsg}>The email or password you entered is incorrect.</p>
-      ) : null}
       <form className={style.form} onSubmit={onSubmit}>
-        <div>
+        <div className={style.formSection}>
           <label htmlFor='email'>Email:</label>
           <input type='email' name='email' required />
         </div>
-        <div>
+        <div className={style.formSection}>
           <label htmlFor='password'>Password:</label>
           <input type='password' name='password' required />
         </div>
-        <div>
+        <div className={style.formSection}>
           <button type='submit'>Log in</button>
         </div>
       </form>
+      {loginError ? (
+        <p className={style.errorMsg}>The email or password you entered is incorrect.</p>
+      ) : null}
     </div>
   );
 }

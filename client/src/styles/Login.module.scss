@@ -1,13 +1,17 @@
 .formContainer {
-  width: 360px;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 10px;
+  width: 360px;
+}
+
+.formSection {
+  margin: 20px 0;
 
   label {
     margin-bottom: 10px;
