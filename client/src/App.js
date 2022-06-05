@@ -9,7 +9,6 @@ import style from './styles/App.module.scss';
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -17,7 +16,6 @@ function App() {
         const response = await authVerify();
         const userData = await response.json();
         setCurrUser(userData.user);
-        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -54,25 +52,23 @@ function App() {
 
   return (
     <>
-      {isLoading ? null : (
-        <div className={style.AppContainer}>
-          <Router>
-            <NavBar user={currUser} handleLogOut={handleLogOut} />
-            <Switch>
-              <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
-                <Blog user={currUser} />
-              </Route>
-              <Route exact path='/login'>
-                {currUser ? <Redirect to='/dashboard' /> : <Login handleLogIn={handleLogIn} />}
-              </Route>
-              <Route exact path='/dashboard'>
-                {currUser ? <Dashboard user={currUser} /> : <Redirect to='/login' />}
-              </Route>
-              <Redirect to='/' />
-            </Switch>
-          </Router>
-        </div>
-      )}
+      <div className={style.AppContainer}>
+        <Router>
+          <NavBar user={currUser} handleLogOut={handleLogOut} />
+          <Switch>
+            <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
+              <Blog user={currUser} />
+            </Route>
+            <Route exact path='/login'>
+              {currUser ? <Redirect to='/dashboard' /> : <Login handleLogIn={handleLogIn} />}
+            </Route>
+            <Route exact path='/dashboard'>
+              {currUser ? <Dashboard user={currUser} /> : <Redirect to='/login' />}
+            </Route>
+            <Redirect to='/' />
+          </Switch>
+        </Router>
+      </div>
     </>
   );
 }
