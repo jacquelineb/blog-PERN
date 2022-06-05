@@ -1,13 +1,11 @@
+.BlogPostEditorContainer {
+  min-height: 80vh;
+  padding: 20px;
+}
+
 .title {
   width: 100%;
-}
-
-.hidden {
-  visibility: hidden;
-}
-
-.BlogPostEditorContainer {
-  width: 500px;
-  height: 80vh;
-  padding: 10px;
+  font-size: 20px;
+  padding: 10px 0;
+  margin-bottom: 5px;
 }

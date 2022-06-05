@@ -68,8 +68,10 @@ function BlogPostEditor({ editingPost = null }) {
           ref={titleRef}
           required
         />
-        <div id='bodyEditor'></div> {/* Editor.js */}
-        <button type='submit'>{!editingPost ? 'Post' : 'Update'}</button>
+        <div className={style.bodyEditor} id='bodyEditor'></div> {/* Editor.js */}
+        <button className={style.submitBtn} type='submit'>
+          {!editingPost ? 'Post' : 'Update'}
+        </button>
       </form>
     </div>
   );
