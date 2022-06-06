@@ -5,6 +5,7 @@ import Header from './Header';
 import BlogPosts from './BlogPosts';
 import BlogPagination from './BlogPagination';
 import style from '../styles/Blog.module.scss';
+import LoadingSpinner from './LoadingSpinner';
 
 const POSTS_PER_PAGE = 10;
 
@@ -26,19 +27,6 @@ function Blog({ user }) {
   }, [pageNum]);
 
   useEffect(() => {
-    async function fetchTotalNumPosts() {
-      try {
-        const response = await getPostCount();
-        const numPosts = await response.json();
-        setTotalNumPosts(numPosts);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchTotalNumPosts();
-  }, []);
-
-  useEffect(() => {
     async function fetchPostsForPage() {
       try {
         const limit = POSTS_PER_PAGE;
@@ -54,19 +42,36 @@ function Blog({ user }) {
     fetchPostsForPage();
   }, [page]);
 
+  useEffect(() => {
+    async function fetchTotalNumPosts() {
+      try {
+        const response = await getPostCount();
+        const numPosts = await response.json();
+        setTotalNumPosts(numPosts);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchTotalNumPosts();
+  }, []);
+
   return (
     <div className={style.BlogContainer}>
       <Header />
-      {isLoading ? null : (
-        <div className={style.mainContent}>
-          <h1 className={style.blogTitle}>Untitled Blog</h1>
-          <BlogPosts posts={posts} authUser={user} />
-          <BlogPagination
-            currPage={page}
-            totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
-          />
-        </div>
-      )}
+      <div className={style.mainContent}>
+        <h1 className={style.blogTitle}>Untitled Blog</h1>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <BlogPosts posts={posts} authUser={user} />
+            <BlogPagination
+              currPage={page}
+              totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }
