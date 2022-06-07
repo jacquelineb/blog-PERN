@@ -9,6 +9,7 @@ import style from './styles/App.module.scss';
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getCurrentUser() {
@@ -18,6 +19,8 @@ function App() {
         setCurrUser(userData.user);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     }
     getCurrentUser();
@@ -51,8 +54,8 @@ function App() {
   }
 
   return (
-    <>
-      <div className={style.AppContainer}>
+    <div className={style.AppContainer}>
+      {isLoading ? null : (
         <Router>
           <NavBar user={currUser} handleLogOut={handleLogOut} />
           <Switch>
@@ -68,8 +71,8 @@ function App() {
             <Redirect to='/' />
           </Switch>
         </Router>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 
