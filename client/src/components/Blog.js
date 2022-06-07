@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPostCount, getPosts } from '../api/post';
 import Header from './Header';
@@ -15,7 +15,7 @@ function Blog({ user }) {
 
   const [page, setPage] = useState(pageNum);
   const [posts, setPosts] = useState([]);
-  const totalNumPosts = useRef(0);
+  const [totalNumPosts, setTotalNumPosts] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function Blog({ user }) {
       try {
         const response = await getPostCount();
         const numPosts = await response.json();
-        totalNumPosts.current = numPosts;
+        setTotalNumPosts(numPosts);
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +67,7 @@ function Blog({ user }) {
             <BlogPosts posts={posts} authUser={user} />
             <BlogPagination
               currPage={page}
-              totalNumPages={Math.ceil(totalNumPosts.current / POSTS_PER_PAGE)}
+              totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
             />
           </>
         )}
