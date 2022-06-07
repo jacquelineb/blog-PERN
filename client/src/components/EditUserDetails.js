@@ -4,8 +4,9 @@ import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/us
 import defaultAvatar from '../assets/avatar.png';
 import style from '../styles/EditUserDetails.module.scss';
 
+const BIOGRAPHY_CHAR_LIMIT = 160;
+
 function EditUserDetails({ user }) {
-  const BIOGRAPHY_CHAR_LIMIT = 160;
   const originalUserData = useRef({});
   const [avatar, setAvatar] = useState('');
   const [biography, setBiography] = useState('');
@@ -18,10 +19,9 @@ function EditUserDetails({ user }) {
         const response = await getUserDetails(user);
         const userData = await response.json();
         if (userData) {
-          const { bio, avatar } = userData;
-          setBiography(bio);
-          setAvatar(avatar);
-          originalUserData.current = { bio, avatar };
+          setBiography(userData.bio);
+          setAvatar(userData.avatar);
+          originalUserData.current = { bio: userData.bio, avatar: userData.avatar };
         }
         setIsLoading(false);
       } catch (error) {
@@ -32,16 +32,16 @@ function EditUserDetails({ user }) {
   }, [user]);
 
   useEffect(() => {
-    setAvatar(
-      selectedImageFile
-        ? URL.createObjectURL(selectedImageFile)
-        : originalUserData.current.avatar
-    );
+    if (selectedImageFile) {
+      setAvatar(URL.createObjectURL(selectedImageFile));
+    } else {
+      setAvatar(originalUserData.current.avatar);
+    }
   }, [selectedImageFile]);
 
   async function handleSave(e) {
+    e.preventDefault();
     try {
-      e.preventDefault();
       const promises = [];
       if (avatar !== originalUserData.current.avatar) {
         const urlToUploadedImage = await uploadFileToS3Bucket(selectedImageFile);
@@ -73,7 +73,7 @@ function EditUserDetails({ user }) {
           <div className={style.avatarChange}>
             <div>
               <img
-                className={style.avatar}
+                className={style.avatarPreview}
                 src={avatar}
                 alt={`${user}'s avatar`}
                 onError={(e) => {
@@ -82,6 +82,7 @@ function EditUserDetails({ user }) {
                 }}
               />
             </div>
+
             <input
               type='file'
               id='upload'
@@ -96,7 +97,6 @@ function EditUserDetails({ user }) {
               }}
               hidden
             />
-
             <button
               type='button'
               onClick={() => {
@@ -110,6 +110,7 @@ function EditUserDetails({ user }) {
               type='button'
               disabled={avatar === originalUserData.current.avatar}
               onClick={() => {
+                URL.revokeObjectURL(avatar);
                 setSelectedImageFile(null);
               }}
             >
