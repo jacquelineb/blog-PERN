@@ -23,23 +23,21 @@ function Header() {
   }, []);
 
   return (
-    <header className={style.container}>
+    <header className={style.Header}>
       <div className={style.background}></div>
-      <div className={style.userCard}>
+      <div className={style.descriptionContainer}>
         {isLoading ? null : (
-          <>
-            <div className={style.avatarContainer}>
-              <img
-                className={style.avatar}
-                src={avatar ? avatar : defaultAvatar}
-                alt={`${ADMIN}'s avatar`}
-              />
-            </div>
-
+          <div className={style.userCard}>
+            <img
+              className={style.avatar}
+              src={avatar ? avatar : defaultAvatar}
+              alt={`${ADMIN}'s avatar`}
+            />
             <p className={style.name}>{ADMIN}</p>
             <p className={style.bio}>{biography}</p>
-          </>
+          </div>
         )}
+        <h1 className={style.title}>Untitled Blog</h1>
       </div>
     </header>
   );
