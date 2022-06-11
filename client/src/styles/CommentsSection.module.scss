@@ -1,0 +1,38 @@
+.CommentsSectionContainer {
+  h1 {
+    font-size: 20px;
+  }
+}
+
+.CommentForm {
+  .bodyInput {
+    width: 100%;
+  }
+}
+
+.CommentContainer {
+  margin: 10px 0;
+
+  p {
+    margin: 4px 0;
+  }
+
+  .author {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .postAuthorBadge {
+    color: #A10702;
+    font-weight: lighter;
+  }
+
+  .datePosted {
+    font-size: 12px;
+  }
+
+  .body {
+    font-size: 14px;
+  }
+}
+
