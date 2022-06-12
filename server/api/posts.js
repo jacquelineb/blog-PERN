@@ -3,19 +3,30 @@ const router = express.Router();
 const pool = require('../db');
 const authMiddleware = require('../utils/authMiddleware');
 
+// Get total number of posts
+router.head('/', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT count(*) FROM post');
+    //res.status(200).json(result.rows[0].count);
+    res.set('Total-Count', result.rows[0].count).send();
+  } catch (error) {
+    console.log('in here!!');
+    console.error(error);
+    res.status(500).json('Server Error');
+  }
+});
+
 // Get posts
 router.get('/', async (req, res) => {
   const { limit, offset } = req.query;
-
   try {
     const posts = await pool.query(
-      `SELECT post.id, post.title, post.body, post.created_on, blog_user.username
+      `SELECT post.id, post.title, post.body, post.created_on, blog_user.username as author
       FROM post
       INNER JOIN blog_user
       ON post.author_id = blog_user.id ORDER BY created_on DESC
       OFFSET $1 ROWS
-      FETCH FIRST $2 ROW ONLY
-      `,
+      FETCH FIRST $2 ROW ONLY`,
       [offset, limit ? limit : 10]
     );
     res.status(200).json(posts.rows);
@@ -25,11 +36,19 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get total number of posts
-router.get('/count', async (req, res) => {
+// Get post by id
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
   try {
-    const num_posts = await pool.query('SELECT count(*) FROM post');
-    res.status(200).json(num_posts.rows[0].count);
+    const posts = await pool.query(
+      `SELECT post.id, post.title, post.body, post.created_on, blog_user.username as author
+      FROM post
+      INNER JOIN blog_user
+      ON post.author_id = blog_user.id
+      WHERE post.id = $1`,
+      [id]
+    );
+    res.status(200).json(posts.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json('Server Error');

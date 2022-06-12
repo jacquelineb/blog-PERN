@@ -43,9 +43,11 @@ async function deletePost(postId) {
   }
 }
 
-async function getPostCount() {
+async function getTotalPostCountHeader() {
   try {
-    const response = await fetch('/api/posts/count');
+    const response = await fetch('/api/posts/', {
+      method: 'HEAD',
+    });
     return response;
   } catch (error) {
     console.error(error);
@@ -61,4 +63,13 @@ async function getPosts(limit, offset) {
   }
 }
 
-export { createPost, editPost, deletePost, getPostCount, getPosts };
+async function getPost(id) {
+  try {
+    const response = await fetch(`/api/posts/${id}`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { createPost, editPost, deletePost, getTotalPostCountHeader, getPosts, getPost };
