@@ -1,10 +1,14 @@
+/*
+  Stylesheet to override some of the styles injected from Editor.js library.
+*/
+
 .cdx-search-field,
 .image-tool__caption {
   display: none;
 }
 
 .ce-block__content:hover{
-  background-color:lightgray;
+  background-color: lightgray;
 }
 
 .codex-editor--narrow,
@@ -27,7 +31,6 @@
   border: 1px solid black;
   right: 0 !important;
 }
-
 
 .ce-paragraph {
   line-height: 1.1em;
