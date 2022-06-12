@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatDate } from '../utils/formatDate';
+import formatDate from '../utils/formatDate';
 import style from '../styles/BlogPost.module.scss';
 
 function BlogPost({ post }) {
@@ -8,7 +8,7 @@ function BlogPost({ post }) {
     <div className={style.wrapper}>
       <h2 className={style.title}>{title}</h2>
       <p className={style.postMetaData}>
-        Posted on <span className={style.date}>{formatDate(created_on)}</span>
+        Posted on <span className={style.date}>{formatDate(created_on).date}</span>
       </p>
 
       <div className={style.body}>

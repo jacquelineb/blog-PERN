@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { formatDateWithTime } from '../utils/formatDate.js';
+import formatDate from '../utils/formatDate.js';
 import style from '../styles/CommentsSection.module.scss';
 
 function CommentsSection({ postAuthor, postId }) {
@@ -94,6 +94,7 @@ function CommentForm({ onSubmit }) {
 }
 
 function Comment({ data, isPostAuthor }) {
+  const { date, time } = formatDate(data.created_on);
   return (
     <div className={style.CommentContainer} id='comments'>
       <div>
@@ -101,7 +102,9 @@ function Comment({ data, isPostAuthor }) {
           {data.author ? data.author : 'Anonymous'}
           {isPostAuthor ? <span className={style.postAuthorBadge}> (Post Author)</span> : null}
         </p>
-        <p className={style.datePosted}>{formatDateWithTime(data.created_on)}</p>
+        <p className={style.datePosted}>
+          {date} at {time}
+        </p>
       </div>
       <p className={style.body}>{data.body}</p>
     </div>
