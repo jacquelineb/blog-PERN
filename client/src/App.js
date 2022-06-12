@@ -1,11 +1,13 @@
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import Login from './components/Login';
-import NavBar from './components/NavBar';
-import Dashboard from './components/Dashboard';
-import Blog from './components/Blog';
 import { authVerify, authLogin, authLogout } from './api/auth';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import BlogPage from './pages/BlogPage';
+import BlogPostWithComments from './pages/BlogPostWithComments';
+import NavBar from './components/NavBar';
 import style from './styles/App.module.scss';
+import Header from './components/Header';
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
@@ -60,7 +62,12 @@ function App() {
           <NavBar user={currUser} handleLogOut={handleLogOut} />
           <Switch>
             <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
-              <Blog user={currUser} />
+              <Header />
+              <BlogPage authUser={currUser} />
+            </Route>
+            <Route exact path='/post/:postId([1-9][0-9]*)'>
+              <Header />
+              <BlogPostWithComments />
             </Route>
             <Route exact path='/login'>
               {currUser ? <Redirect to='/dashboard' /> : <Login handleLogIn={handleLogIn} />}

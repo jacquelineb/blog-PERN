@@ -1,6 +1,6 @@
 import React from 'react';
-import CreateBlogPost from './CreateBlogPost';
-import EditUserDetails from './EditUserDetails';
+import PostToolbar from '../components/PostToolbar';
+import EditUserDetails from '../components/EditUserDetails';
 import style from '../styles/Dashboard.module.scss';
 
 function Dashboard({ user }) {
@@ -11,7 +11,7 @@ function Dashboard({ user }) {
         <EditUserDetails user={user} />
       </div>
       <div className={style.dashboardSection}>
-        <CreateBlogPost />
+        <PostToolbar tools={['create']} />
       </div>
     </div>
   );

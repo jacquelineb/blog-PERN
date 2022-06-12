@@ -1,0 +1,30 @@
+.wrapper {
+  width: 100%;
+
+  .title {
+    font-size: 30px;
+    margin: 4px 0;
+    color: #A10702;
+  }
+
+  .postMetaData {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+
+  .date {
+    font-weight: bold;
+  }
+
+  .body {
+    div {
+      margin-bottom: 10px;
+    }
+
+    img {
+      display: block;
+      margin: auto;
+      max-width: 100%;
+    }
+  }
+}

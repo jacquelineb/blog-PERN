@@ -54,9 +54,6 @@ function CommentsSection({ postAuthor, postId }) {
           />
         );
       })}
-      {/**
-      Button to load more comments
-       */}
       <button>Load more comments</button>
     </div>
   );
@@ -98,7 +95,7 @@ function CommentForm({ onSubmit }) {
 
 function Comment({ data, isPostAuthor }) {
   return (
-    <div className={style.CommentContainer}>
+    <div className={style.CommentContainer} id='comments'>
       <div>
         <p className={style.author}>
           {data.author ? data.author : 'Anonymous'}
