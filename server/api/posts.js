@@ -6,7 +6,7 @@ const authMiddleware = require('../utils/authMiddleware');
 // Get total number of posts
 router.head('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT count(*) FROM post');
+    const result = await pool.query('SELECT count(*)::int FROM post');
     //res.status(200).json(result.rows[0].count);
     res.set('Total-Count', result.rows[0].count).send();
   } catch (error) {
@@ -155,6 +155,20 @@ router.get('/:post_id/comments', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send();
+  }
+});
+
+// Get total comment count for post
+router.get('/:post_id/comments/count', async (req, res) => {
+  const { post_id } = req.params;
+  try {
+    const response = await pool.query(`SELECT COUNT(*)::int FROM comment WHERE post_id = $1`, [
+      post_id,
+    ]);
+
+    res.status(200).json(response.rows[0].count);
+  } catch (error) {
+    console.error(error);
   }
 });
 
