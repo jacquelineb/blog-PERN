@@ -1,18 +1,24 @@
 .container {
   padding: 10px 0;
-  width: 100%;
-  text-align: center;
 }
 
 .pageLinksContainer {
   display: flex;
-  justify-content: space-between;
-}
 
-.pageLink {
-  text-decoration: none;
+  a {
+    text-decoration: none;
+  }
+
+  .previous {
+    margin-right: auto;
+  }
+
+  .next {
+    margin-left: auto;
+  }
 }
 
 .pageNumber {
   text-align: right;
 }
+

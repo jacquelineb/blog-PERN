@@ -2,23 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import style from '../styles/Pagination.module.scss';
 
-function Pagination({ onChange, currPage, totalNumPages }) {
+function Pagination({ currPage, totalNumPages }) {
   return (
     <div className={style.container}>
       <div className={style.pageLinksContainer}>
         {currPage > 1 ? (
-          <Link
-            className={style.pageLink}
-            to={`/page/${currPage - 1}`}
-            onClick={() => onChange(currPage - 1)}
-          >
-            Previous
-          </Link>
+          <div className={style.previous}>
+            <Link to={`/page/${currPage - 1}`}>Previous</Link>
+          </div>
         ) : null}
         {currPage < totalNumPages ? (
-          <Link className={style.pageLink} to={`/page/${currPage + 1}`}>
-            Next
-          </Link>
+          <div className={style.next}>
+            <Link to={`/page/${currPage + 1}`}>Next</Link>
+          </div>
         ) : null}
       </div>
       <div className={style.pageNumber}>

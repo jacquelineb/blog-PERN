@@ -76,7 +76,6 @@ function BlogPage({ authUser }) {
 
           <Pagination
             currPage={page}
-            onChange={setPage}
             totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
           />
         </>
