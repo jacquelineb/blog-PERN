@@ -116,4 +116,46 @@ router.delete('/:post_id', authMiddleware.checkAuthenticated, async (req, res) =
   }
 });
 
+// Create comment for post
+router.post('/:post_id/comments', async (req, res) => {
+  const author_id = req.user ? req.user.id : null;
+  const { post_id } = req.params;
+  const { body } = req.body;
+  try {
+    const response = await pool.query(
+      'INSERT INTO comment (post_id, author_id, body) VALUES ($1, $2, $3) RETURNING id',
+      [post_id, author_id, body]
+    );
+    res.status(201).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+});
+
+// Get comments for post
+router.get('/:post_id/comments', async (req, res) => {
+  const { post_id } = req.params;
+  const limit = req.query.limit ? req.query.limit : 25;
+  const offset = req.query.offset ? req.query.offset : 0;
+
+  try {
+    const comments = await pool.query(
+      `SELECT comment.id, blog_user.username as author, comment.body, comment.created_on
+      FROM comment
+      LEFT JOIN blog_user ON comment.author_id = blog_user.id
+      WHERE comment.post_id = $1
+      ORDER BY created_on DESC
+      OFFSET $2 ROWS
+      FETCH FIRST $3 ROW ONLY`,
+      [post_id, offset, limit]
+    );
+
+    res.status(200).json(comments.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send();
+  }
+});
+
 module.exports = router;
