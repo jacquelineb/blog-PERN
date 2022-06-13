@@ -126,7 +126,7 @@ router.post('/:post_id/comments', async (req, res) => {
       'INSERT INTO comment (post_id, author_id, body) VALUES ($1, $2, $3) RETURNING id',
       [post_id, author_id, body]
     );
-    res.status(201).send();
+    res.status(201).json({ comment_id: response.rows[0].id });
   } catch (error) {
     console.error(error);
     res.status(500).send();
