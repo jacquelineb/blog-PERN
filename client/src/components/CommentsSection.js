@@ -1,30 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import formatDate from '../utils/formatDate.js';
-import { getCommentsForPost, createCommentForPost, getCommentById } from '../api/comments.js';
+import {
+  getCommentsForPost,
+  createCommentForPost,
+  getCommentById,
+  getNumCommentsForPost,
+} from '../api/comments.js';
 import style from '../styles/CommentsSection.module.scss';
+
+const COMMENTS_PER_LOAD = 25;
 
 function CommentsSection({ postAuthor, postId }) {
   const [comments, setComments] = useState([]);
+  const [totalNumComments, setTotalNumComments] = useState(0);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    async function getAndSetTotalNumComments() {
+      const numComments = await getNumCommentsForPost(postId);
+      setTotalNumComments(numComments);
+    }
+    getAndSetTotalNumComments();
+  }, [postId]);
 
   useEffect(() => {
     async function getAndSetComments() {
-      const comments = await getCommentsForPost(postId);
-      setComments(comments);
+      const comments = await getCommentsForPost(
+        postId,
+        COMMENTS_PER_LOAD,
+        COMMENTS_PER_LOAD * (page - 1)
+      );
+
+      setComments((prevState) => [...prevState, ...comments]);
     }
     getAndSetComments().catch(console.error);
-  }, [postId]);
+  }, [postId, page]);
 
   async function handleSubmit(comment) {
     const commentId = await createCommentForPost(comment, postId);
     if (commentId) {
       const newComment = await getCommentById(commentId);
       setComments((prevState) => [newComment, ...prevState]);
+      setTotalNumComments(totalNumComments + 1);
     }
   }
 
   return (
     <div className={style.CommentsSectionContainer}>
-      <h1>Comments</h1>
+      <h1>{totalNumComments} Comments</h1>
       <CommentForm onSubmit={handleSubmit} />
       {comments.map((comment) => {
         return (
@@ -35,7 +58,10 @@ function CommentsSection({ postAuthor, postId }) {
           />
         );
       })}
-      <button>Load more comments</button>
+
+      {comments.length === totalNumComments ? null : (
+        <button onClick={() => setPage(page + 1)}>Load more comments</button>
+      )}
     </div>
   );
 }

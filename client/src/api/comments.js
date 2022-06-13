@@ -21,9 +21,12 @@ async function createCommentForPost(comment, postId) {
   }
 }
 
-async function getCommentsForPost(postId) {
+async function getCommentsForPost(postId, limit, offset) {
   try {
-    const response = await fetch(`/api/posts/${postId}/comments`);
+    const response = await fetch(
+      `/api/posts/${postId}/comments?limit=${limit}&offset=${offset}`
+    );
+
     if (response.status === 200) {
       return await response.json();
     }
@@ -47,4 +50,13 @@ async function getCommentById(id) {
   }
 }
 
-export { getCommentsForPost, createCommentForPost, getCommentById };
+async function getNumCommentsForPost(postId) {
+  try {
+    const response = await fetch(`/api/posts/${postId}/comments/count`);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { getCommentsForPost, createCommentForPost, getCommentById, getNumCommentsForPost };
