@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { deletePost } from '../api/post';
+import { deletePost } from '../api/posts';
 import BlogPostEditor from './BlogPostEditor';
 import Modal from './Modal';
 import style from '../styles/PostToolbar.module.scss';

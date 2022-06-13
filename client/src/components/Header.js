@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUserDetails } from '../api/user';
+import { getUserDetails } from '../api/users';
 import defaultAvatar from '../assets/avatar.png';
 import style from '../styles/Header.module.scss';
 

@@ -1,43 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import formatDate from '../utils/formatDate.js';
+import { getCommentsForPost, createCommentForPost, getCommentById } from '../api/comments.js';
 import style from '../styles/CommentsSection.module.scss';
 
 function CommentsSection({ postAuthor, postId }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    async function getComments() {
-      try {
-        const response = await fetch(`/api/comments/?postId=${postId}`);
-        console.log(response);
-        const comments = await response.json();
-        setComments(comments);
-      } catch (error) {}
+    async function getAndSetComments() {
+      const comments = await getCommentsForPost(postId);
+      setComments(comments);
     }
-    getComments();
+    getAndSetComments().catch(console.error);
   }, [postId]);
 
   async function handleSubmit(comment) {
-    try {
-      let response = await fetch(`/api/comments/`, {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ postId: postId, body: comment }),
-      });
-
-      // Should probably put this into a separate function
-      if (response.status === 201) {
-        console.log(response.headers.get('Location'));
-        response = await fetch(`/api/comments${response.headers.get('Location')}`);
-        const newComment = await response.json();
-        setComments((prevState) => [newComment, ...prevState]);
-      }
-    } catch (error) {
-      console.error(error);
+    const commentId = await createCommentForPost(comment, postId);
+    if (commentId) {
+      const newComment = await getCommentById(commentId);
+      setComments((prevState) => [newComment, ...prevState]);
     }
   }
 

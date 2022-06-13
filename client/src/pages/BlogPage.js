@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getTotalPostCountHeader, getPosts } from '../api/post';
+import { getTotalPostCountHeader, getPosts } from '../api/posts';
 import style from '../styles/BlogPage.module.scss';
 import BlogPost from '../components/BlogPost';
 import LoadingSpinner from '../components/LoadingSpinner';

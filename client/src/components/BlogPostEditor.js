@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { createPost, editPost } from '../api/post.js';
+import { createPost, editPost } from '../api/posts.js';
 import { uploadFileToS3Bucket } from '../api/storage.js';
 import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
 import createEditor from '../utils/createEditor.js';
