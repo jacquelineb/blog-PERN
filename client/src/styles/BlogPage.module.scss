@@ -15,9 +15,13 @@
 }
 
 .postContainer {
-  //background-color: white;
-  //border-radius: 4px;
-  //width: 550px;
-  //padding: 30px 20px;
   @include container-small;
+}
+
+.commentsLink {
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  text-align: right;
 }

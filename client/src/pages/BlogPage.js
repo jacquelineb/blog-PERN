@@ -68,7 +68,9 @@ function BlogPage({ authUser }) {
                 <div className={style.postContainer} key={post.id} data-post-id={post.id}>
                   <BlogPost post={post} />
                   {authUser ? <PostToolbar tools={['edit', 'delete']} post={post} /> : null}
-                  <Link to={`/post/${post.id}`}>Comments</Link>
+                  <Link className={style.commentsLink} to={`/post/${post.id}`}>
+                    Comments
+                  </Link>
                 </div>
               );
             })}
