@@ -6,11 +6,9 @@ const authMiddleware = require('../utils/authMiddleware');
 // Get total number of posts
 router.head('/', async (req, res) => {
   try {
-    const result = await pool.query('SELECT count(*)::int FROM post');
-    //res.status(200).json(result.rows[0].count);
+    const result = await pool.query('SELECT COUNT(*)::int FROM post');
     res.set('Total-Count', result.rows[0].count).send();
   } catch (error) {
-    console.log('in here!!');
     console.error(error);
     res.status(500).json('Server Error');
   }
