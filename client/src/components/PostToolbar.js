@@ -7,17 +7,23 @@ import style from '../styles/PostToolbar.module.scss';
 function PostToolbar({ tools, post }) {
   return (
     <div className={style.toolbar}>
-      {tools.map((toolName) => {
+      {tools.map((toolName, idx) => {
+        let tool;
         switch (toolName) {
           case 'create':
-            return <CreateBlogPost />;
+            tool = <CreateBlogPost />;
+            break;
           case 'edit':
-            return <EditBlogPost originalPost={post} />;
+            tool = <EditBlogPost originalPost={post} />;
+            break;
           case 'delete':
-            return <DeleteBlogPost post={post} />;
+            tool = <DeleteBlogPost post={post} />;
+            break;
           default:
-            return null;
+            tool = null;
         }
+
+        return tool ? <div key={idx}>{tool}</div> : null;
       })}
     </div>
   );
