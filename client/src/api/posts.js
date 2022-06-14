@@ -45,10 +45,8 @@ async function deletePost(postId) {
 
 async function getTotalPostCount() {
   try {
-    const response = await fetch('/api/posts/', {
-      method: 'HEAD',
-    });
-    const numPosts = response.headers.get('Total-Count');
+    const response = await fetch('/api/posts/count');
+    const numPosts = await response.json();
     return numPosts;
   } catch (error) {
     console.error(error);
