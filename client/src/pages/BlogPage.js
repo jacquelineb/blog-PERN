@@ -66,8 +66,8 @@ function BlogPage({ authUser }) {
             {posts.map((post) => {
               return (
                 <div className={style.postContainer} key={post.id} data-post-id={post.id}>
-                  <BlogPost post={post} />
                   {authUser ? <PostToolbar tools={['edit', 'delete']} post={post} /> : null}
+                  <BlogPost post={post} />
                   <Link className={style.commentsLink} to={`/post/${post.id}`}>
                     Comments
                   </Link>
