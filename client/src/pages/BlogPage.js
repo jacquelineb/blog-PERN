@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getTotalPostCountHeader, getPosts } from '../api/posts';
+import { getTotalPostCount, getPosts } from '../api/posts';
 import style from '../styles/BlogPage.module.scss';
 import BlogPost from '../components/BlogPost';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -45,8 +45,7 @@ function BlogPage({ authUser }) {
   useEffect(() => {
     async function fetchTotalNumPosts() {
       try {
-        const response = await getTotalPostCountHeader();
-        const numPosts = response.headers.get('Total-Count');
+        const numPosts = await getTotalPostCount();
         setTotalNumPosts(numPosts);
       } catch (error) {
         console.error(error);

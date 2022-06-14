@@ -43,12 +43,13 @@ async function deletePost(postId) {
   }
 }
 
-async function getTotalPostCountHeader() {
+async function getTotalPostCount() {
   try {
     const response = await fetch('/api/posts/', {
       method: 'HEAD',
     });
-    return response;
+    const numPosts = response.headers.get('Total-Count');
+    return numPosts;
   } catch (error) {
     console.error(error);
   }
@@ -72,4 +73,4 @@ async function getPost(id) {
   }
 }
 
-export { createPost, editPost, deletePost, getTotalPostCountHeader, getPosts, getPost };
+export { createPost, editPost, deletePost, getTotalPostCount, getPosts, getPost };
