@@ -60,7 +60,9 @@ function CommentsSection({ postAuthor, postId }) {
       })}
 
       {comments.length === totalNumComments ? null : (
-        <button onClick={() => setPage(page + 1)}>Load more comments</button>
+        <button className={style.loadMore} onClick={() => setPage(page + 1)}>
+          Load more comments
+        </button>
       )}
     </div>
   );
@@ -76,6 +78,7 @@ function CommentForm({ onSubmit }) {
         e.preventDefault();
         if (comment) {
           onSubmit(comment);
+          setComment('');
         }
       }}
     >
