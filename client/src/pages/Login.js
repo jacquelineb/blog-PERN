@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
 import style from '../styles/Login.module.scss';
 
-function Login({ handleLogIn }) {
+function Login() {
   const [loginError, setLoginError] = useState(false);
+  const { user, login } = useAuthContext();
 
   useEffect(() => {
     /* Without this useEffect I will get a warning:
@@ -23,11 +26,15 @@ function Login({ handleLogIn }) {
         password: e.target.password.value,
       };
 
-      const loginSuccessful = await handleLogIn(credentials);
+      const loginSuccessful = await login(credentials);
       setLoginError(!loginSuccessful);
     } catch (error) {
       console.error(error);
     }
+  }
+
+  if (user) {
+    return <Redirect to='/dashboard' />;
   }
 
   return (

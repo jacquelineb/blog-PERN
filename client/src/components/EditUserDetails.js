@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useAuthContext } from '../context/AuthContext.js';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../api/storage.js';
 import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/users.js';
 import defaultAvatar from '../assets/avatar.png';
@@ -6,7 +7,8 @@ import style from '../styles/EditUserDetails.module.scss';
 
 const BIOGRAPHY_CHAR_LIMIT = 160;
 
-function EditUserDetails({ user }) {
+function EditUserDetails() {
+  const { user } = useAuthContext();
   const originalUserData = useRef({});
   const [avatar, setAvatar] = useState('');
   const [biography, setBiography] = useState('');

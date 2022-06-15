@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuthContext } from '../context/AuthContext';
 import style from '../styles/NavBar.module.scss';
 
-function NavBar({ user, handleLogOut }) {
+function NavBar() {
+  const { user, logout } = useAuthContext();
   return (
     <nav className={style.nav}>
       <Link className={style.link} to='/'>
@@ -13,7 +15,7 @@ function NavBar({ user, handleLogOut }) {
           Log in
         </Link>
       ) : (
-        <DropdownMenu user={user} logout={handleLogOut} />
+        <DropdownMenu user={user} logout={logout} />
       )}
     </nav>
   );

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getTotalPostCount, getPosts } from '../api/posts';
-import style from '../styles/BlogPage.module.scss';
+import { useAuthContext } from '../context/AuthContext';
 import BlogPost from '../components/BlogPost';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from '../components/Pagination';
 import PostToolbar from '../components/PostToolbar.js';
+import style from '../styles/BlogPage.module.scss';
 
 const POSTS_PER_PAGE = 10;
 
-function BlogPage({ authUser }) {
+function BlogPage() {
+  const { user } = useAuthContext();
   let { pageNum } = useParams();
   pageNum = pageNum ? +pageNum : 1;
 
@@ -56,7 +58,7 @@ function BlogPage({ authUser }) {
 
   return (
     <div className={style.container}>
-      {authUser ? <PostToolbar tools={['create']} /> : null}
+      {user ? <PostToolbar tools={['create']} /> : null}
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -65,7 +67,7 @@ function BlogPage({ authUser }) {
             {posts.map((post) => {
               return (
                 <div className={style.postContainer} key={post.id} data-post-id={post.id}>
-                  {authUser ? <PostToolbar tools={['edit', 'delete']} post={post} /> : null}
+                  {user ? <PostToolbar tools={['edit', 'delete']} post={post} /> : null}
                   <BlogPost post={post} />
                   <Link className={style.commentsLink} to={`/post/${post.id}`}>
                     Comments
