@@ -43,13 +43,18 @@ function BlogPostEditor({ editingPost = null }) {
       }
 
       await Promise.all(promises);
+      let postUploaded;
       if (!editingPost) {
-        await createPost(title, body);
+        postUploaded = await createPost(title, body);
       } else {
-        await editPost(editingPost.id, title, body);
+        postUploaded = await editPost(editingPost.id, title, body);
       }
 
-      window.location.reload();
+      if (postUploaded) {
+        window.location.reload();
+      } else {
+        alert('An error occurred.');
+      }
     } catch (error) {
       console.error(error);
     }

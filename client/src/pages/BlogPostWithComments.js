@@ -13,13 +13,9 @@ function BlogPostWithComments() {
 
   useEffect(() => {
     async function fetchPost() {
-      try {
-        const response = await getPost(postId);
-        setPost(await response.json());
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
+      const _post = await getPost(postId);
+      setPost(_post);
+      setIsLoading(false);
     }
     fetchPost();
   }, [postId]);
@@ -30,8 +26,12 @@ function BlogPostWithComments() {
         <LoadingSpinner />
       ) : (
         <div className={style.container}>
-          <BlogPost post={post} />
-          <CommentsSection postAuthor={post.author} postId={post.id} />
+          {post ? (
+            <>
+              <BlogPost post={post} />
+              <CommentsSection postAuthor={post.author} postId={post.id} />
+            </>
+          ) : null}
         </div>
       )}
     </>

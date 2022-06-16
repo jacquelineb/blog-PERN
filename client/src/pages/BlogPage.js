@@ -13,45 +13,28 @@ const POSTS_PER_PAGE = 10;
 function BlogPage() {
   const { user } = useAuthContext();
   let { pageNum } = useParams();
-  pageNum = pageNum ? +pageNum : 1;
+  pageNum = parseInt(pageNum) || 1;
 
-  const [page, setPage] = useState(pageNum);
   const [posts, setPosts] = useState([]);
-  const [totalNumPosts, setTotalNumPosts] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (pageNum) {
-      setPage(+pageNum);
-    } else {
-      setPage(1);
-    }
-  }, [pageNum]);
+  const [totalNumPosts, setTotalNumPosts] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchPostsForPage() {
-      try {
-        const limit = POSTS_PER_PAGE;
-        const offset = POSTS_PER_PAGE * (page - 1);
-        const response = await getPosts(limit, offset);
-        const posts = await response.json();
-        setPosts(posts);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
+      setIsLoading(true);
+      const limit = POSTS_PER_PAGE;
+      const offset = POSTS_PER_PAGE * (pageNum - 1);
+      const _posts = await getPosts(limit, offset);
+      setPosts(_posts);
+      setIsLoading(false);
     }
     fetchPostsForPage();
-  }, [page]);
+  }, [pageNum]);
 
   useEffect(() => {
     async function fetchTotalNumPosts() {
-      try {
-        const numPosts = await getTotalPostCount();
-        setTotalNumPosts(numPosts);
-      } catch (error) {
-        console.error(error);
-      }
+      const numPosts = await getTotalPostCount();
+      setTotalNumPosts(numPosts);
     }
     fetchTotalNumPosts();
   }, []);
@@ -78,7 +61,7 @@ function BlogPage() {
           </div>
 
           <Pagination
-            currPage={page}
+            currPage={pageNum}
             totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
           />
         </>
