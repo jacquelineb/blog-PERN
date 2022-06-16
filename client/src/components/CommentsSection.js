@@ -12,16 +12,8 @@ const COMMENTS_PER_LOAD = 25;
 
 function CommentsSection({ postAuthor, postId }) {
   const [comments, setComments] = useState([]);
-  const [totalNumComments, setTotalNumComments] = useState(0);
+  const [totalNumComments, setTotalNumComments] = useState();
   const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    async function getAndSetTotalNumComments() {
-      const numComments = await getNumCommentsForPost(postId);
-      setTotalNumComments(numComments);
-    }
-    getAndSetTotalNumComments();
-  }, [postId]);
 
   useEffect(() => {
     async function getAndSetComments() {
@@ -33,8 +25,16 @@ function CommentsSection({ postAuthor, postId }) {
 
       setComments((prevState) => [...prevState, ...comments]);
     }
-    getAndSetComments().catch(console.error);
+    getAndSetComments();
   }, [postId, page]);
+
+  useEffect(() => {
+    async function getAndSetTotalNumComments() {
+      const numComments = await getNumCommentsForPost(postId);
+      setTotalNumComments(numComments);
+    }
+    getAndSetTotalNumComments();
+  }, [postId]);
 
   async function handleSubmit(comment) {
     const commentId = await createCommentForPost(comment, postId);
@@ -58,7 +58,6 @@ function CommentsSection({ postAuthor, postId }) {
           />
         );
       })}
-
       {comments.length === totalNumComments ? null : (
         <button className={style.loadMore} onClick={() => setPage(page + 1)}>
           Load more comments

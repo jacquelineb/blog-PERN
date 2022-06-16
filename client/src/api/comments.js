@@ -1,4 +1,5 @@
 async function createCommentForPost(comment, postId) {
+  let commentId;
   try {
     const response = await fetch(`/api/posts/${postId}/comments`, {
       method: 'POST',
@@ -11,51 +12,57 @@ async function createCommentForPost(comment, postId) {
     });
 
     if (response.status === 201) {
-      const { comment_id } = await response.json();
-      return comment_id;
+      commentId = await response.json();
     }
-
-    return null;
   } catch (error) {
     console.error(error);
+  } finally {
+    return commentId;
   }
 }
 
 async function getCommentsForPost(postId, limit, offset) {
+  let comments = [];
   try {
     const response = await fetch(
       `/api/posts/${postId}/comments?limit=${limit}&offset=${offset}`
     );
 
     if (response.status === 200) {
-      return await response.json();
+      comments = await response.json();
     }
-
-    return [];
   } catch (error) {
     console.error(error);
+  } finally {
+    return comments;
   }
 }
 
 async function getCommentById(id) {
+  let comment = {};
   try {
     const response = await fetch(`/api/comments/${id}`);
     if (response.status === 200) {
-      return await response.json();
+      comment = await response.json();
     }
-
-    return {};
   } catch (error) {
     console.error(error);
+  } finally {
+    return comment;
   }
 }
 
 async function getNumCommentsForPost(postId) {
+  let numComments = 0;
   try {
     const response = await fetch(`/api/posts/${postId}/comments/count`);
-    return await response.json();
+    if (response.status === 200) {
+      numComments = await response.json();
+    }
   } catch (error) {
     console.error(error);
+  } finally {
+    return numComments;
   }
 }
 
