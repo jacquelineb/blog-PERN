@@ -1,17 +1,22 @@
 async function authVerify() {
+  let user;
   try {
     const response = await fetch('/api/auth/verify', {
       method: 'GET',
       credentials: 'include',
     });
 
-    return response;
+    if (response.status === 200) {
+      user = (await response.json()).user;
+    }
   } catch (error) {
     console.error(error);
   }
+  return user;
 }
 
 async function authLogin(credentials) {
+  let loginStatus = {};
   try {
     const response = await fetch('/api/auth/login', {
       method: 'POST',
@@ -23,7 +28,22 @@ async function authLogin(credentials) {
       body: JSON.stringify(credentials),
     });
 
-    return response;
+    if (response.status === 200) {
+      const { user } = await response.json();
+      loginStatus = { user };
+    } else {
+      let errorMsg;
+      if (response.status === 401) {
+        errorMsg = 'The email or password you entered is incorrect.';
+      } else if (response.status === 403) {
+        errorMsg = 'Already logged into another account.';
+      } else if (response.status === 500) {
+        errorMsg = 'Server could not be reached.';
+      }
+      loginStatus = { error: errorMsg };
+    }
+
+    return loginStatus;
   } catch (error) {
     console.error(error);
   }

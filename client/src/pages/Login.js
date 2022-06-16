@@ -1,36 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import style from '../styles/Login.module.scss';
 
 function Login() {
-  const [loginError, setLoginError] = useState(false);
-  const { user, login } = useAuthContext();
-
-  useEffect(() => {
-    /* Without this useEffect I will get a warning:
-      Can't perform a React state update on an unmounted component This is a no-op,
-      but it indicates a memory leak in your application. To fix, cancel all
-      subscriptions and asynchronous tasks in a useEffect cleanup function.
-     */
-    return () => {
-      setLoginError(false);
-    };
-  }, []);
+  const { user, login, error } = useAuthContext();
 
   async function onSubmit(e) {
     e.preventDefault();
-    try {
-      const credentials = {
-        email: e.target.email.value,
-        password: e.target.password.value,
-      };
+    const credentials = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
 
-      const loginSuccessful = await login(credentials);
-      setLoginError(!loginSuccessful);
-    } catch (error) {
-      console.error(error);
-    }
+    await login(credentials);
   }
 
   if (user) {
@@ -53,9 +36,7 @@ function Login() {
           <button type='submit'>Log in</button>
         </div>
       </form>
-      {loginError ? (
-        <p className={style.errorMsg}>The email or password you entered is incorrect.</p>
-      ) : null}
+      {error ? <p className={style.errorMsg}>{error}</p> : null}
     </div>
   );
 }
