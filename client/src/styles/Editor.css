@@ -7,23 +7,13 @@
   display: none;
 }
 
-.ce-block__content:hover{
+.ce-block__content:hover {
   background-color: lightgray;
 }
 
 .codex-editor--narrow,
 .codex-editor__redactor {
   margin-right: 0 !important;
-}
-
-.codex-editor__redactor {
-  padding-bottom: 10px !important;
-  width: 510px;
-  min-height: 200px;
-}
-
-.ce-toolbar {
-  right: unset;
 }
 
 .ce-toolbar__actions {
@@ -33,10 +23,11 @@
 }
 
 .ce-paragraph {
-  line-height: 1.1em;
+  font-size: 18px;
+  line-height: 24px;
 }
 
 .cdx-block {
   padding: 0;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
