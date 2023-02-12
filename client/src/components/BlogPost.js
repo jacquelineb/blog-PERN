@@ -5,7 +5,7 @@ import style from '../styles/BlogPost.module.scss';
 function BlogPost({ post }) {
   const { id, title, body, created_on } = post;
   return (
-    <div className={style.wrapper}>
+    <div>
       <h2 className={style.title}>{title}</h2>
       <p className={style.postMetaData}>
         Posted on <span className={style.date}>{formatDate(created_on).date}</span>

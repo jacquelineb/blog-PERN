@@ -1,6 +1,6 @@
 @import './mixins';
 
 .container {
-  @include container-small;
-  margin: auto;
+  @include blog-post-container;
+  margin: 0 auto;
 }

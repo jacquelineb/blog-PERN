@@ -4,9 +4,9 @@
   align-items: center;
 }
 
-@mixin container-small {
-  width: 550px;
-  padding: 30px 20px;
+@mixin blog-post-container {
+  max-width: 600px;
+  padding: 20px;
   background-color: white;
   border-radius: 4px;
 }
