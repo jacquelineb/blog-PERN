@@ -23,23 +23,22 @@ function Header() {
   }, []);
 
   return (
-    <header className={style.Header}>
+    <div>
       <div className={style.background}></div>
-      <div className={style.descriptionContainer}>
-        {isLoading ? null : (
-          <div className={style.userCard}>
-            <img
-              className={style.avatar}
-              src={avatar ? avatar : defaultAvatar}
-              alt={`${ADMIN}'s avatar`}
-            />
+      {isLoading ? null : (
+        <div className={style.userCard}>
+          <img
+            className={style.avatar}
+            src={avatar ? avatar : defaultAvatar}
+            alt={`${ADMIN}'s avatar`}
+          />
+          <div>
             <p className={style.name}>{ADMIN}</p>
             <p className={style.bio}>{biography}</p>
           </div>
-        )}
-        <h1 className={style.title}>Untitled Blog</h1>
-      </div>
-    </header>
+        </div>
+      )}
+    </div>
   );
 }
 

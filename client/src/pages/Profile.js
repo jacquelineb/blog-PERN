@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getTotalPostCount, getPosts } from '../api/posts';
 import { useAuthContext } from '../context/AuthContext';
+import Header from '../components/Header';
 import BlogPost from '../components/BlogPost';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from '../components/Pagination';
 import PostToolbar from '../components/PostToolbar.js';
-import style from '../styles/BlogPage.module.scss';
+import style from '../styles/Profile.module.scss';
 
 const POSTS_PER_PAGE = 10;
 
@@ -41,6 +42,7 @@ function BlogPage() {
 
   return (
     <div className={style.container}>
+      <Header />
       {user ? <PostToolbar tools={['create']} /> : null}
       {isLoading ? (
         <LoadingSpinner />
