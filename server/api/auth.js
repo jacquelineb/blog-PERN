@@ -10,7 +10,6 @@ initializePassport(passport);
 
 // Register a user
 router.post('/register', authMiddleware.checkNotAuthenticated, async (req, res) => {
-  console.log('in here');
   try {
     const { username, email, password } = req.body;
 
