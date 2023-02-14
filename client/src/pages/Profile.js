@@ -13,6 +13,7 @@ import { getUserDetails } from '../api/users';
 
 import banner from '../assets/header.png';
 import defaultAvatar from '../assets/avatar.png';
+import Avatar from '../components/Avatar';
 
 const POSTS_PER_PAGE = 10;
 
@@ -65,11 +66,9 @@ function Profile() {
         <div>
           <img className={style.banner} src={banner} alt='banner' />
           <div className={`${style.userDetails} ${style.main}`}>
-            <img
-              className={style.avatar}
-              src={userDetails.avatar ? userDetails.avatar : defaultAvatar}
-              alt='user avatar'
-            />
+            <div className={style.avatarWrapper}>
+              <Avatar src={userDetails.avatar} alt={`${userDetails.username}'s avatar`} />
+            </div>
             <div className={style.username}>{userDetails.username}</div>
             <div className={style.bio}>{userDetails.bio}</div>
           </div>
@@ -109,10 +108,10 @@ function Profile() {
       </Page.Main>
       <Page.Sidebar>
         <div className={`${style.userDetails} ${style.side}`}>
-          <img
-            className={style.avatar}
-            src={userDetails.avatar ? userDetails.avatar : defaultAvatar}
-            alt='user avatar'
+          <Avatar
+            src={userDetails.avatar}
+            alt={`${userDetails.username}'s avatar`}
+            size='large'
           />
           <div className={style.username}>{userDetails.username}</div>
           <div className={style.bio}>{userDetails.bio}</div>

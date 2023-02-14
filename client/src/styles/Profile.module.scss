@@ -16,11 +16,6 @@
   position: sticky;
   top: 0;
   padding-top: 15vh;
-
-  .avatar {
-    width: 100px;
-    height: 100px;
-  }
 }
 
 .userDetails {
@@ -29,14 +24,6 @@
   margin: 0 auto;
   padding: 18px;
   overflow-wrap: break-word;
-}
-
-.avatar {
-  padding: 2px;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: white;
 }
 
 .username {
@@ -74,7 +61,7 @@
       font-size: 26px;
     }
 
-    .avatar,
+    .avatarWrapper,
     .bio {
       display: none;
     }
