@@ -5,7 +5,7 @@ import { authVerify, authLogin, authLogout } from '../api/auth';
 const AuthContext = createContext({});
 
 function AuthProvider({ children }) {
-  const [user, setUser] = useState();
+  const [authUser, setAuthUser] = useState();
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
@@ -18,8 +18,8 @@ function AuthProvider({ children }) {
   useEffect(() => {
     async function getCurrentUser() {
       setIsLoadingUser(true);
-      const _user = await authVerify();
-      setUser(_user);
+      const _authUser = await authVerify();
+      setAuthUser(_authUser);
       setIsLoadingUser(false);
     }
     getCurrentUser();
@@ -29,7 +29,7 @@ function AuthProvider({ children }) {
     setIsLoading(true);
     const loginStatus = await authLogin(credentials);
     if (loginStatus.user) {
-      setUser(loginStatus.user);
+      setAuthUser(loginStatus.user);
     } else {
       setError(loginStatus.error);
     }
@@ -38,18 +38,18 @@ function AuthProvider({ children }) {
 
   async function logout() {
     await authLogout();
-    setUser(undefined);
+    setAuthUser(undefined);
   }
 
   const memoizedValue = useMemo(
     () => ({
-      user,
+      authUser,
       isLoading,
       error,
       login,
       logout,
     }),
-    [user, isLoading, error]
+    [authUser, isLoading, error]
   );
 
   return (

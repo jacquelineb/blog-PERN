@@ -8,7 +8,7 @@ import style from '../styles/EditUserDetails.module.scss';
 const BIOGRAPHY_CHAR_LIMIT = 160;
 
 function EditUserDetails() {
-  const { user } = useAuthContext();
+  const { authUser } = useAuthContext();
   const originalUserData = useRef({});
   const [avatar, setAvatar] = useState('');
   const [biography, setBiography] = useState('');
@@ -18,7 +18,7 @@ function EditUserDetails() {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await getUserDetails(user);
+        const response = await getUserDetails(authUser);
         const userData = await response.json();
         if (userData) {
           setBiography(userData.bio);
@@ -31,7 +31,7 @@ function EditUserDetails() {
       }
     }
     getUserData();
-  }, [user]);
+  }, [authUser]);
 
   useEffect(() => {
     if (selectedImageFile) {
@@ -77,7 +77,7 @@ function EditUserDetails() {
               <img
                 className={style.avatarPreview}
                 src={avatar}
-                alt={`${user}'s avatar`}
+                alt={`${authUser}'s avatar`}
                 onError={(e) => {
                   e.target.src = defaultAvatar;
                   e.target.onError = null; // Avoid infinite loop in case defaultAvatar also caused error

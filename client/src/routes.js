@@ -5,10 +5,11 @@ import Profile from './pages/Profile';
 import BlogPostWithComments from './pages/BlogPostWithComments';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 const routes = (
   <Switch>
-    <Route exact path={['/', '/page/:pageNum([1-9][0-9]*)']}>
+    <Route exact path={['/profile/:username', '/profile/:username/page/:pageNum([1-9][0-9]*)']}>
       <Profile />
     </Route>
     <Route exact path='/post/:postId([1-9][0-9]*)'>
@@ -17,16 +18,24 @@ const routes = (
     <Route exact path='/login'>
       <Login />
     </Route>
-    <ProtectedRoute exact path='/dashboard'>
+    <RestrictedRoute exact path='/signup'>
+      <Signup />
+    </RestrictedRoute>
+    <PrivateRoute exact path='/dashboard'>
       <Dashboard />
-    </ProtectedRoute>
+    </PrivateRoute>
     <Redirect to='/' />
   </Switch>
 );
 
-function ProtectedRoute({ children, ...rest }) {
-  const { user } = useAuthContext();
-  return user ? <Route {...rest}>{children}</Route> : <Redirect to='/login' />;
+function PrivateRoute({ children, ...rest }) {
+  const { authUser } = useAuthContext();
+  return authUser ? <Route {...rest}>{children}</Route> : <Redirect to='/login' />;
+}
+
+function RestrictedRoute({ children, ...rest }) {
+  const { authUser } = useAuthContext();
+  return !authUser ? <Route {...rest}>{children}</Route> : <Redirect to='/dashboard' />;
 }
 
 export default routes;

@@ -4,18 +4,18 @@ import { useAuthContext } from '../context/AuthContext';
 import style from '../styles/NavBar.module.scss';
 
 function NavBar() {
-  const { user, logout } = useAuthContext();
+  const { authUser, logout } = useAuthContext();
   return (
     <nav className={style.nav}>
       <Link className={style.link} to='/'>
         Home
       </Link>
-      {!user ? (
+      {!authUser ? (
         <Link className={style.link} to='/login'>
           Log in
         </Link>
       ) : (
-        <DropdownMenu user={user} logout={logout} />
+        <DropdownMenu user={authUser} logout={logout} />
       )}
     </nav>
   );

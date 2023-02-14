@@ -4,7 +4,7 @@ import { useAuthContext } from '../context/AuthContext';
 import style from '../styles/Login.module.scss';
 
 function Login() {
-  const { user, login, error } = useAuthContext();
+  const { authUser, login, error } = useAuthContext();
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -16,7 +16,7 @@ function Login() {
     await login(credentials);
   }
 
-  if (user) {
+  if (authUser) {
     return <Redirect to='/dashboard' />;
   }
 
