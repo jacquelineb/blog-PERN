@@ -6,6 +6,7 @@
 
 @mixin blog-post-container {
   max-width: 600px;
+  width: 100vw;
   padding: 20px;
   background-color: white;
   color: black;
