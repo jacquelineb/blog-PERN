@@ -1,6 +1,9 @@
 .Page {
   max-width: 1200px;
   margin: 0 auto;
+  border-left: 1px solid #111;
+  border-right: 1px solid #111;
+  background-color: #0b0b0b;
 }
 
 .Main {
@@ -10,14 +13,14 @@
 
 .Sidebar {
   min-width: 250px;
-  border-left: 1px solid #222;
+  border-left: 1px solid #111;
   display: none;
 }
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 950px) {
   .Page {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 
   .Main {
@@ -25,6 +28,8 @@
   }
 
   .Sidebar {
+    flex-grow: 1;
+    max-width: 300px;
     display: block;
   }
 }
