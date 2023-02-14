@@ -59,10 +59,10 @@ async function deletePost(postId) {
   }
 }
 
-async function getTotalPostCount() {
+async function getTotalPostCount(username) {
   let numPosts = 0;
   try {
-    const response = await fetch('/api/posts/count');
+    const response = await fetch(`/api/posts/count?username=${username}`);
     if (response.status === 200) {
       numPosts = await response.json();
     }
@@ -74,10 +74,12 @@ async function getTotalPostCount() {
   }
 }
 
-async function getPosts(limit, offset) {
+async function getPosts(username, limit, offset) {
   let posts = [];
   try {
-    const response = await fetch(`/api/posts?limit=${limit}&offset=${offset}`);
+    const response = await fetch(
+      `/api/posts?username=${username}&limit=${limit}&offset=${offset}`
+    );
     if (response.status === 200) {
       posts = await response.json();
     }
