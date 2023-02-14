@@ -7,6 +7,11 @@
   display: none;
 }
 
+.ce-block__content {
+  max-width: unset;
+  color: black;
+}
+
 .ce-block__content:hover {
   background-color: lightgray;
 }
