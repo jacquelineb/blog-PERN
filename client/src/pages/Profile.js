@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { getTotalPostCount, getPosts } from '../api/posts';
 import { useAuthContext } from '../context/AuthContext';
 import BlogPost from '../components/BlogPost';
@@ -18,6 +18,7 @@ const POSTS_PER_PAGE = 10;
 
 function Profile() {
   const { authUser } = useAuthContext();
+  const history = useHistory();
   const params = useParams();
   const profile = params.username;
   let pageNum = params.pageNum;
@@ -98,6 +99,9 @@ function Profile() {
               <Pagination
                 currPage={pageNum}
                 totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
+                onPageChange={(pageNum) => {
+                  history.push(`/profile/${profile}/page/${pageNum}`);
+                }}
               />
             </>
           )}

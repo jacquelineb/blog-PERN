@@ -1,12 +1,13 @@
-.container {
-  padding: 10px 0;
-}
-
-.pageLinksContainer {
+.pageButtonsContainer {
   display: flex;
 
-  a {
-    text-decoration: none;
+  button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 4px;
+    font-size: 16px;
+    cursor: pointer;
   }
 
   .previous {
@@ -21,4 +22,3 @@
 .pageNumber {
   text-align: right;
 }
-
