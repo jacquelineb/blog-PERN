@@ -1,0 +1,30 @@
+.Page {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.Main {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.Sidebar {
+  min-width: 250px;
+  border-left: 1px solid gray;
+  display: none;
+}
+
+@media only screen and (min-width: 900px) {
+  .Page {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .Main {
+    flex-grow: 1;
+  }
+
+  .Sidebar {
+    display: block;
+  }
+}
