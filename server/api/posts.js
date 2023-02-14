@@ -5,8 +5,16 @@ const authMiddleware = require('../utils/authMiddleware');
 
 // Get total number of posts
 router.get('/count', async (req, res) => {
+  const { username } = req.query;
   try {
-    const result = await pool.query('SELECT COUNT(*)::int FROM post');
+    const result = await pool.query(
+      `SELECT COUNT(*)::int
+      FROM post
+      INNER JOIN blog_user
+      ON post.author_id = blog_user.id AND LOWER(blog_user.username) = LOWER($1)
+      `,
+      [username]
+    );
     res.status(200).json(result.rows[0].count);
   } catch (error) {
     console.error(error);
@@ -14,19 +22,21 @@ router.get('/count', async (req, res) => {
   }
 });
 
-// Get posts
+// Get posts by user
 router.get('/', async (req, res) => {
-  const { limit, offset } = req.query;
+  const { username, limit, offset } = req.query;
   try {
     const posts = await pool.query(
       `SELECT post.id, post.title, post.body, post.created_on, blog_user.username as author
       FROM post
       INNER JOIN blog_user
-      ON post.author_id = blog_user.id ORDER BY created_on DESC
-      OFFSET $1 ROWS
-      FETCH FIRST $2 ROW ONLY`,
-      [offset, limit ? limit : 10]
+      ON post.author_id = blog_user.id AND LOWER(blog_user.username) = LOWER($1)
+      ORDER BY created_on DESC
+      OFFSET $2 ROWS
+      FETCH FIRST $3 ROW ONLY`,
+      [username, offset, limit ? limit : 10]
     );
+
     res.status(200).json(posts.rows);
   } catch (error) {
     console.error(error);
