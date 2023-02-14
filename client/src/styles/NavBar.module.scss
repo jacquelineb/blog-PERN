@@ -3,12 +3,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
-  height: 30px;
-  background-color: rgba(0,0,0,0.2);
-  position: absolute;
+  height: 50px;
   width: 100%;
+  background-color: black;
+  box-shadow: 0 0 6px #222;
+  position: relative;
   z-index: 1;
-  font-size: 14px;
 }
 
 .link {
@@ -58,7 +58,7 @@
   font-size: 14px;
 
   &:hover {
-    color: rgb(255,255,255);
+    color: rgb(255, 255, 255);
   }
 }
 
