@@ -7,9 +7,10 @@ const authMiddleware = require('../utils/authMiddleware');
 router.get('/:username', async (req, res) => {
   try {
     const { username } = req.params;
-    const user = await pool.query(`SELECT bio, avatar FROM blog_user WHERE username = $1`, [
-      username,
-    ]);
+    const user = await pool.query(
+      `SELECT username, bio, avatar FROM blog_user WHERE LOWER(username) = LOWER($1)`,
+      [username]
+    );
     const userData = user.rowCount ? user.rows[0] : null;
     res.status(200).json(userData);
   } catch (error) {
