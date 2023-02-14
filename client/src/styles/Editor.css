@@ -2,6 +2,11 @@
   Stylesheet to override some of the styles injected from Editor.js library.
 */
 
+#bodyEditor {
+  background-color: white;
+  color: black;
+}
+
 .cdx-search-field,
 .image-tool__caption {
   display: none;
@@ -9,7 +14,6 @@
 
 .ce-block__content {
   max-width: unset;
-  color: black;
 }
 
 .ce-block__content:hover {
