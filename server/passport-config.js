@@ -5,7 +5,10 @@ const bcrypt = require('bcrypt');
 function initialize(passport) {
   const authenticateUser = async (email, password, done) => {
     try {
-      const results = await pool.query('SELECT * FROM blog_user WHERE email = $1', [email]);
+      const results = await pool.query(
+        'SELECT * FROM blog_user WHERE LOWER(email) = LOWER($1)',
+        [email]
+      );
       // User with given email not found
       if (!(results.rows.length > 0)) {
         return done(null, false, { message: 'Incorrect email or password' });
