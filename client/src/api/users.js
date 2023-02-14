@@ -1,7 +1,7 @@
 async function getUserDetails(user) {
   try {
     const response = await fetch(`/api/users/${user}`);
-    return response;
+    return await response.json();
   } catch (error) {
     console.error(error);
   }
@@ -19,7 +19,7 @@ async function updateUserBiography(biography) {
       body: JSON.stringify({ bio: biography }),
     });
 
-    return response;
+    return await response.json();
   } catch (error) {
     console.error(error);
   }

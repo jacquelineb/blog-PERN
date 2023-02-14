@@ -32,8 +32,8 @@ function Profile() {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const response = await getUserDetails(profile);
-      const { username, bio, avatar } = await response.json();
+      const _userDetails = await getUserDetails(profile);
+      const { username, bio, avatar } = _userDetails;
       setUserDetails({ username, bio, avatar });
     })();
   }, [profile]);
