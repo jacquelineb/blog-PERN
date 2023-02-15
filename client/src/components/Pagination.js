@@ -3,8 +3,8 @@ import style from '../styles/Pagination.module.scss';
 
 function Pagination({ currPage, totalNumPages, onPageChange }) {
   return (
-    <div>
-      <div className={style.pageButtonsContainer}>
+    <div className={style.container}>
+      <div className={style.buttonsContainer}>
         {currPage > 1 ? (
           <div className={style.previous}>
             <button onClick={() => onPageChange(currPage - 1)}>Previous</button>
