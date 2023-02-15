@@ -1,5 +1,15 @@
 .toolbar {
   display: flex;
-  gap: 3px;
   justify-content: flex-end;
+  gap: 6px;
+}
+
+.toolButton {
+  border-style: none;
+  background-color: white;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightgrey;
+  }
 }

@@ -3,6 +3,7 @@ import { deletePost } from '../api/posts';
 import BlogPostEditor from './BlogPostEditor';
 import Modal from './Modal';
 import style from '../styles/PostToolbar.module.scss';
+import Icon from './Icon';
 
 function PostToolbar({ tools, post }) {
   return (
@@ -23,7 +24,7 @@ function PostToolbar({ tools, post }) {
             tool = null;
         }
 
-        return tool ? <div key={idx}>{tool}</div> : null;
+        return tool ? <span key={idx}>{tool}</span> : null;
       })}
     </div>
   );
@@ -33,7 +34,9 @@ function CreateBlogPost() {
   const [showModalForm, setShowModalForm] = useState(false);
   return (
     <>
-      <button onClick={() => setShowModalForm(true)}>Create new post</button>
+      <button className={style.toolButton} onClick={() => setShowModalForm(true)}>
+        Create new post
+      </button>
       <Modal
         display={showModalForm}
         handleClose={() => {
@@ -51,7 +54,13 @@ function EditBlogPost({ originalPost }) {
   const [showModalForm, setShowModalForm] = useState(false);
   return (
     <>
-      <button onClick={() => setShowModalForm(true)}>Edit</button>
+      <button
+        className={style.toolButton}
+        title='Edit post'
+        onClick={() => setShowModalForm(true)}
+      >
+        <Icon name='edit' size='24' />
+      </button>
       <Modal
         display={showModalForm}
         handleClose={() => {
@@ -81,7 +90,11 @@ function DeleteBlogPost({ post }) {
     }
   }
 
-  return <button onClick={handleDelete}>Delete</button>;
+  return (
+    <button className={style.toolButton} title='Delete post' onClick={handleDelete}>
+      <Icon name='delete' size='24' />
+    </button>
+  );
 }
 
 export default PostToolbar;
