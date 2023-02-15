@@ -1,7 +1,7 @@
 .nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 30px;
   height: 50px;
   width: 100%;
@@ -13,11 +13,8 @@
 
 .link {
   text-decoration: none;
+  margin-left: 12px;
   color: white;
-
-  &:hover {
-    color: black;
-  }
 }
 
 .dropdownMenuContainer {
@@ -32,10 +29,6 @@
   border: none;
   color: white;
   cursor: pointer;
-
-  &:hover {
-    color: black;
-  }
 }
 
 .dropdownContent {

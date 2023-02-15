@@ -7,13 +7,15 @@ function NavBar() {
   const { authUser, logout } = useAuthContext();
   return (
     <nav className={style.nav}>
-      <Link className={style.link} to='/'>
-        Home
-      </Link>
       {!authUser ? (
-        <Link className={style.link} to='/login'>
-          Log in
-        </Link>
+        <div>
+          <Link className={style.link} to='/login'>
+            Log in
+          </Link>
+          <Link className={style.link} to='/signup'>
+            Sign up
+          </Link>
+        </div>
       ) : (
         <DropdownMenu user={authUser} logout={logout} />
       )}
