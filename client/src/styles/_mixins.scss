@@ -12,3 +12,29 @@
   color: black;
   border-radius: 4px;
 }
+
+@mixin form {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+
+  div {
+    margin-bottom: 16px;
+  }
+
+  label,
+  button {
+    font-weight: 600;
+  }
+
+  input:not([type='checkbox']),
+  button {
+    margin: 2px 0;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+}

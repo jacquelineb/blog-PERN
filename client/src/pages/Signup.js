@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import style from '../styles/Signup.module.scss';
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -39,9 +40,9 @@ function Signup() {
   }
 
   return (
-    <div>
+    <div className={style.container}>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSignup}>
+      <form className={style.form} onSubmit={handleSignup}>
         <div>
           <label htmlFor='username'>Username:</label>
           <input
@@ -50,11 +51,14 @@ function Signup() {
             name='username'
             pattern='[a-zA-Z0-9_-]+'
             maxLength='32'
+            title='May only contain letters (a-z, A-Z), numbers, hyphens and/or underscores'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-          {errors && errors.usernameTaken ? <p>Username already in use.</p> : null}
+          {errors && errors.usernameTaken ? (
+            <div className={style.errorMsg}>Username already in use.</div>
+          ) : null}
         </div>
 
         <div>
@@ -67,7 +71,9 @@ function Signup() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          {errors && errors.emailTaken ? <p>Email already in use.</p> : null}
+          {errors && errors.emailTaken ? (
+            <div className={style.errorMsg}>Email already in use.</div>
+          ) : null}
         </div>
         <div>
           <label htmlFor='password'>Password:</label>
@@ -99,15 +105,6 @@ function Signup() {
           <label htmlFor='show-password'>
             <span>Show password</span>
           </label>
-
-          <p>
-            Username may only contain letters (a-z, A-Z), numbers, hyphens and/or underscores.
-            (Max length of 32 characters)
-          </p>
-          <p>
-            Password must be at least 8 characters long, containing at least one number, one
-            uppercase letter, and one lowercase letter.
-          </p>
         </div>
         <div>
           <button type='submit'>Sign up</button>

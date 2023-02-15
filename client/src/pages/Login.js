@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import style from '../styles/Login.module.scss';
 
@@ -21,7 +21,7 @@ function Login() {
   }
 
   return (
-    <div className={style.formContainer}>
+    <div className={style.container}>
       <h1>Log in</h1>
       <form className={style.form} onSubmit={onSubmit}>
         <div className={style.formSection}>
@@ -36,7 +36,10 @@ function Login() {
           <button type='submit'>Log in</button>
         </div>
       </form>
-      {error ? <p className={style.errorMsg}>{error}</p> : null}
+      {error ? <div className={style.errorMsg}>{error}</div> : null}
+      <div>
+        Don't have an account? <Link to='/signup'>Sign up</Link>
+      </div>
     </div>
   );
 }
