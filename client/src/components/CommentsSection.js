@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import formatDate from '../utils/formatDate.js';
 import {
   getCommentsForPost,
@@ -107,10 +108,16 @@ function Comment({ data, isPostAuthor }) {
   return (
     <div className={style.CommentContainer} id='comments'>
       <div>
-        <p className={style.author}>
-          {data.author ? data.author : 'Anonymous'}
+        <div className={style.author}>
+          {data.author ? (
+            <Link className={style.authorLink} to={`/profile/${data.author}`}>
+              {data.author}
+            </Link>
+          ) : (
+            <span className={style.anonymous}>Anonymous</span>
+          )}
           {isPostAuthor ? <span className={style.postAuthorBadge}> (Post Author)</span> : null}
-        </p>
+        </div>
         <p className={style.datePosted}>
           {date} at {time}
         </p>
