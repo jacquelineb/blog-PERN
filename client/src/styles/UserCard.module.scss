@@ -1,0 +1,26 @@
+.UserCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  overflow-wrap: anywhere;
+  text-align: center;
+
+  &.small {
+    font-size: 12px;
+  }
+
+  &.medium {
+    font-size: 16px;
+  }
+
+  &.large {
+    font-size: 18px;
+  }
+}
+
+.username {
+  font-weight: 600;
+  font-size: 1.25em;
+}

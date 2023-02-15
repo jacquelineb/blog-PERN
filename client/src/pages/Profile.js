@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { getUserDetails } from '../api/users';
 import { getTotalPostCount, getPosts } from '../api/posts';
 import { useAuthContext } from '../context/AuthContext';
 import BlogPost from '../components/BlogPost';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Page from '../layouts/Page';
 import Pagination from '../components/Pagination';
 import PostToolbar from '../components/PostToolbar.js';
-import style from '../styles/Profile.module.scss';
-import Page from '../layouts/Page';
-
-import { getUserDetails } from '../api/users';
-
+import UserCard from '../components/UserCard';
 import banner from '../assets/header.png';
-import defaultAvatar from '../assets/avatar.png';
-import Avatar from '../components/Avatar';
+import style from '../styles/Profile.module.scss';
 
 const POSTS_PER_PAGE = 10;
 
@@ -63,14 +60,15 @@ function Profile() {
   return (
     <Page>
       <Page.Main>
-        <div>
+        <div className={style.header}>
           <img className={style.banner} src={banner} alt='banner' />
-          <div className={`${style.userDetails} ${style.main}`}>
-            <div className={style.avatarWrapper}>
-              <Avatar src={userDetails.avatar} alt={`${userDetails.username}'s avatar`} />
-            </div>
-            <div className={style.username}>{userDetails.username}</div>
-            <div className={style.bio}>{userDetails.bio}</div>
+          <div className={style.userCardWrapper}>
+            <UserCard
+              username={userDetails.username}
+              bio={userDetails.bio}
+              avatar={userDetails.avatar}
+              size='medium'
+            />
           </div>
         </div>
         <div className={style.mainContent}>
@@ -107,14 +105,13 @@ function Profile() {
         </div>
       </Page.Main>
       <Page.Sidebar>
-        <div className={`${style.userDetails} ${style.side}`}>
-          <Avatar
-            src={userDetails.avatar}
-            alt={`${userDetails.username}'s avatar`}
+        <div className={style.sticky}>
+          <UserCard
+            username={userDetails.username}
+            bio={userDetails.bio}
+            avatar={userDetails.avatar}
             size='large'
           />
-          <div className={style.username}>{userDetails.username}</div>
-          <div className={style.bio}>{userDetails.bio}</div>
         </div>
       </Page.Sidebar>
     </Page>
