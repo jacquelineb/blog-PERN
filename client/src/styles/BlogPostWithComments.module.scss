@@ -4,3 +4,19 @@
   @include blog-post-container;
   margin: 0 auto;
 }
+
+.author {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid black;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  padding-top: 15vh;
+}
