@@ -24,8 +24,8 @@ function Profile() {
 
   const [posts, setPosts] = useState([]);
   const [totalNumPosts, setTotalNumPosts] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [userDetails, setUserDetails] = useState({ username: '', bio: '', avatar: '' });
+  const [isLoading, setIsLoading] = useState(true);
+  const [userDetails, setUserDetails] = useState();
 
   useEffect(() => {
     (async () => {
@@ -38,15 +38,16 @@ function Profile() {
 
   useEffect(() => {
     async function fetchPostsForPage() {
-      //setIsLoading(true);
       const limit = POSTS_PER_PAGE;
       const offset = POSTS_PER_PAGE * (pageNum - 1);
       const _posts = await getPosts(userDetails.username, limit, offset);
       setPosts(_posts);
-      //setIsLoading(false);
     }
-    fetchPostsForPage();
-  }, [userDetails.username, pageNum]);
+
+    if (userDetails) {
+      fetchPostsForPage();
+    }
+  }, [userDetails, pageNum]);
 
   useEffect(() => {
     async function fetchTotalNumPosts() {
@@ -54,29 +55,32 @@ function Profile() {
       setTotalNumPosts(numPosts);
       setIsLoading(false);
     }
-    fetchTotalNumPosts();
-  }, [userDetails.username]);
+
+    if (userDetails) {
+      fetchTotalNumPosts();
+    }
+  }, [userDetails]);
 
   return (
-    <Page>
-      <Page.Main>
-        <div className={style.header}>
-          <img className={style.banner} src={banner} alt='banner' />
-          <div className={style.userCardWrapper}>
-            <UserCard
-              username={userDetails.username}
-              bio={userDetails.bio}
-              avatar={userDetails.avatar}
-              size='medium'
-            />
-          </div>
-        </div>
-        <div className={style.mainContent}>
-          {authUser === userDetails.username ? <PostToolbar tools={['create']} /> : null}
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <>
+    <>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <Page>
+          <Page.Main>
+            <div className={style.header}>
+              <img className={style.banner} src={banner} alt='banner' />
+              <div className={style.userCardWrapper}>
+                <UserCard
+                  username={userDetails.username}
+                  bio={userDetails.bio}
+                  avatar={userDetails.avatar}
+                  size='medium'
+                />
+              </div>
+            </div>
+            <div className={style.mainContent}>
+              {authUser === userDetails.username ? <PostToolbar tools={['create']} /> : null}
               <div className={style.posts}>
                 {posts.map((post) => {
                   return (
@@ -100,21 +104,21 @@ function Profile() {
                   history.push(`/profile/${profile}/page/${pageNum}`);
                 }}
               />
-            </>
-          )}
-        </div>
-      </Page.Main>
-      <Page.Sidebar>
-        <div className={style.sticky}>
-          <UserCard
-            username={userDetails.username}
-            bio={userDetails.bio}
-            avatar={userDetails.avatar}
-            size='large'
-          />
-        </div>
-      </Page.Sidebar>
-    </Page>
+            </div>
+          </Page.Main>
+          <Page.Sidebar>
+            <div className={style.sticky}>
+              <UserCard
+                username={userDetails.username}
+                bio={userDetails.bio}
+                avatar={userDetails.avatar}
+                size='large'
+              />
+            </div>
+          </Page.Sidebar>
+        </Page>
+      )}
+    </>
   );
 }
 
