@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useAuthContext } from '../context/AuthContext.js';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../api/storage.js';
 import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/users.js';
-import defaultAvatar from '../assets/avatar.png';
+import Avatar from './Avatar.js';
 import style from '../styles/EditUserDetails.module.scss';
 
 const BIOGRAPHY_CHAR_LIMIT = 160;
@@ -18,8 +18,7 @@ function EditUserDetails() {
   useEffect(() => {
     async function getUserData() {
       try {
-        const response = await getUserDetails(authUser);
-        const userData = await response.json();
+        const userData = await getUserDetails(authUser);
         if (userData) {
           setBiography(userData.bio);
           setAvatar(userData.avatar);
@@ -74,15 +73,7 @@ function EditUserDetails() {
         <form onSubmit={handleSave}>
           <div className={style.avatarChange}>
             <div>
-              <img
-                className={style.avatarPreview}
-                src={avatar}
-                alt={`${authUser}'s avatar`}
-                onError={(e) => {
-                  e.target.src = defaultAvatar;
-                  e.target.onError = null; // Avoid infinite loop in case defaultAvatar also caused error
-                }}
-              />
+              <Avatar src={avatar} alt={`${authUser}'s avatar`} size='large' />
             </div>
 
             <input
@@ -118,7 +109,6 @@ function EditUserDetails() {
             >
               Reset
             </button>
-            <p>Image dimensions of 184px by 184px is recommended.</p>
           </div>
 
           <div>
