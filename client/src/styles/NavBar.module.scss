@@ -2,55 +2,41 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 12px;
   padding: 0 4vw;
   height: 50px;
-  width: 100%;
   background-color: black;
   box-shadow: 0 0 6px #222;
-  position: relative;
-  z-index: 2;
 }
 
 .link {
   text-decoration: none;
-  margin-left: 12px;
   color: white;
-}
-
-.dropdownMenuContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: relative;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .dropdownToggle {
+  @extend .link;
   background: none;
   border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
 }
 
-.dropdownContent {
+.dropdownMenu {
   min-width: 150px;
   background-color: black;
-  z-index: 2;
   position: absolute;
-  top: 34px;
-
-  &.inactive {
-    display: none;
-  }
+  top: 50px;
+  right: 4vw;
+  z-index: 2;
 
   a,
   button {
+    @extend .link;
     background-color: transparent;
     border-style: none;
-    color: white;
     text-decoration: none;
     display: block;
-    font-size: 16px;
     text-align: center;
     padding: 8px;
     width: 100%;
