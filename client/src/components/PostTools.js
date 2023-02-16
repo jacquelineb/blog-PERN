@@ -49,14 +49,14 @@ function EditBlogPost({ originalPost }) {
   );
 }
 
-function DeleteBlogPost({ post }) {
+function DeleteBlogPost({ postId }) {
   async function handleDelete() {
     if (window.confirm('Are you sure you want to delete this post?')) {
       /**
         TODO: if the post has images, need to delete those from cloud
          **/
 
-      const isDeleted = await deletePost(post.id);
+      const isDeleted = await deletePost(postId);
       if (isDeleted) {
         window.location.reload();
       } else {

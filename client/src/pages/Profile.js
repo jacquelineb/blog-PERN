@@ -80,7 +80,6 @@ function Profile() {
               </div>
             </div>
             <div className={style.mainContent}>
-              {/* {authUser === userDetails.username ? <PostToolbar tools={['create']} /> : null} */}
               {authUser === userDetails.username ? <CreateBlogPost /> : null}
               <div className={style.posts}>
                 {posts.map((post) => {
@@ -88,8 +87,8 @@ function Profile() {
                     <div className={style.postContainer} key={post.id} data-post-id={post.id}>
                       {authUser === userDetails.username ? (
                         <div className={style.postTools}>
-                          <EditBlogPost post={post} />
-                          <DeleteBlogPost post={post} />
+                          <EditBlogPost originalPost={post} />
+                          <DeleteBlogPost postId={post.id} />
                         </div>
                       ) : null}
                       <BlogPost post={post} />
