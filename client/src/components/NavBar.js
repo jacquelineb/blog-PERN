@@ -31,12 +31,8 @@ function NavBar() {
     <nav className={style.nav}>
       {!authUser ? (
         <>
-          <Link className={style.link} to='/login'>
-            Log in
-          </Link>
-          <Link className={style.link} to='/signup'>
-            Sign up
-          </Link>
+          <Link to='/login'>Log in</Link>
+          <Link to='/signup'>Sign up</Link>
         </>
       ) : (
         <>
@@ -47,22 +43,14 @@ function NavBar() {
             <span>{authUser}</span> <Icon name='chevronDown' size='16' />
           </button>
 
-          <div
-            className={style.dropdownMenu}
-            style={{ display: showDropdown ? 'block' : 'none' }}
-            ref={dropdownMenuRef}
-          >
-            <Link className={style.dropdownLink} to='/dashboard'>
-              Dashboard
-            </Link>
-            <Link className={style.dropdownLink} to={`/profile/${authUser}`}>
-              View my profile
-            </Link>
-            <CreateBlogPost />
-            <button className={`${style.logoutBtn} ${style.dropdownLink}`} onClick={logout}>
-              Log out
-            </button>
-          </div>
+          {!showDropdown ? null : (
+            <div className={style.dropdownMenu} ref={dropdownMenuRef}>
+              <Link to='/dashboard'>Dashboard</Link>
+              <Link to={`/profile/${authUser}`}>View my profile</Link>
+              <CreateBlogPost />
+              <button onClick={logout}>Log out</button>
+            </div>
+          )}
         </>
       )}
     </nav>
