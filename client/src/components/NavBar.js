@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
+import { CreateBlogPost } from './PostTools';
 import style from '../styles/NavBar.module.scss';
 
 function NavBar() {
@@ -63,6 +64,10 @@ function DropdownMenu({ user, logout }) {
         <Link className={style.dropdownLink} to='/dashboard'>
           Dashboard
         </Link>
+        <Link className={style.dropdownLink} to={`/profile/${user}`}>
+          View my profile
+        </Link>
+        <CreateBlogPost />
         <button className={`${style.logoutBtn} ${style.dropdownLink}`} onClick={logout}>
           Log out
         </button>

@@ -29,35 +29,34 @@
   border: none;
   color: white;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .dropdownContent {
-  width: 100px;
-  background-color: purple;
+  min-width: 150px;
+  background-color: black;
   z-index: 2;
   position: absolute;
-  top: 24px;
+  top: 34px;
 
   &.inactive {
     display: none;
   }
-}
 
-.dropdownLink {
-  text-decoration: none;
-  color: rgb(230, 230, 230);
-  display: block;
-  padding: 5px;
-  font-size: 14px;
+  a,
+  button {
+    background-color: transparent;
+    border-style: none;
+    color: white;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    text-align: center;
+    padding: 8px;
+    width: 100%;
 
-  &:hover {
-    color: rgb(255, 255, 255);
+    &:hover {
+      background-color: #111;
+    }
   }
-}
-
-.logoutBtn {
-  border: none;
-  background: none;
-  cursor: pointer;
-  display: block;
 }
