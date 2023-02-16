@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../context/AuthContext';
 import { CreateBlogPost } from './PostTools';
 import style from '../styles/NavBar.module.scss';
+import Icon from './Icon';
 
 function NavBar() {
   const { authUser, logout } = useAuthContext();
@@ -54,7 +55,7 @@ function DropdownMenu({ user, logout }) {
           setDropdownIsActive(!dropdownIsActive);
         }}
       >
-        {user} ⮟
+        <span>{user}</span> <Icon name='chevronDown' size='16' />
       </button>
 
       <div

@@ -18,6 +18,12 @@ const ICONS = {
       <path d='M10 12l4 4m0 -4l-4 4' />
     </>
   ),
+  chevronDown: (
+    <>
+      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+      <polyline points='6 9 12 15 18 9' />
+    </>
+  ),
 };
 
 function Icon({ name, size }) {
@@ -32,6 +38,7 @@ function Icon({ name, size }) {
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
+      style={{ verticalAlign: 'middle' }}
     >
       {ICONS[name]}
     </svg>
