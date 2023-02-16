@@ -7,7 +7,7 @@ import BlogPost from '../components/BlogPost';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Page from '../layouts/Page';
 import Pagination from '../components/Pagination';
-import PostToolbar from '../components/PostToolbar.js';
+import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from '../components/PostTools';
 import UserCard from '../components/UserCard';
 import banner from '../assets/header.png';
 import style from '../styles/Profile.module.scss';
@@ -80,13 +80,17 @@ function Profile() {
               </div>
             </div>
             <div className={style.mainContent}>
-              {authUser === userDetails.username ? <PostToolbar tools={['create']} /> : null}
+              {/* {authUser === userDetails.username ? <PostToolbar tools={['create']} /> : null} */}
+              {authUser === userDetails.username ? <CreateBlogPost /> : null}
               <div className={style.posts}>
                 {posts.map((post) => {
                   return (
                     <div className={style.postContainer} key={post.id} data-post-id={post.id}>
                       {authUser === userDetails.username ? (
-                        <PostToolbar tools={['edit', 'delete']} post={post} />
+                        <div className={style.postTools}>
+                          <EditBlogPost post={post} />
+                          <DeleteBlogPost post={post} />
+                        </div>
                       ) : null}
                       <BlogPost post={post} />
                       <Link className={style.commentsLink} to={`/post/${post.id}`}>

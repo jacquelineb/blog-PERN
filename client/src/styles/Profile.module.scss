@@ -31,6 +31,12 @@
   @include blog-post-container;
 }
 
+.postTools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
 .commentsLink {
   font-size: 14px;
   text-decoration: none;

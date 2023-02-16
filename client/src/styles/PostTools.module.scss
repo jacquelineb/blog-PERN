@@ -1,11 +1,6 @@
-.toolbar {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.toolButton {
+.createPostBtn,
+.editPostBtn,
+.deletePostBtn {
   border-style: none;
   background-color: white;
   cursor: pointer;
