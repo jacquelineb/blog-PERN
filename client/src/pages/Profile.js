@@ -11,6 +11,7 @@ import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from '../components/Post
 import UserCard from '../components/UserCard';
 import banner from '../assets/header.png';
 import style from '../styles/Profile.module.scss';
+import NotFound from './NotFound';
 
 const POSTS_PER_PAGE = 10;
 
@@ -29,9 +30,6 @@ function Profile() {
   useEffect(() => {
     (async () => {
       const userData = await getUserDetails(profile);
-      if (!userData) {
-        history.push('/'); // TODO: Create 404 component and redirect to it
-      }
       setUser({
         data: userData,
         isLoading: false,
@@ -40,7 +38,7 @@ function Profile() {
   }, [profile]);
 
   useEffect(() => {
-    if (!user.isLoading) {
+    if (!user.isLoading && user.data) {
       (async () => {
         const limit = POSTS_PER_PAGE;
         const offset = POSTS_PER_PAGE * (pageNum - 1);
@@ -54,7 +52,7 @@ function Profile() {
   }, [user, pageNum]);
 
   useEffect(() => {
-    if (!user.isLoading) {
+    if (!user.isLoading && user.data) {
       (async () => {
         setTotalNumPosts(await getTotalPostCount(user.data.username));
       })();
@@ -63,6 +61,10 @@ function Profile() {
 
   if (user.isLoading) {
     return null;
+  }
+
+  if (!user.data) {
+    return <NotFound />;
   }
 
   return (
