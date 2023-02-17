@@ -22,110 +22,118 @@ function Profile() {
   let pageNum = params.pageNum;
   pageNum = parseInt(pageNum) || 1;
 
-  const [posts, setPosts] = useState([]);
-  const [totalNumPosts, setTotalNumPosts] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [userDetails, setUserDetails] = useState();
+  const [user, setUser] = useState({ data: undefined, isLoading: true });
+  const [posts, setPosts] = useState({ data: [], isLoading: true });
+  const [totalNumPosts, setTotalNumPosts] = useState(0);
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true);
-      const _userDetails = await getUserDetails(profile);
-      const { username, bio, avatar } = _userDetails;
-      setUserDetails({ username, bio, avatar });
+      const userData = await getUserDetails(profile);
+      if (!userData) {
+        history.push('/'); // TODO: Create 404 component and redirect to it
+      }
+      setUser({
+        data: userData,
+        isLoading: false,
+      });
     })();
   }, [profile]);
 
   useEffect(() => {
-    async function fetchPostsForPage() {
-      const limit = POSTS_PER_PAGE;
-      const offset = POSTS_PER_PAGE * (pageNum - 1);
-      const _posts = await getPosts(userDetails.username, limit, offset);
-      setPosts(_posts);
+    if (!user.isLoading) {
+      (async () => {
+        const limit = POSTS_PER_PAGE;
+        const offset = POSTS_PER_PAGE * (pageNum - 1);
+        const postData = await getPosts(user.data.username, limit, offset);
+        setPosts({
+          data: postData,
+          isLoading: false,
+        });
+      })();
     }
-
-    if (userDetails) {
-      fetchPostsForPage();
-    }
-  }, [userDetails, pageNum]);
+  }, [user, pageNum]);
 
   useEffect(() => {
-    async function fetchTotalNumPosts() {
-      const numPosts = await getTotalPostCount(userDetails.username);
-      setTotalNumPosts(numPosts);
-      setIsLoading(false);
+    if (!user.isLoading) {
+      (async () => {
+        setTotalNumPosts(await getTotalPostCount(user.data.username));
+      })();
     }
+  }, [user]);
 
-    if (userDetails) {
-      fetchTotalNumPosts();
-    }
-  }, [userDetails]);
+  if (user.isLoading) {
+    return null;
+  }
 
   return (
-    <>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <Page>
-          <Page.Main>
-            <div className={style.header}>
-              <img className={style.banner} src={banner} alt='banner' />
-              <div className={style.userCardWrapper}>
-                <UserCard
-                  username={userDetails.username}
-                  bio={userDetails.bio}
-                  avatar={userDetails.avatar}
-                  size='medium'
-                />
-              </div>
-            </div>
-            <div className={style.mainContent}>
-              {authUser === userDetails.username ? (
-                <div className={style.postTools}>
-                  <CreateBlogPost />
-                </div>
-              ) : null}
-              <div className={style.posts}>
-                {posts.map((post) => {
-                  return (
-                    <div className={style.postContainer} key={post.id} data-post-id={post.id}>
-                      {authUser === userDetails.username ? (
-                        <div className={style.postTools}>
-                          <EditBlogPost originalPost={post} />
-                          <DeleteBlogPost postId={post.id} />
-                        </div>
-                      ) : null}
-                      <BlogPost post={post} />
-                      <Link className={style.commentsLink} to={`/post/${post.id}`}>
-                        Comments
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
+    <Page>
+      <Page.Main>
+        <div className={style.header}>
+          <img className={style.banner} src={banner} alt='banner' />
 
-              <Pagination
-                currPage={pageNum}
-                totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
-                onPageChange={(pageNum) => {
-                  history.push(`/profile/${profile}/page/${pageNum}`);
-                }}
-              />
+          <div className={style.userCardWrapper}>
+            <UserCard
+              username={user.data.username}
+              bio={user.data.bio}
+              avatar={user.data.avatar}
+              size='medium'
+            />
+          </div>
+
+          <div className={style.mainContent}>
+            {authUser === user.data.username ? (
+              <div className={style.postTools}>
+                <CreateBlogPost />
+              </div>
+            ) : null}
+
+            <div className={style.posts}>
+              {posts.isLoading ? (
+                <LoadingSpinner />
+              ) : (
+                <>
+                  {posts.data.map((post) => {
+                    return (
+                      <div className={style.postContainer} key={post.id} data-post-id={post.id}>
+                        {authUser === user.data.username ? (
+                          <div className={style.postTools}>
+                            <EditBlogPost originalPost={post} />
+                            <DeleteBlogPost postId={post.id} />
+                          </div>
+                        ) : null}
+                        <BlogPost post={post} />
+                        <Link className={style.commentsLink} to={`/post/${post.id}`}>
+                          Comments
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </>
+              )}
             </div>
-          </Page.Main>
-          <Page.Sidebar>
-            <div className={style.sticky}>
-              <UserCard
-                username={userDetails.username}
-                bio={userDetails.bio}
-                avatar={userDetails.avatar}
-                size='large'
-              />
-            </div>
-          </Page.Sidebar>
-        </Page>
-      )}
-    </>
+
+            <Pagination
+              currPage={pageNum}
+              totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
+              onPageChange={(pageNum) => {
+                history.push(`/profile/${profile}/page/${pageNum}`);
+              }}
+            />
+          </div>
+        </div>
+      </Page.Main>
+
+      <Page.Sidebar>
+        <div className={style.sticky}>
+          <UserCard
+            username={user.data.username}
+            bio={user.data.bio}
+            avatar={user.data.avatar}
+            size='large'
+          />
+        </div>
+      </Page.Sidebar>
+    </Page>
   );
 }
 
