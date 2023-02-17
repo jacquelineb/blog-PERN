@@ -28,7 +28,7 @@ function NavBar() {
   }, [showDropdown]);
 
   return (
-    <nav className={style.nav}>
+    <nav className={style.Nav}>
       {!authUser ? (
         <>
           <Link to='/login'>Log in</Link>
@@ -42,13 +42,29 @@ function NavBar() {
           >
             <span>{authUser}</span> <Icon name='chevronDown' size='16' />
           </button>
+          <CreateBlogPost />
 
           {!showDropdown ? null : (
             <div className={style.dropdownMenu} ref={dropdownMenuRef}>
-              <Link to='/dashboard'>Dashboard</Link>
-              <Link to={`/profile/${authUser}`}>View my profile</Link>
-              <CreateBlogPost />
-              <button onClick={logout}>Log out</button>
+              <Link onClick={() => setShowDropdown(false)} to='/dashboard'>
+                Dashboard
+              </Link>
+              <Link
+                onClick={() => {
+                  setShowDropdown(false);
+                }}
+                to={`/profile/${authUser}`}
+              >
+                View my profile
+              </Link>
+              <button
+                onClick={() => {
+                  setShowDropdown(false);
+                  logout();
+                }}
+              >
+                Log out
+              </button>
             </div>
           )}
         </>
