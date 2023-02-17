@@ -1,19 +1,20 @@
 import React from 'react';
-import PostToolbar from '../components/PostToolbar';
 import EditUserDetails from '../components/EditUserDetails';
+import Page from '../layouts/Page';
 import style from '../styles/Dashboard.module.scss';
 
 function Dashboard() {
   return (
-    <div className={style.DashboardContainer}>
-      <h1>Dashboard</h1>
-      <div className={style.dashboardSection}>
-        <EditUserDetails />
-      </div>
-      <div className={style.dashboardSection}>
-        <PostToolbar tools={['create']} />
-      </div>
-    </div>
+    <Page>
+      <Page.Main>
+        <div className={style.Dashboard}>
+          <h1>Dashboard</h1>
+          <div>
+            <EditUserDetails />
+          </div>
+        </div>
+      </Page.Main>
+    </Page>
   );
 }
 
