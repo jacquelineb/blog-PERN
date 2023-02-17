@@ -80,7 +80,11 @@ function Profile() {
               </div>
             </div>
             <div className={style.mainContent}>
-              {authUser === userDetails.username ? <CreateBlogPost /> : null}
+              {authUser === userDetails.username ? (
+                <div className={style.postTools}>
+                  <CreateBlogPost />
+                </div>
+              ) : null}
               <div className={style.posts}>
                 {posts.map((post) => {
                   return (
