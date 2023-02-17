@@ -16,6 +16,8 @@
   color: white;
   background-color: black;
   box-shadow: 0 0 6px #222;
+  position: relative;
+  z-index: 1;
 
   a {
     @extend .navItem;
@@ -35,7 +37,6 @@
   position: absolute;
   top: 50px;
   right: 4vw;
-  z-index: 2;
   display: flex;
   flex-direction: column;
 
