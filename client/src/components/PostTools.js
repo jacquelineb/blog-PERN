@@ -11,7 +11,7 @@ function CreateBlogPost() {
   return (
     <>
       <button className={style.createPostBtn} onClick={() => setShowModal(true)}>
-        Create new post
+        <Icon name='create' size='24' />
       </button>
       <Modal
         active={showModal}

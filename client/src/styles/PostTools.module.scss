@@ -2,10 +2,7 @@
 .editPostBtn,
 .deletePostBtn {
   border-style: none;
-  background-color: white;
+  background-color: inherit;
+  color: currentColor;
   cursor: pointer;
-
-  &:hover {
-    background-color: lightgrey;
-  }
 }
