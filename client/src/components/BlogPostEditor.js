@@ -7,7 +7,7 @@ import style from '../styles/BlogPostEditorJs.module.scss';
 import '../styles/Editor.css';
 
 function BlogPostEditor({ editingPost = null }) {
-  const titleRef = useRef(editingPost ? editingPost.title : '');
+  const titleRef = useRef();
   const bodyEditor = useRef();
   useEffect(() => {
     if (titleRef.current) {
@@ -65,7 +65,7 @@ function BlogPostEditor({ editingPost = null }) {
       <form onSubmit={handleSubmit}>
         <input
           className={style.title}
-          defaultValue={titleRef.current}
+          defaultValue={editingPost ? editingPost.title : ''}
           type='text'
           placeholder='Title'
           pattern='.*\S+.*'
