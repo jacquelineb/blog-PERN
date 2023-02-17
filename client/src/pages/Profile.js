@@ -70,9 +70,8 @@ function Profile() {
   return (
     <Page>
       <Page.Main>
-        <div className={style.header}>
+        <div>
           <img className={style.banner} src={banner} alt='banner' />
-
           <div className={style.userCardWrapper}>
             <UserCard
               username={user.data.username}
@@ -81,47 +80,47 @@ function Profile() {
               size='medium'
             />
           </div>
+        </div>
 
-          <div className={style.mainContent}>
-            {authUser === user.data.username ? (
-              <div className={style.postTools}>
-                <CreateBlogPost />
-              </div>
-            ) : null}
-
-            <div className={style.posts}>
-              {posts.isLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <>
-                  {posts.data.map((post) => {
-                    return (
-                      <div className={style.postContainer} key={post.id} data-post-id={post.id}>
-                        {authUser === user.data.username ? (
-                          <div className={style.postTools}>
-                            <EditBlogPost originalPost={post} />
-                            <DeleteBlogPost postId={post.id} />
-                          </div>
-                        ) : null}
-                        <BlogPost post={post} />
-                        <Link className={style.commentsLink} to={`/post/${post.id}`}>
-                          Comments
-                        </Link>
-                      </div>
-                    );
-                  })}
-                </>
-              )}
+        <div className={style.mainContent}>
+          {authUser === user.data.username ? (
+            <div className={style.postTools}>
+              <CreateBlogPost />
             </div>
+          ) : null}
 
-            <Pagination
-              currPage={pageNum}
-              totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
-              onPageChange={(pageNum) => {
-                history.push(`/profile/${profile}/page/${pageNum}`);
-              }}
-            />
+          <div>
+            {posts.isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <>
+                {posts.data.map((post) => {
+                  return (
+                    <div className={style.postContainer} key={post.id} data-post-id={post.id}>
+                      {authUser === user.data.username ? (
+                        <div className={style.postTools}>
+                          <EditBlogPost originalPost={post} />
+                          <DeleteBlogPost postId={post.id} />
+                        </div>
+                      ) : null}
+                      <BlogPost post={post} />
+                      <Link className={style.commentsLink} to={`/post/${post.id}`}>
+                        Comments
+                      </Link>
+                    </div>
+                  );
+                })}
+              </>
+            )}
           </div>
+
+          <Pagination
+            currPage={pageNum}
+            totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
+            onPageChange={(pageNum) => {
+              history.push(`/profile/${profile}/page/${pageNum}`);
+            }}
+          />
         </div>
       </Page.Main>
 
