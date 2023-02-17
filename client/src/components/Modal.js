@@ -7,9 +7,10 @@ function Modal({ active, handleClose, title, content }) {
     if (active) {
       document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflowY = 'scroll';
+      document.body.style.overflowY = 'auto';
     }
-    return () => (document.body.style.overflowY = 'scroll');
+
+    return () => (document.body.style.overflowY = 'auto');
   }, [active]);
 
   return active
