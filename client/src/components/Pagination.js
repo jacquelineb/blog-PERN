@@ -2,6 +2,10 @@ import React from 'react';
 import style from '../styles/Pagination.module.scss';
 
 function Pagination({ currPage, totalNumPages, onPageChange }) {
+  if (totalNumPages === 0) {
+    return null;
+  }
+
   return (
     <div className={style.Pagination}>
       <div className={style.buttonsContainer}>
