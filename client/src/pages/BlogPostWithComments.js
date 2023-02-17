@@ -33,7 +33,7 @@ function BlogPostWithComments() {
       ) : (
         <Page>
           <Page.Main>
-            <div className={style.container}>
+            <div className={style.BlogPostWithComments}>
               {post ? (
                 <>
                   <div className={style.author}>

@@ -1,6 +1,6 @@
 @import './mixins';
 
-.container {
+.BlogPostWithComments {
   @include blog-post-container;
   margin: 0 auto;
 }

@@ -40,7 +40,7 @@ function Signup() {
   }
 
   return (
-    <div className={style.container}>
+    <div className={style.Signup}>
       <h1>Sign Up</h1>
       <form className={style.form} onSubmit={handleSignup}>
         <div>

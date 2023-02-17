@@ -47,7 +47,7 @@ function CommentsSection({ postAuthor, postId }) {
   }
 
   return (
-    <div className={style.CommentsSectionContainer}>
+    <div className={style.CommentsSection}>
       <h1>{totalNumComments} Comments</h1>
       <CommentForm onSubmit={handleSubmit} />
       {comments.map((comment) => {

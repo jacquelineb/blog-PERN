@@ -1,6 +1,6 @@
 @import './mixins';
 
-.container {
+.Login {
   @include flex-column-center;
   margin-top: 5vh;
 }

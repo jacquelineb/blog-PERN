@@ -61,7 +61,7 @@ function BlogPostEditor({ editingPost = null }) {
   }
 
   return (
-    <div className={style.BlogPostEditorContainer}>
+    <div className={style.BlogPostEditor}>
       <form onSubmit={handleSubmit}>
         <input
           className={style.title}

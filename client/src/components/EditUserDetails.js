@@ -68,7 +68,7 @@ function EditUserDetails() {
   }
 
   return (
-    <div className={style.EditUserDetailsContainer}>
+    <div className={style.EditUserDetails}>
       {isLoading ? null : (
         <form onSubmit={handleSave}>
           <div className={style.avatarChange}>

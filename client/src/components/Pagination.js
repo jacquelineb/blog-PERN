@@ -3,7 +3,7 @@ import style from '../styles/Pagination.module.scss';
 
 function Pagination({ currPage, totalNumPages, onPageChange }) {
   return (
-    <div className={style.container}>
+    <div className={style.Pagination}>
       <div className={style.buttonsContainer}>
         {currPage > 1 ? (
           <div className={style.previous}>

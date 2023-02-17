@@ -1,6 +1,6 @@
 @import './mixins';
 
-.container {
+.Signup {
   @include flex-column-center;
   margin-top: 5vh;
 }
