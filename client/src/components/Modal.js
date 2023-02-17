@@ -1,24 +1,29 @@
 import React, { useEffect } from 'react';
-import styles from '../styles/Modal.module.scss';
+import ReactDOM from 'react-dom';
+import style from '../styles/Modal.module.scss';
 
-function Modal({ display, handleClose, children }) {
+function Modal({ active, handleClose, title, content }) {
   useEffect(() => {
-    if (display) {
+    if (active) {
       document.body.style.overflowY = 'hidden';
     } else {
       document.body.style.overflowY = 'scroll';
     }
     return () => (document.body.style.overflowY = 'scroll');
-  }, [display]);
+  }, [active]);
 
-  return display ? (
-    <div className={styles.modalContainer}>
-      <div className={styles.modalContent}>
-        <button onClick={handleClose}>Close</button>
-        {children}
-      </div>
-    </div>
-  ) : null;
+  return active
+    ? ReactDOM.createPortal(
+        <div className={style.modalContainer}>
+          <div className={style.modalContent}>
+            <button onClick={handleClose}>Close</button>
+            <div className={style.title}>{title}</div>
+            {content}
+          </div>
+        </div>,
+        document.getElementById('root')
+      )
+    : null;
 }
 
 export default Modal;

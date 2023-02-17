@@ -6,45 +6,41 @@ import Modal from './Modal';
 import style from '../styles/PostTools.module.scss';
 
 function CreateBlogPost() {
-  const [showModalForm, setShowModalForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
-      <button className={style.createPostBtn} onClick={() => setShowModalForm(true)}>
+      <button className={style.createPostBtn} onClick={() => setShowModal(true)}>
         Create new post
       </button>
       <Modal
-        display={showModalForm}
-        handleClose={() => {
-          setShowModalForm(false);
-        }}
-      >
-        <p>Create a new post</p>
-        <BlogPostEditor />
-      </Modal>
+        active={showModal}
+        handleClose={() => setShowModal(false)}
+        title='Creating new post'
+        content={<BlogPostEditor />}
+      />
     </>
   );
 }
 
 function EditBlogPost({ originalPost }) {
-  const [showModalForm, setShowModalForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <button
         className={style.editPostBtn}
         title='Edit post'
-        onClick={() => setShowModalForm(true)}
+        onClick={() => setShowModal(true)}
       >
         <Icon name='edit' size='24' />
       </button>
       <Modal
-        display={showModalForm}
-        handleClose={() => {
-          setShowModalForm(false);
-        }}
-      >
-        <p>Editing post</p>
-        <BlogPostEditor editingPost={originalPost} />
-      </Modal>
+        active={showModal}
+        handleClose={() => setShowModal(false)}
+        title='Editing post'
+        content={<BlogPostEditor editingPost={originalPost} />}
+      />
     </>
   );
 }
