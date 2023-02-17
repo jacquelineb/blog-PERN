@@ -6,6 +6,8 @@ import BlogPostWithComments from './pages/BlogPostWithComments';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import NotFound from './pages/NotFound';
+import Landing from './pages/Landing';
 
 const routes = (
   <Switch>
@@ -24,7 +26,12 @@ const routes = (
     <PrivateRoute exact path='/dashboard'>
       <Dashboard />
     </PrivateRoute>
-    <Redirect to='/' />
+    <Route exact path='/'>
+      <Landing />
+    </Route>
+    <Route path='*'>
+      <NotFound />
+    </Route>
   </Switch>
 );
 
