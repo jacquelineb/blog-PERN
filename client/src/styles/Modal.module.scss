@@ -12,6 +12,17 @@
   z-index: 1;
 }
 
+.closeBtn {
+  border-style: none;
+  background-color: inherit;
+  color: currentColor;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-top: 4px;
+  margin-right: 4px;
+}
+
 .modalContent {
   background-color: white;
   display: block;
