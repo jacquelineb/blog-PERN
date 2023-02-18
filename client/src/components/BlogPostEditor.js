@@ -19,6 +19,13 @@ function BlogPostEditor({ editingPost = null }) {
     if (!bodyEditor.current) {
       bodyEditor.current = createEditor(editingPost ? editingPost.body : []);
     }
+    return () => {
+      //Editor.js appends some random divs with the class 'ct' whenever an instance of the editor is created
+      //This cleanup function removes those divs
+      document.body
+        .querySelectorAll('div.ct')
+        .forEach((node) => document.body.removeChild(node));
+    };
   }, [editingPost]);
 
   async function handleSubmit(e) {
