@@ -37,6 +37,12 @@
   text-align: right;
 }
 
+.userCardWrapper {
+  position: relative;
+  top: -66px;
+  margin-bottom: -66px;
+}
+
 @media only screen and (min-width: 950px) {
   .userCardWrapper {
     display: none;
