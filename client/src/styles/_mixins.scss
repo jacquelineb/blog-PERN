@@ -26,6 +26,10 @@
     font-weight: 600;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   input:not([type='checkbox']),
   button {
     margin: 2px 0;
