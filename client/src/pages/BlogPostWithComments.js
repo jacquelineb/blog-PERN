@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getPost } from '../api/posts';
 import { getUserDetails } from '../api/users';
 import Avatar from '../components/Avatar';
@@ -44,8 +44,16 @@ function BlogPostWithComments() {
           {post ? (
             <>
               <div className={style.author}>
-                <Avatar src={author.avatar} alt={`${author.username}'s avatar`} size='small' />
-                <div>{post.author}</div>
+                <Link className={style.link} to={`/profile/${post.author}`}>
+                  <Avatar
+                    src={author.avatar}
+                    alt={`${author.username}'s avatar`}
+                    size='small'
+                  />
+                </Link>
+                <Link className={style.link} to={`/profile/${post.author}`}>
+                  {post.author}
+                </Link>
               </div>
               <BlogPost post={post} />
               <CommentsSection postAuthor={post.author} postId={post.id} />
