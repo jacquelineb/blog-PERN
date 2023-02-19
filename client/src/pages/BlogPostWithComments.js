@@ -6,6 +6,7 @@ import Avatar from '../components/Avatar';
 import BlogPost from '../components/BlogPost';
 import CommentsSection from '../components/CommentsSection';
 import LoadingSpinner from '../components/LoadingSpinner';
+import NotFound from '../pages/NotFound';
 import Page from '../layouts/Page';
 import UserCard from '../components/UserCard';
 import style from '../styles/BlogPostWithComments.module.scss';
@@ -19,15 +20,21 @@ function BlogPostWithComments() {
   useEffect(() => {
     (async () => {
       const _post = await getPost(postId);
-      const _author = await getUserDetails(_post.author);
       setPost(_post);
-      setAuthor(_author);
+      if (_post) {
+        const _author = await getUserDetails(_post.author);
+        setAuthor(_author);
+      }
       setIsLoading(false);
     })();
   }, [postId]);
 
   if (isLoading) {
     return <LoadingSpinner />;
+  }
+
+  if (!post) {
+    return <NotFound />;
   }
 
   return (
