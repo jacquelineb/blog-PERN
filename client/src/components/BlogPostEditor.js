@@ -4,7 +4,7 @@ import { uploadFileToS3Bucket } from '../api/storage.js';
 import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
 import createEditor from '../utils/createEditor.js';
 import style from '../styles/BlogPostEditorJs.module.scss';
-import '../styles/Editor.css';
+import '../styles/Editor.scss';
 
 function BlogPostEditor({ editingPost = null }) {
   const titleRef = useRef();
