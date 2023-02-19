@@ -22,7 +22,7 @@ router.get('/count', async (req, res) => {
   }
 });
 
-// Get posts by user
+// Get a list of posts by user
 router.get('/', async (req, res) => {
   const { username, limit, offset } = req.query;
   try {
@@ -56,7 +56,7 @@ router.get('/:id', async (req, res) => {
       WHERE post.id = $1`,
       [id]
     );
-    res.status(200).json(posts.rows[0]);
+    res.status(200).json(posts.rowCount ? posts.rows[0] : null);
   } catch (error) {
     console.error(error);
     res.status(500).json('Server Error');
