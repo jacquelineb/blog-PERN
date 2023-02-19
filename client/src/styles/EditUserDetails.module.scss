@@ -4,17 +4,10 @@
 }
 
 .avatarChange {
-  text-align: center;
-}
-
-.avatarPreview {
-  height: 180px;
-  width: 180px;
-  border-radius: 50%;
-  padding: 2px;
-  background-color: white;
-  display: block;
-  margin: 12px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .biographyInput {

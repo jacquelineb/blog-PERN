@@ -72,43 +72,42 @@ function EditUserDetails() {
       {isLoading ? null : (
         <form onSubmit={handleSave}>
           <div className={style.avatarChange}>
+            <Avatar src={avatar} alt={`${authUser}'s avatar`} size='large' />
             <div>
-              <Avatar src={avatar} alt={`${authUser}'s avatar`} size='large' />
+              <input
+                type='file'
+                id='upload'
+                name='upload'
+                accept='image/jpeg, image/jpg, image/png, image/webp'
+                onChange={(e) => {
+                  if (e.target.files[0].size <= 300000) {
+                    setSelectedImageFile(e.target.files[0]);
+                  } else {
+                    alert('File size is too big! (Limit 300kb)');
+                  }
+                }}
+                hidden
+              />
+              <button
+                type='button'
+                onClick={() => {
+                  document.getElementById('upload').click();
+                }}
+              >
+                Change avatar
+              </button>
+
+              <button
+                type='button'
+                disabled={avatar === originalUserData.current.avatar}
+                onClick={() => {
+                  URL.revokeObjectURL(avatar);
+                  setSelectedImageFile(null);
+                }}
+              >
+                Reset
+              </button>
             </div>
-
-            <input
-              type='file'
-              id='upload'
-              name='upload'
-              accept='image/jpeg, image/jpg, image/png, image/webp'
-              onChange={(e) => {
-                if (e.target.files[0].size <= 300000) {
-                  setSelectedImageFile(e.target.files[0]);
-                } else {
-                  alert('File size is too big! (Limit 300kb)');
-                }
-              }}
-              hidden
-            />
-            <button
-              type='button'
-              onClick={() => {
-                document.getElementById('upload').click();
-              }}
-            >
-              Change avatar
-            </button>
-
-            <button
-              type='button'
-              disabled={avatar === originalUserData.current.avatar}
-              onClick={() => {
-                URL.revokeObjectURL(avatar);
-                setSelectedImageFile(null);
-              }}
-            >
-              Reset
-            </button>
           </div>
 
           <div>
