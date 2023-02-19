@@ -25,6 +25,10 @@
   margin-right: 0 !important;
 }
 
+.codex-editor__redactor {
+  padding-bottom: 50px !important;
+}
+
 .ce-toolbar__actions {
   background-color: white;
   border: 1px solid black;
