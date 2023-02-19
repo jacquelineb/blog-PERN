@@ -3,3 +3,8 @@
   background-color: black;
   color: white;
 }
+
+::selection {
+  background-color: Highlight;
+  color: HighlightText;
+}

@@ -6,11 +6,6 @@
   padding: 0;
 }
 
-::selection {
-  background-color: Highlight;
-  color: HighlightText;
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
