@@ -26,43 +26,37 @@ function BlogPostWithComments() {
     })();
   }, [postId]);
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <>
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <Page>
-          <Page.Main>
-            <div className={style.BlogPostWithComments}>
-              {post ? (
-                <>
-                  <div className={style.author}>
-                    <Avatar
-                      src={author.avatar}
-                      alt={`${author.username}'s avatar`}
-                      size='small'
-                    />
-                    <div>{post.author}</div>
-                  </div>
-                  <BlogPost post={post} />
-                  <CommentsSection postAuthor={post.author} postId={post.id} />
-                </>
-              ) : null}
-            </div>
-          </Page.Main>
-          <Page.Sidebar>
-            <div className={style.sticky}>
-              <UserCard
-                avatar={author.avatar}
-                username={author.username}
-                bio={author.bio}
-                size='large'
-              />
-            </div>
-          </Page.Sidebar>
-        </Page>
-      )}
-    </>
+    <Page>
+      <Page.Main>
+        <div className={style.BlogPostWithComments}>
+          {post ? (
+            <>
+              <div className={style.author}>
+                <Avatar src={author.avatar} alt={`${author.username}'s avatar`} size='small' />
+                <div>{post.author}</div>
+              </div>
+              <BlogPost post={post} />
+              <CommentsSection postAuthor={post.author} postId={post.id} />
+            </>
+          ) : null}
+        </div>
+      </Page.Main>
+      <Page.Sidebar>
+        <div className={style.sticky}>
+          <UserCard
+            avatar={author.avatar}
+            username={author.username}
+            bio={author.bio}
+            size='large'
+          />
+        </div>
+      </Page.Sidebar>
+    </Page>
   );
 }
 
