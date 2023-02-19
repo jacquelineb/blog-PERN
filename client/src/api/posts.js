@@ -1,5 +1,4 @@
 async function createPost(title, body) {
-  let isCreated = false;
   try {
     const response = await fetch('/api/posts/', {
       method: 'POST',
@@ -10,18 +9,18 @@ async function createPost(title, body) {
       credentials: 'include',
       body: JSON.stringify({ title, body }),
     });
+
+    // Return bool indicating whether or not post was successfully created
     if (response.status === 200) {
-      isCreated = true;
+      return true;
     }
+    return false;
   } catch (error) {
     console.error(error);
-  } finally {
-    return isCreated;
   }
 }
 
 async function editPost(id, title, body) {
-  let isUpdated = false;
   try {
     const response = await fetch(`/api/posts/${id}`, {
       method: 'PUT',
@@ -32,75 +31,60 @@ async function editPost(id, title, body) {
       credentials: 'include',
       body: JSON.stringify({ title, body }),
     });
+
+    // Return bool indicating whether or not post was successfully edited
     if (response.status === 200) {
-      isUpdated = true;
+      return true;
     }
+    return false;
   } catch (error) {
     console.error(error);
-  } finally {
-    return isUpdated;
   }
 }
 
 async function deletePost(postId) {
-  let isDeleted = false;
   try {
     const response = await fetch(`/api/posts/${postId}`, {
       method: 'DELETE',
       credentials: 'include',
     });
+
+    // Return bool indicating whether or not post was successfully deleted
     if (response.status === 200) {
-      isDeleted = true;
+      return true;
     }
+    return false;
   } catch (error) {
     console.error(error);
-  } finally {
-    return isDeleted;
   }
 }
 
 async function getTotalPostCount(username) {
-  let numPosts = 0;
   try {
     const response = await fetch(`/api/posts/count?username=${username}`);
-    if (response.status === 200) {
-      numPosts = await response.json();
-    }
-    return numPosts;
+    return await response.json();
   } catch (error) {
     console.error(error);
-  } finally {
-    return numPosts;
   }
 }
 
 async function getPosts(username, limit, offset) {
-  let posts = [];
   try {
     const response = await fetch(
       `/api/posts?username=${username}&limit=${limit}&offset=${offset}`
     );
-    if (response.status === 200) {
-      posts = await response.json();
-    }
+    return await response.json();
   } catch (error) {
     console.error(error);
-  } finally {
-    return posts;
   }
 }
 
 async function getPost(id) {
-  let post = null;
   try {
     const response = await fetch(`/api/posts/${id}`);
-    if (response.status === 200) {
-      post = await response.json();
-    }
+    return await response.json();
   } catch (error) {
     console.error(error);
-  } finally {
-    return post;
   }
 }
 
