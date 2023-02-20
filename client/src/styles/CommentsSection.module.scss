@@ -9,8 +9,10 @@
 .CommentForm {
   .bodyInput {
     width: 100%;
-    height: 100px;
+    height: 200px;
     font-size: 14px;
+    resize: vertical;
+    display: block;
   }
 }
 
@@ -19,6 +21,8 @@
 
   p {
     margin: 4px 0;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
   }
 
   .author {
