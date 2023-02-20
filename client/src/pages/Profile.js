@@ -104,9 +104,11 @@ function Profile() {
                         </div>
                       ) : null}
                       <BlogPost post={post} />
-                      <Link className={style.commentsLink} to={`/post/${post.id}`}>
-                        Comments
-                      </Link>
+                      <div className={style.alignRight}>
+                        <Link className={style.commentsLink} to={`/post/${post.id}`}>
+                          Comments
+                        </Link>
+                      </div>
                     </div>
                   );
                 })}
