@@ -1,5 +1,6 @@
 import React from 'react';
 import style from '../styles/Pagination.module.scss';
+import Icon from './Icon';
 
 const SIBLING_COUNT = 2; // min number of page numbers to show on left and right of current page link
 
@@ -58,7 +59,7 @@ function Pagination({ currPage, totalNumPages, onPageChange }) {
               }
             }}
           >
-            Prev
+            <Icon name='chevronLeft' size='20' />
           </button>
         </li>
         {pageNumbers.map((pageNum) => {
@@ -91,7 +92,7 @@ function Pagination({ currPage, totalNumPages, onPageChange }) {
               }
             }}
           >
-            Next
+            <Icon name='chevronRight' size='20' />
           </button>
         </li>
       </ul>

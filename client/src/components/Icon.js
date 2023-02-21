@@ -33,6 +33,18 @@ const ICONS = {
       <path d='M10 12l4 4m0 -4l-4 4' />
     </>
   ),
+  chevronLeft: (
+    <>
+      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+      <polyline points='15 6 9 12 15 18' />
+    </>
+  ),
+  chevronRight: (
+    <>
+      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+      <polyline points='9 6 15 12 9 18' />
+    </>
+  ),
   chevronDown: (
     <>
       <path stroke='none' d='M0 0h24v24H0z' fill='none' />
