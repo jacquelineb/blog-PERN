@@ -2,27 +2,31 @@
   margin: 10px;
 }
 
-.buttonsContainer {
+.pageButtons {
+  list-style-type: none;
   display: flex;
-
-  button {
-    background: none;
-    border: none;
-    color: white;
-    padding: 4px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-
-  .previous {
-    margin-right: auto;
-  }
-
-  .next {
-    margin-left: auto;
-  }
+  justify-content: center;
+  gap: 10px;
 }
 
-.pageNumber {
-  text-align: right;
+.pageButton {
+  background: none;
+  border-style: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.2;
+  }
+
+  &.active {
+    color: red;
+    text-decoration: underline;
+  }
+
+  &:disabled,
+  &.active {
+    cursor: unset;
+  }
 }
