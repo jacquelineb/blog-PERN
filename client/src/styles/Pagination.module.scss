@@ -6,6 +6,7 @@
   list-style-type: none;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
 }
 
@@ -16,17 +17,20 @@
   font-size: 16px;
   cursor: pointer;
 
+  &:hover {
+    text-decoration: underline;
+  }
+
   &:disabled {
     opacity: 0.2;
   }
 
   &.active {
     color: red;
-    text-decoration: underline;
   }
 
   &:disabled,
   &.active {
-    cursor: unset;
+    pointer-events: none;
   }
 }
