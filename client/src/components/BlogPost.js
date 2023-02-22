@@ -1,12 +1,15 @@
 import React from 'react';
 import formatDate from '../utils/formatDate';
 import style from '../styles/BlogPost.module.scss';
+import { Link } from 'react-router-dom';
 
 function BlogPost({ post }) {
   const { id, title, body, created_on } = post;
   return (
     <div>
-      <h2 className={style.title}>{title}</h2>
+      <h2 className={style.title}>
+        <Link to={`/post/${post.id}`}>{title}</Link>
+      </h2>
       <p className={style.postMetaData}>
         Posted on <span className={style.date}>{formatDate(created_on).date}</span>
       </p>
