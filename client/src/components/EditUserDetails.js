@@ -42,6 +42,7 @@ function EditUserDetails() {
       const promises = [];
       if (avatar !== originalUserData.current.avatar) {
         const croppedImageFile = await convertObjectUrlToFile(avatar);
+        URL.revokeObjectURL(avatar);
         const urlToUploadedImage = await uploadFileToS3Bucket(croppedImageFile);
         if (urlToUploadedImage) {
           promises.push(updateUserAvatar(urlToUploadedImage));

@@ -15,7 +15,6 @@ function ImageCropper({ image, onApply }) {
     try {
       const croppedImage = await getCroppedImg(image, croppedAreaPixels);
       onApply(croppedImage);
-      // URL.revokeObjectURL(croppedImage); // I need to revoke the url after, but uncommenting causes issues with the image not uploading
     } catch (e) {
       console.error(e);
     }
