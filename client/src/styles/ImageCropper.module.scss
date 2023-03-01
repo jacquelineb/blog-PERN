@@ -1,0 +1,19 @@
+.ImageCropper {
+  text-align: center;
+}
+
+.cropperWrapper {
+  position: relative;
+  width: 100vw;
+  max-width: 500px;
+  aspect-ratio: 1;
+}
+
+.zoomSlider {
+  margin: 10px;
+}
+
+.btnsContainer {
+  text-align: right;
+  margin: 10px;
+}

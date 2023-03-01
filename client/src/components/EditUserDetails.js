@@ -2,7 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useAuthContext } from '../context/AuthContext.js';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../api/storage.js';
 import { getUserDetails, updateUserBiography, updateUserAvatar } from '../api/users.js';
+import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
 import Avatar from './Avatar.js';
+import ImageCropper from './ImageCropper.js';
+import Modal from './Modal';
 import style from '../styles/EditUserDetails.module.scss';
 
 const BIOGRAPHY_CHAR_LIMIT = 160;
@@ -12,8 +15,9 @@ function EditUserDetails() {
   const originalUserData = useRef({});
   const [avatar, setAvatar] = useState('');
   const [biography, setBiography] = useState('');
-  const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showImageCropper, setShowImageCropper] = useState(false);
+  const uploadedImage = useRef(null);
 
   useEffect(() => {
     async function getUserData() {
@@ -32,20 +36,13 @@ function EditUserDetails() {
     getUserData();
   }, [authUser]);
 
-  useEffect(() => {
-    if (selectedImageFile) {
-      setAvatar(URL.createObjectURL(selectedImageFile));
-    } else {
-      setAvatar(originalUserData.current.avatar);
-    }
-  }, [selectedImageFile]);
-
   async function handleSave(e) {
     e.preventDefault();
     try {
       const promises = [];
       if (avatar !== originalUserData.current.avatar) {
-        const urlToUploadedImage = await uploadFileToS3Bucket(selectedImageFile);
+        const croppedImageFile = await convertObjectUrlToFile(avatar);
+        const urlToUploadedImage = await uploadFileToS3Bucket(croppedImageFile);
         if (urlToUploadedImage) {
           promises.push(updateUserAvatar(urlToUploadedImage));
           promises.push(
@@ -67,72 +64,95 @@ function EditUserDetails() {
     }
   }
 
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <div className={style.EditUserDetails}>
-      {isLoading ? null : (
-        <form onSubmit={handleSave}>
-          <div className={style.avatarChange}>
-            <Avatar src={avatar} alt={`${authUser}'s avatar`} size='large' />
-            <div>
-              <input
-                type='file'
-                id='upload'
-                name='upload'
-                accept='image/jpeg, image/jpg, image/png, image/webp'
-                onChange={(e) => {
-                  if (e.target.files[0].size <= 300000) {
-                    setSelectedImageFile(e.target.files[0]);
-                  } else {
-                    alert('File size is too big! (Limit 300kb)');
-                  }
-                }}
-                hidden
-              />
-              <button
-                type='button'
-                onClick={() => {
-                  document.getElementById('upload').click();
-                }}
-              >
-                Change avatar
-              </button>
-
-              <button
-                type='button'
-                disabled={avatar === originalUserData.current.avatar}
-                onClick={() => {
-                  URL.revokeObjectURL(avatar);
-                  setSelectedImageFile(null);
-                }}
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-
+      <form onSubmit={handleSave}>
+        <div className={style.avatarChange}>
+          <Avatar src={avatar} alt={`${authUser}'s avatar`} size='large' />
           <div>
-            <label htmlFor='biography'>Biography</label>
-            <textarea
-              className={style.biographyInput}
-              id='biography'
-              name='biography'
-              type='text'
-              maxLength={BIOGRAPHY_CHAR_LIMIT}
-              value={biography}
+            <input
+              type='file'
+              id='upload'
+              name='upload'
+              accept='image/jpeg, image/jpg, image/png, image/webp'
               onChange={(e) => {
-                setBiography(e.target.value);
+                if (e.target.files[0].size <= 1000000) {
+                  uploadedImage.current = e.target.files[0];
+                  setShowImageCropper(true);
+                } else {
+                  alert('File size is too big! (Limit 1MB)');
+                }
               }}
+              hidden
             />
-            <p
-              className={style.characterLimit}
-            >{`Characters: ${biography.length} / ${BIOGRAPHY_CHAR_LIMIT}`}</p>
-          </div>
+            <button
+              type='button'
+              onClick={() => {
+                document.getElementById('upload').click();
+              }}
+            >
+              Change avatar
+            </button>
 
-          <button className={style.submitButton} type='submit' id='save'>
-            Save
-          </button>
-        </form>
-      )}
+            <button
+              type='button'
+              disabled={avatar === originalUserData.current.avatar}
+              onClick={() => {
+                setAvatar(originalUserData.current.avatar);
+                URL.revokeObjectURL(uploadedImage.current);
+                uploadedImage.current = null;
+              }}
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor='biography'>Biography</label>
+          <textarea
+            className={style.biographyInput}
+            id='biography'
+            name='biography'
+            type='text'
+            maxLength={BIOGRAPHY_CHAR_LIMIT}
+            value={biography}
+            onChange={(e) => {
+              setBiography(e.target.value);
+            }}
+          />
+          <p
+            className={style.characterLimit}
+          >{`Characters: ${biography.length} / ${BIOGRAPHY_CHAR_LIMIT}`}</p>
+        </div>
+
+        <button className={style.submitButton} type='submit' id='save'>
+          Save
+        </button>
+      </form>
+
+      <Modal
+        active={showImageCropper}
+        handleClose={() => {
+          URL.revokeObjectURL(uploadedImage.current);
+          uploadedImage.current = null;
+          setShowImageCropper(false);
+        }}
+        title=''
+        content={
+          <ImageCropper
+            image={uploadedImage.current && URL.createObjectURL(uploadedImage.current)}
+            onApply={(croppedImg) => {
+              setAvatar(croppedImg);
+              setShowImageCropper(false);
+            }}
+          />
+        }
+      />
     </div>
   );
 }
