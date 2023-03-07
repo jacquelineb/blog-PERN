@@ -38,7 +38,7 @@ function BlogPosts() {
   }, [author]);
 
   return (
-    <div className={style.Posts}>
+    <div className={style.BlogPosts}>
       {authUser === author ? (
         <div className={style.postTools}>
           <CreateBlogPost />
