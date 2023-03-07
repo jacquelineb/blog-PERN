@@ -17,20 +17,18 @@ import style from '../styles/Profile.module.scss';
 
 function Profile() {
   const { path } = useRouteMatch();
-  const params = useParams();
-  const profile = params.username;
-
+  const { username } = useParams();
   const [user, setUser] = useState({ data: undefined, isLoading: true });
 
   useEffect(() => {
     (async () => {
-      const userData = await getUserDetails(profile);
+      const userData = await getUserDetails(username);
       setUser({
         data: userData,
         isLoading: false,
       });
     })();
-  }, [profile]);
+  }, [username]);
 
   if (user.isLoading) {
     return null;
@@ -62,7 +60,7 @@ function Profile() {
               </div>
               <BlogPosts />
             </Route>
-            <Redirect to={`/profile/${profile}`} />
+            <Redirect to={`/profile/${username}`} />
           </Switch>
         </div>
         <div className={style.sideContent}>
