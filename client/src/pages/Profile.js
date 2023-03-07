@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom';
 import { getUserDetails } from '../api/users';
-import { getTotalPostCount, getPosts } from '../api/posts';
-import { useAuthContext } from '../context/AuthContext';
-import BlogPost from '../components/BlogPost';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Page from '../layouts/Page';
-import Pagination from '../components/Pagination';
-import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from '../components/PostTools';
+import BlogPosts from '../components/BlogPosts';
+import BlogPostWithComments from '../components/BlogPostWithComments';
+import NotFound from './NotFound';
 import UserCard from '../components/UserCard';
 import banner from '../assets/header.png';
 import style from '../styles/Profile.module.scss';
-import NotFound from './NotFound';
-
-const POSTS_PER_PAGE = 10;
 
 function Profile() {
-  const { authUser } = useAuthContext();
-  const history = useHistory();
+  const { path } = useRouteMatch();
   const params = useParams();
   const profile = params.username;
-  let pageNum = params.pageNum;
-  pageNum = parseInt(pageNum) || 1;
 
   const [user, setUser] = useState({ data: undefined, isLoading: true });
-  const [posts, setPosts] = useState({ data: [], isLoading: true });
-  const [totalNumPosts, setTotalNumPosts] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -37,28 +32,6 @@ function Profile() {
     })();
   }, [profile]);
 
-  useEffect(() => {
-    if (!user.isLoading && user.data) {
-      (async () => {
-        const limit = POSTS_PER_PAGE;
-        const offset = POSTS_PER_PAGE * (pageNum - 1);
-        const postData = await getPosts(user.data.username, limit, offset);
-        setPosts({
-          data: postData,
-          isLoading: false,
-        });
-      })();
-    }
-  }, [user, pageNum]);
-
-  useEffect(() => {
-    if (!user.isLoading && user.data) {
-      (async () => {
-        setTotalNumPosts(await getTotalPostCount(user.data.username));
-      })();
-    }
-  }, [user]);
-
   if (user.isLoading) {
     return null;
   }
@@ -68,75 +41,42 @@ function Profile() {
   }
 
   return (
-    <Page>
-      <Page.Main>
-        <div>
-          <img className={style.banner} src={banner} alt='banner' />
-          <div className={style.userCardWrapper}>
+    <Router>
+      <div className={style.Profile}>
+        <div className={style.mainContent}>
+          <Switch>
+            <Route exact path={`${path}/post/:postId([1-9][0-9]*)`}>
+              <BlogPostWithComments />
+            </Route>
+            <Route exact path={[`${path}/`, `${path}/page/:pageNum([1-9][0-9]*)`]}>
+              <div>
+                <img className={style.banner} src={banner} alt='banner' />
+                <div className={style.userCardWrapper}>
+                  <UserCard
+                    username={user.data.username}
+                    bio={user.data.bio}
+                    avatar={user.data.avatar}
+                    size='medium'
+                  />
+                </div>
+              </div>
+              <BlogPosts />
+            </Route>
+            <Redirect to={`/profile/${profile}`} />
+          </Switch>
+        </div>
+        <div className={style.sideContent}>
+          <div className={style.sticky}>
             <UserCard
               username={user.data.username}
               bio={user.data.bio}
               avatar={user.data.avatar}
-              size='medium'
+              size='large'
             />
           </div>
         </div>
-
-        <div className={style.mainContent}>
-          {authUser === user.data.username ? (
-            <div className={style.postTools}>
-              <CreateBlogPost />
-            </div>
-          ) : null}
-
-          <div>
-            {posts.isLoading ? (
-              <LoadingSpinner />
-            ) : (
-              <>
-                {posts.data.map((post) => {
-                  return (
-                    <div className={style.postContainer} key={post.id} data-post-id={post.id}>
-                      {authUser === user.data.username ? (
-                        <div className={style.postTools}>
-                          <EditBlogPost originalPost={post} />
-                          <DeleteBlogPost postId={post.id} />
-                        </div>
-                      ) : null}
-                      <BlogPost post={post} />
-                      <div className={style.alignRight}>
-                        <Link className={style.commentsLink} to={`/post/${post.id}`}>
-                          Comments
-                        </Link>
-                      </div>
-                    </div>
-                  );
-                })}
-              </>
-            )}
-          </div>
-
-          <Pagination
-            currPage={pageNum}
-            totalNumPages={Math.ceil(totalNumPosts / POSTS_PER_PAGE)}
-            onPageChange={(pageNum) => {
-              history.push(`/profile/${profile}/page/${pageNum}`);
-            }}
-          />
-        </div>
-      </Page.Main>
-
-      <Page.Sidebar>
-        <div className={style.sticky}>
-          <UserCard
-            username={user.data.username}
-            bio={user.data.bio}
-            avatar={user.data.avatar}
-            size='large'
-          />
-        </div>
-      </Page.Sidebar>
-    </Page>
+      </div>
+    </Router>
   );
 }
 

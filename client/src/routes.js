@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useAuthContext } from './context/AuthContext';
 import Profile from './pages/Profile';
-import BlogPostWithComments from './pages/BlogPostWithComments';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -11,11 +10,8 @@ import Landing from './pages/Landing';
 
 const routes = (
   <Switch>
-    <Route exact path={['/profile/:username', '/profile/:username/page/:pageNum([1-9][0-9]*)']}>
+    <Route path={'/profile/:username'}>
       <Profile />
-    </Route>
-    <Route exact path='/post/:postId([1-9][0-9]*)'>
-      <BlogPostWithComments />
     </Route>
     <Route exact path='/login'>
       <Login />

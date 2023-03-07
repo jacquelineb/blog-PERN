@@ -1,8 +1,10 @@
-@import './mixins';
-
-.mainContent {
-  margin: 24px auto;
-  max-width: 700px;
+.Profile {
+  max-width: 1200px;
+  margin: 0 auto;
+  border-left: 1px solid #111;
+  border-right: 1px solid #111;
+  background-color: #0b0b0b;
+  padding-bottom: 12px;
 }
 
 .banner {
@@ -14,29 +16,12 @@
 
 .sticky {
   position: sticky;
-  top: 0;
+  top: 60px;
+}
+
+.sideContent {
+  display: none;
   padding-top: 15vh;
-}
-
-.postContainer {
-  @include blog-post-container;
-}
-
-.postTools {
-  display: flex;
-  justify-content: flex-end;
-  gap: 4px;
-  margin: 6px;
-}
-
-.alignRight {
-  text-align: right;
-}
-
-.commentsLink {
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: bold;
 }
 
 .userCardWrapper {
@@ -46,6 +31,22 @@
 }
 
 @media only screen and (min-width: 950px) {
+  .Profile {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .mainContent {
+    flex-grow: 1;
+    align-self: center;
+  }
+
+  .sideContent {
+    border-left: 1px solid #111;
+    max-width: 300px;
+    display: block;
+  }
+
   .userCardWrapper {
     display: none;
   }
