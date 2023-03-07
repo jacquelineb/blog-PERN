@@ -6,11 +6,11 @@ import convertObjectUrlToFile from '../utils/convertObjectUrlToFile.js';
 import Avatar from './Avatar.js';
 import ImageCropper from './ImageCropper.js';
 import Modal from './Modal';
-import style from '../styles/EditUserDetails.module.scss';
+import style from '../styles/ProfileEditor.module.scss';
 
 const BIOGRAPHY_CHAR_LIMIT = 160;
 
-function EditUserDetails() {
+function ProfileEditor() {
   const { authUser } = useAuthContext();
   const originalUserData = useRef({});
   const [avatar, setAvatar] = useState('');
@@ -70,7 +70,7 @@ function EditUserDetails() {
   }
 
   return (
-    <div className={style.EditUserDetails}>
+    <div className={style.ProfileEditor}>
       <form onSubmit={handleSave}>
         <div className={style.avatarChange}>
           <Avatar src={avatar} alt={`${authUser}'s avatar`} size='large' />
@@ -158,4 +158,4 @@ function EditUserDetails() {
   );
 }
 
-export default EditUserDetails;
+export default ProfileEditor;

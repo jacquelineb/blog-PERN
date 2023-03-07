@@ -1,5 +1,5 @@
 import React from 'react';
-import EditUserDetails from '../components/EditUserDetails';
+import ProfileEditor from '../components/ProfileEditor';
 import style from '../styles/Dashboard.module.scss';
 
 function Dashboard() {
@@ -7,7 +7,7 @@ function Dashboard() {
     <div className={style.Dashboard}>
       <h1>Dashboard</h1>
       <div>
-        <EditUserDetails />
+        <ProfileEditor />
       </div>
     </div>
   );
