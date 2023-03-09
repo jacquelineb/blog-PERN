@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import getPost from '../../api/getPost';
-import getUser from '../../../user/api/getUser';
-import { Avatar } from '../../../user';
+import getUser from '../../../users/api/getUser';
+import { Avatar } from '../../../users';
 import BlogPost from '../BlogPost';
 import CommentsSection from '../../../comments';
 import LoadingSpinner from '../../../../components/LoadingSpinner';
