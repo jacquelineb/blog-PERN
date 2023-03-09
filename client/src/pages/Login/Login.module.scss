@@ -1,0 +1,16 @@
+@import '../../styles/mixins';
+
+.Login {
+  @include flex-column-center;
+  margin-top: 5vh;
+}
+
+.form {
+  @include form;
+}
+
+.errorMsg {
+  text-align: center;
+  color: red;
+  margin-bottom: 4px;
+}

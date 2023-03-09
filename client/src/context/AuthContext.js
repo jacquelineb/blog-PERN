@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { authVerify, authLogin, authLogout } from '../api/auth';
+import { authVerify, authLogin, authLogout } from '../services/auth';
 
 const AuthContext = createContext({});
 

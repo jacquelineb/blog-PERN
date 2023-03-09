@@ -1,0 +1,14 @@
+@import '../../styles/mixins';
+
+.Signup {
+  @include flex-column-center;
+  margin-top: 5vh;
+}
+
+.form {
+  @include form;
+}
+
+.errorMsg {
+  color: red;
+}

@@ -1,0 +1,20 @@
+@import '../../../../styles/mixins';
+
+.BlogPostWithComments {
+  @include blog-post-container;
+}
+
+.link {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.author {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid black;
+  font-weight: 600;
+  font-size: 18px;
+}

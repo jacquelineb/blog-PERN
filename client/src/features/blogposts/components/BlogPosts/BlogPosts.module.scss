@@ -1,0 +1,27 @@
+@import '../../../../styles/mixins';
+
+.BlogPosts {
+  max-width: 700px;
+  margin: 24px auto;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.commentsLink {
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.postTools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin: 6px;
+}
+
+.postContainer {
+  @include blog-post-container;
+}

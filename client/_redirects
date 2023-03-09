@@ -1,5 +1,0 @@
-# Redirects file for Netlify
-# Redirects from what the browser requests to what we serve
-
-/api/*    https://jacq-blog-app-server.herokuapp.com/api/:splat    200
-/*        /index.html    200
