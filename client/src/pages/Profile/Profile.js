@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect, Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
-import getUser from '../../features/user/api/getUser';
-import BlogPosts from '../../features/blogposts/components/BlogPosts';
-import BlogPostWithComments from '../../features/blogposts/components/BlogPostWithComments';
+import getUser from '../../features/users/api/getUser';
+import BlogPosts from '../../features/blogposts';
+import BlogPostWithComments from '../../features/blogposts';
 import NotFound from '../NotFound';
-import { UserCard } from '../../features/user';
+import { UserCard } from '../../features/users';
 import banner from '../../assets/header.png';
 import style from './Profile.module.scss';
 

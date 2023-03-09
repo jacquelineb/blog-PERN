@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileEditor from '../../features/user/components/ProfileEditor';
+import { ProfileEditor } from '../../features/users';
 import style from './Dashboard.module.scss';
 
 function Dashboard() {
