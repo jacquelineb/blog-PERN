@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getPost } from '../../api/posts';
-import { getUserDetails } from '../../../user/api/users';
+import getPost from '../../api/getPost';
+import getUser from '../../../user/api/getUser';
 import { Avatar } from '../../../user';
 import BlogPost from '../BlogPost';
 import CommentsSection from '../../../comments';
@@ -19,7 +19,7 @@ function BlogPostWithComments() {
       const _post = await getPost(postId);
       setPost(_post);
       if (_post) {
-        const _author = await getUserDetails(_post.author);
+        const _author = await getUser(_post.author);
         setAuthor(_author);
       }
       setIsLoading(false);

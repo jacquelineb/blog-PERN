@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAuthContext } from '../../../../context/AuthContext';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../../../../services/storage';
-import { getUserDetails, updateUserBiography, updateUserAvatar } from '../../api/users';
+import getUser from '../../api/getUser';
+import updateAvatar from '../../api/updateAvatar';
+import updateBiography from '../../api/updateBiography';
 import convertObjectUrlToFile from '../../../../utils/convertObjectUrlToFile';
 import Avatar from '../Avatar';
 import ImageCropper from '../../../../components/ImageCropper';
@@ -22,7 +24,7 @@ function ProfileEditor() {
   useEffect(() => {
     async function getUserData() {
       try {
-        const userData = await getUserDetails(authUser);
+        const userData = await getUser(authUser);
         if (userData) {
           setBiography(userData.bio);
           setAvatar(userData.avatar);
@@ -45,7 +47,7 @@ function ProfileEditor() {
         URL.revokeObjectURL(avatar);
         const urlToUploadedImage = await uploadFileToS3Bucket(croppedImageFile);
         if (urlToUploadedImage) {
-          promises.push(updateUserAvatar(urlToUploadedImage));
+          promises.push(updateAvatar(urlToUploadedImage));
           promises.push(
             // Delete the old avatar from storage
             deleteFileFromS3Bucket(originalUserData.current.avatar.split('/').pop())
@@ -54,7 +56,7 @@ function ProfileEditor() {
       }
 
       if (biography !== originalUserData.current.bio) {
-        promises.push(updateUserBiography(biography));
+        promises.push(updateBiography(biography));
       }
 
       if (promises.length) {

@@ -7,7 +7,7 @@ import {
   useParams,
   useRouteMatch,
 } from 'react-router-dom';
-import { getUserDetails } from '../../features/user/api/users';
+import getUser from '../../features/user/api/getUser';
 import BlogPosts from '../../features/blogposts/components/BlogPosts';
 import BlogPostWithComments from '../../features/blogposts/components/BlogPostWithComments';
 import NotFound from '../NotFound';
@@ -22,7 +22,7 @@ function Profile() {
 
   useEffect(() => {
     (async () => {
-      const userData = await getUserDetails(username);
+      const userData = await getUser(username);
       setUser({
         data: userData,
         isLoading: false,

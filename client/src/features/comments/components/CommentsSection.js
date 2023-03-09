@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import formatDate from '../../../utils/formatDate.js';
-import {
-  getCommentsForPost,
-  createCommentForPost,
-  getCommentById,
-  getNumCommentsForPost,
-} from '../api/comments.js';
+import createComment from '../api/createComment';
+import getComment from '../api/getComment';
+import getComments, { getCommentCount } from '../api/getComments';
 import style from './CommentsSection.module.scss';
 
 const COMMENTS_PER_LOAD = 25;
@@ -18,7 +15,7 @@ function CommentsSection({ postAuthor, postId }) {
 
   useEffect(() => {
     async function getAndSetComments() {
-      const comments = await getCommentsForPost(
+      const comments = await getComments(
         postId,
         COMMENTS_PER_LOAD,
         COMMENTS_PER_LOAD * (page - 1)
@@ -31,16 +28,16 @@ function CommentsSection({ postAuthor, postId }) {
 
   useEffect(() => {
     async function getAndSetTotalNumComments() {
-      const numComments = await getNumCommentsForPost(postId);
+      const numComments = await getCommentCount(postId);
       setTotalNumComments(numComments);
     }
     getAndSetTotalNumComments();
   }, [postId]);
 
   async function handleSubmit(comment) {
-    const commentId = await createCommentForPost(comment, postId);
+    const commentId = await createComment(comment, postId);
     if (commentId) {
-      const newComment = await getCommentById(commentId);
+      const newComment = await getComment(commentId);
       setComments((prevState) => [newComment, ...prevState]);
       setTotalNumComments(totalNumComments + 1);
     }

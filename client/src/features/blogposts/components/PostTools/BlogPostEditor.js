@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import { createPost, editPost } from '../../api/posts';
 import { uploadFileToS3Bucket } from '../../../../services/storage';
 import convertObjectUrlToFile from '../../../../utils/convertObjectUrlToFile';
+import createPost from '../../api/createPost';
+import editPost from '../../api/editPost';
 import createEditor from '../../utils/createEditor';
 import style from './BlogPostEditorJs.module.scss';
 import './Editor.scss';

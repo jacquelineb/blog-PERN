@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { deletePost } from '../../api/posts';
+import deletePost from '../../api/deletePost';
 import BlogPostEditor from './BlogPostEditor';
 import Icon from '../../../../components/Icon';
 import Modal from '../../../../components/Modal';

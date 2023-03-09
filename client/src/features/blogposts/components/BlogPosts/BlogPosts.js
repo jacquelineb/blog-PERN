@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../../context/AuthContext';
-import { getPosts, getTotalPostCount } from '../../api/posts';
+// import { getPosts, getTotalPostCount } from '../../api';
+import getPosts, { getTotalPostCount } from '../../api/getPosts';
 import BlogPost from '../BlogPost';
 import Pagination from '../../../../components/Pagination';
 import { CreateBlogPost, EditBlogPost, DeleteBlogPost } from '../PostTools';
