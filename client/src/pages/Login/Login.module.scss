@@ -1,12 +1,8 @@
-@import '../../styles/mixins';
-
 .Login {
-  @include flex-column-center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 5vh;
-}
-
-.form {
-  @include form;
 }
 
 .errorMsg {

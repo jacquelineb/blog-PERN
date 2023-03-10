@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext';
+import Form from '../../components/Form';
 import style from './Login.module.scss';
 
 function Login() {
@@ -23,19 +24,19 @@ function Login() {
   return (
     <div className={style.Login}>
       <h1>Log in</h1>
-      <form className={style.form} onSubmit={onSubmit}>
-        <div className={style.formSection}>
-          <label htmlFor='email'>Email:</label>
-          <input type='email' name='email' required />
-        </div>
-        <div className={style.formSection}>
-          <label htmlFor='password'>Password:</label>
-          <input type='password' name='password' required />
-        </div>
-        <div className={style.formSection}>
-          <button type='submit'>Log in</button>
-        </div>
-      </form>
+      <Form onSubmit={onSubmit}>
+        <Form.Section>
+          <Form.Label htmlFor='email'>Email:</Form.Label>
+          <Form.Input type='email' name='email' required />
+        </Form.Section>
+        <Form.Section>
+          <Form.Label htmlFor='password'>Password:</Form.Label>
+          <Form.Input type='password' name='password' required />
+        </Form.Section>
+        <Form.Section>
+          <Form.SubmitButton>Log in</Form.SubmitButton>
+        </Form.Section>
+      </Form>
       {error ? <div className={style.errorMsg}>{error}</div> : null}
       <div>
         Don't have an account? <Link to='/signup'>Sign up</Link>

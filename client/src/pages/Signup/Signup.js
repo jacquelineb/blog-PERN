@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Form from '../../components/Form';
 import style from './Signup.module.scss';
 
 function Signup() {
@@ -42,10 +43,10 @@ function Signup() {
   return (
     <div className={style.Signup}>
       <h1>Sign Up</h1>
-      <form className={style.form} onSubmit={handleSignup}>
-        <div>
-          <label htmlFor='username'>Username:</label>
-          <input
+      <Form onSubmit={handleSignup}>
+        <Form.Section>
+          <Form.Label htmlForm='username'>Username:</Form.Label>
+          <Form.Input
             type='text'
             id='username'
             name='username'
@@ -59,11 +60,10 @@ function Signup() {
           {errors && errors.usernameTaken ? (
             <div className={style.errorMsg}>Username already in use.</div>
           ) : null}
-        </div>
-
-        <div>
-          <label htmlFor='email'>Email:</label>
-          <input
+        </Form.Section>
+        <Form.Section>
+          <Form.Label htmlFor='email'>Email:</Form.Label>
+          <Form.Input
             type='email'
             id='email'
             name='email'
@@ -74,10 +74,10 @@ function Signup() {
           {errors && errors.emailTaken ? (
             <div className={style.errorMsg}>Email already in use.</div>
           ) : null}
-        </div>
-        <div>
-          <label htmlFor='password'>Password:</label>
-          <input
+        </Form.Section>
+        <Form.Section>
+          <Form.Label htmlFor='password'>Password:</Form.Label>
+          <Form.Input
             type='password'
             id='password'
             name='password'
@@ -87,8 +87,7 @@ function Signup() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
-          <input
+          <Form.Input
             className='pwCheckbox'
             type='checkbox'
             id='show-password'
@@ -102,14 +101,14 @@ function Signup() {
               }
             }}
           />
-          <label htmlFor='show-password'>
+          <Form.Label htmlFor='show-password'>
             <span>Show password</span>
-          </label>
-        </div>
-        <div>
-          <button type='submit'>Sign up</button>
-        </div>
-      </form>
+          </Form.Label>
+        </Form.Section>
+        <Form.Section>
+          <Form.SubmitButton>Sign up</Form.SubmitButton>
+        </Form.Section>
+      </Form>
       <p>
         Already have an account? <Link to='/login'>Log in</Link>
       </p>
