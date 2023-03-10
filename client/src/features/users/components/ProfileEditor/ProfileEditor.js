@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useAuthContext } from '../../../../context/AuthContext';
 import { uploadFileToS3Bucket, deleteFileFromS3Bucket } from '../../../../services/storage';
 import getUser from '../../api/getUser';
 import updateAvatar from '../../api/updateAvatar';
@@ -12,8 +11,7 @@ import style from './ProfileEditor.module.scss';
 
 const BIOGRAPHY_CHAR_LIMIT = 160;
 
-function ProfileEditor() {
-  const { authUser } = useAuthContext();
+function ProfileEditor({ authUser }) {
   const originalUserData = useRef({});
   const [avatar, setAvatar] = useState('');
   const [biography, setBiography] = useState('');
