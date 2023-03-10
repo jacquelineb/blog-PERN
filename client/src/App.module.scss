@@ -1,0 +1,17 @@
+.AppContainer {
+  min-height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+::selection {
+  background-color: Highlight;
+  color: HighlightText;
+}
+
+a {
+  color: #0f61ff;
+  &:active {
+    color: red;
+  }
+}

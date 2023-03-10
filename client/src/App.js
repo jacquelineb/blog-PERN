@@ -2,7 +2,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import routes from './routes';
 import NavBar from './components/NavBar';
-import style from './styles/App.module.scss';
+import style from './App.module.scss';
 
 function App() {
   return (
