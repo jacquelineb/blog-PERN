@@ -16,7 +16,7 @@ A simple full-stack blog application built with PostgreSQL, Express, React, Node
 
 ## Prerequisites
 
-- PostgreSQL - [Download & install PostgreSQL](https://www.postgresql.org/download/) and make sure it's running. Set up the database using the `setup.sql` file found in the `server` folder.
+- PostgreSQL - [Download & install PostgreSQL](https://www.postgresql.org/download/)
 - AWS S3 - This project uses [AWS S3](https://aws.amazon.com/s3/) buckets to store images uploaded by blog users. Checkout [this video](https://youtu.be/yGYeYJpRWPM?si=gkEvoCORm4hcUgO8&t=264) on how to set up the bucket. When creating an IAM policy for the Express backend ([9:12 in video](https://youtu.be/yGYeYJpRWPM?si=dA3-66AGo6wr-fx0&t=552)), make sure to add the DeleteObject permission in addition to the PutObject permission.
 
 ## Running the app locally
@@ -43,7 +43,7 @@ cd server
 
 Set up the environment variables in a `.env` file. See `.env.example`.
 
-Set up the database. Make sure your Postgres server is running:
+Make sure your Postgres server is running, then setup the database:
 
 ```bash
 psql setup.sql
